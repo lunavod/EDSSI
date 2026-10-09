@@ -1,0 +1,276 @@
+/* The side panel: where the commander is, the ship, and what is unsold. */
+
+.side {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  width: clamp(340px, 27.9vw, 440px);
+  min-height: 0;
+}
+
+/* The blocks scroll if they must; the ledger stays pinned below them. */
+.side-scroll {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  overflow-y: auto;
+}
+.side-foot {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 8px;
+  padding-top: 10px;
+}
+.side-block {
+  display: flex;
+  flex-direction: column;
+}
+.side-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+  color: var(--muted);
+  font-family: var(--caps);
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.side-label::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--rule-soft);
+}
+.side-label .ic-w {
+  color: var(--accent);
+}
+/* The system's tags, then its facts as rows: a gap before the rows' first rule. */
+.side-block .tags + .kv {
+  margin-top: 12px;
+}
+.side-empty {
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 15.5px;
+}
+
+.sys-title {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 12px;
+  padding: 4px 0 10px;
+}
+.sys-logo {
+  width: 52px;
+  height: 52px;
+  color: var(--accent);
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 60%, transparent));
+}
+.sys-name {
+  color: var(--accent);
+  font-family: var(--caps);
+  font-size: 29px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1.02;
+  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 50%, transparent);
+  text-transform: uppercase;
+}
+.sys-sub {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 3px;
+  color: var(--muted);
+  font-family: var(--caps);
+  font-size: 16px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+/* Two by two: four across the panel cut an exobio range and the longer labels short. */
+.facts {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin-bottom: 10px;
+  border: 1px solid var(--rule-soft);
+  background: var(--rule-soft);
+}
+.fact {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+  padding: 8px 8px 7px 10px;
+  background: var(--bg);
+}
+.fact .v {
+  overflow: hidden;
+  color: var(--accent-hi);
+  font-family: var(--semi);
+  font-size: 20px;
+  font-weight: 500;
+  line-height: 1.1;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.fact .v small {
+  color: var(--muted);
+  font-size: 14px;
+  font-weight: 400;
+}
+.fact .v.good {
+  color: var(--good);
+}
+.fact .v.warn {
+  color: var(--warn);
+}
+.fact .v.danger {
+  color: var(--danger);
+}
+.fact .k {
+  overflow: hidden;
+  color: var(--dim);
+  font-family: var(--semi);
+  font-size: 13px;
+  letter-spacing: 0.07em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.body-title {
+  display: grid;
+  grid-template-columns: 40px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+.body-logo {
+  width: 40px;
+  height: 40px;
+  color: var(--accent);
+}
+.body-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-family: var(--caps);
+  font-size: 24px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+.body-name .here {
+  width: 11px;
+  height: 18px;
+  color: var(--marker);
+}
+.body-sub {
+  margin-top: 3px;
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 14px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.side .tbl {
+  font-size: 15.5px;
+}
+.side .tbl td:first-child {
+  overflow: hidden;
+  max-width: 0;
+  width: 100%;
+  text-overflow: ellipsis;
+}
+
+.side-name {
+  flex: 1;
+  min-width: 0;
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 21px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.side-name.fit {
+  flex: 0 1 auto;
+}
+.side-figure {
+  color: var(--accent-hi);
+  font-family: var(--caps);
+  font-size: 24px;
+  font-weight: 600;
+}
+.side-figure.warn {
+  color: var(--warn);
+}
+.side-figure small {
+  color: var(--muted);
+  font-size: 15px;
+}
+.side-aside {
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 15px;
+  white-space: nowrap;
+}
+.side-aside b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+.side-aside b.warn {
+  color: var(--warn);
+}
+/* The tank's bar, with what the route and the next jump will burn marked off its filled end. */
+.bar > i.burn-route,
+.bar > i.burn-next {
+  box-shadow: none;
+}
+.bar > i.burn-route,
+.swatch.burn-route {
+  background: var(--accent-lo);
+}
+.bar > i.burn-next,
+.swatch.burn-next {
+  background: var(--marker);
+}
+.side-aside .swatch {
+  display: inline-block;
+  width: 9px;
+  height: 9px;
+  margin-right: 6px;
+}
+
+/* Unsold, in the foot: the numbers checked before deciding to turn back. */
+.side-foot .side-label {
+  font-size: 17px;
+}
+.side-foot .kv {
+  font-size: 19px;
+}
+.side-foot .kv > div {
+  padding: 5px 2px;
+}
+.side-foot .kv dd {
+  font-size: 22px;
+  white-space: nowrap;
+}
+.side-foot .kv dd small {
+  font-size: 17px;
+}
+/* The balance is context, not the point: the rows' size, in the secondary grey. */
+.side-foot .kv .total dt,
+.side-foot .kv .total dd {
+  color: var(--muted);
+  font-weight: 400;
+}

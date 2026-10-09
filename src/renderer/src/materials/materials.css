@@ -1,0 +1,1010 @@
+/*
+ * The Materials tab: recipes, the inventory, the blueprint and synthesis to-do lists, what those
+ * are short of, material traders, and what was crafted.
+ */
+
+/* A page under the tab's own pages: a bar or form on top, the rest scrolling. */
+.mat-page {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+.mat-scroll {
+  /* Holds visually hidden labels, which would otherwise hang off the page and scroll it. */
+  position: relative;
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 18px;
+  min-height: 0;
+  padding-right: 6px;
+  overflow-y: auto;
+}
+.mat-bar {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.mat-bar .input {
+  flex: 1 1 200px;
+  max-width: 340px;
+}
+.mat-bar .seg button {
+  height: 36px;
+  padding: 0 10px;
+  font-size: 13.5px;
+}
+.mat-main {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.mat-empty {
+  color: var(--muted);
+  font-size: 15.5px;
+}
+
+/* A favourite: a card with a bar per ingredient, filled to five crafts' worth. */
+.rc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 10px;
+}
+.rc {
+  padding: 10px 12px 12px;
+  border: 1px solid var(--rule-soft);
+  background: var(--panel);
+}
+.rc.none .rc-name {
+  color: var(--dim);
+}
+.rc-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+}
+.rc-star {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  padding: 2px;
+  border: 0;
+  background: transparent;
+  color: var(--accent);
+}
+.rc-star.off {
+  color: var(--dim);
+}
+.rc-star:hover {
+  color: var(--accent-hi);
+}
+.rc-name {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--fg);
+  font-family: var(--caps);
+  font-size: 19px;
+  letter-spacing: 0.03em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rc-grade {
+  flex: none;
+  padding: 0 6px;
+  border: 1px solid var(--rule);
+  color: var(--accent-2);
+  font-family: var(--semi);
+  font-size: 14px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rc-times {
+  flex: none;
+  color: var(--accent-hi);
+  font-family: var(--caps);
+  font-size: 22px;
+  font-weight: 600;
+}
+.rc-times.zero {
+  color: var(--dim);
+}
+.rc-ings {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.ing {
+  display: inline-grid;
+  grid-template-columns: auto auto;
+  column-gap: 8px;
+  row-gap: 3px;
+  padding: 5px 9px 6px;
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+  font-family: var(--semi);
+  font-size: 15.5px;
+}
+.ing-name {
+  color: var(--muted);
+  white-space: nowrap;
+}
+.ing-n {
+  color: var(--accent-hi);
+  text-align: right;
+}
+.ing-bar {
+  position: relative;
+  grid-column: 1 / -1;
+  height: 2px;
+  background: color-mix(in srgb, var(--accent) 15%, transparent);
+}
+.ing-bar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+  background: var(--accent);
+}
+.ing.short {
+  background: color-mix(in srgb, var(--warn) 8%, transparent);
+}
+.ing.short .ing-n {
+  color: var(--warn);
+}
+.ing.short .ing-bar i {
+  background: var(--warn);
+}
+
+/* Recipe groups, closed by default: there are over a thousand recipes. */
+.grp {
+  border-bottom: 1px solid var(--rule-soft);
+}
+.grp-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 38px;
+  padding: 0 8px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+}
+.grp-head:hover {
+  background: var(--tint);
+}
+.grp.open .grp-head {
+  background: var(--wash);
+}
+.grp-chev {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--accent);
+  transform: rotate(-90deg);
+}
+.grp.open .grp-chev {
+  transform: none;
+}
+.grp-name {
+  overflow: hidden;
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 19px;
+  letter-spacing: 0.03em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.grp-head .micro {
+  font-size: 14px;
+}
+.grp-craft {
+  min-width: 56px;
+  color: var(--dim);
+  font-family: var(--semi);
+  font-size: 16px;
+  text-align: right;
+}
+.grp-craft b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+.grp-body {
+  padding: 4px 8px 8px 32px;
+}
+/* A recipe in an open group: star, name, grade and count, its ingredients on a line of their own. */
+.grp-rec {
+  display: grid;
+  grid-template-columns: 22px auto auto minmax(0, 1fr) 40px 26px;
+  align-items: center;
+  gap: 4px 10px;
+  min-height: 40px;
+  padding: 6px 0 8px;
+  border-top: 1px solid color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.grp-rec .rc-name {
+  font-size: 16px;
+}
+.grp-rec.none .rc-name {
+  color: var(--dim);
+}
+.grp-rec .rc-times {
+  grid-column: 5;
+  font-size: 18px;
+  text-align: right;
+}
+.grp-ings {
+  display: flex;
+  flex-wrap: wrap;
+  grid-column: 2 / -1;
+  grid-row: 2;
+  gap: 6px;
+}
+
+.grp-add {
+  grid-column: 6;
+}
+
+/* Puts a recipe on its to-do list; ticks for a moment after. */
+.todo-add {
+  color: var(--dim);
+}
+.todo-add:hover {
+  color: var(--accent-hi);
+}
+.todo-add.added {
+  border-color: color-mix(in srgb, var(--good) 50%, transparent);
+  color: var(--good);
+}
+
+/* ---------- inventory: a row per family, a column per grade, as the game lays them out ---------- */
+
+.inv-legend {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 14px;
+}
+.inv-key {
+  display: inline-block;
+  width: 14px;
+  height: 4px;
+  margin-left: 10px;
+}
+.inv-key.reserved {
+  background: var(--accent-2);
+}
+.inv-key.full {
+  background: var(--warn);
+}
+.inv-grid {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 4px;
+  table-layout: fixed;
+  font-family: var(--semi);
+}
+.inv-grid thead th {
+  padding: 0 8px 2px;
+  color: var(--dim);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-align: left;
+  text-transform: uppercase;
+}
+.inv-grid thead th:first-child {
+  width: 150px;
+}
+.inv-grid tbody th {
+  padding: 0 8px 0 2px;
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.05em;
+  text-align: left;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.inv-untraded {
+  display: block;
+  color: var(--dim);
+  font-family: var(--semi);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+.inv-cell {
+  padding: 6px 9px 7px;
+  border: 1px solid var(--rule-soft);
+  background: var(--panel);
+  vertical-align: top;
+}
+.inv-none {
+  border: 1px dashed color-mix(in srgb, var(--accent) 8%, transparent);
+}
+.inv-name {
+  display: -webkit-box;
+  overflow: hidden;
+  min-height: 2.3em;
+  color: var(--muted);
+  font-size: 14.5px;
+  line-height: 1.15;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+.inv-n {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 6px;
+  margin: 1px 0 4px;
+}
+.inv-n b {
+  color: var(--accent-hi);
+  font-family: var(--caps);
+  font-size: 21px;
+  font-weight: 600;
+}
+.inv-res {
+  color: var(--accent-2);
+  font-size: 13.5px;
+  white-space: nowrap;
+}
+.inv-res.short {
+  color: var(--warn);
+}
+.inv-bar {
+  position: relative;
+  display: block;
+  height: 3px;
+  background: color-mix(in srgb, var(--accent) 12%, transparent);
+}
+.inv-bar i {
+  position: absolute;
+  inset: 0 auto 0 0;
+}
+.inv-bar .have {
+  background: var(--accent);
+}
+.inv-bar .res {
+  background: var(--accent-2);
+  box-shadow: 1px 0 0 var(--bg);
+}
+.inv-cell.zero .inv-n b {
+  color: var(--dim);
+}
+.inv-cell.full {
+  border-color: color-mix(in srgb, var(--warn) 45%, transparent);
+}
+.inv-cell.full .inv-bar .have {
+  background: var(--warn);
+}
+.inv-cell.dimmed {
+  opacity: 0.35;
+}
+.inv-others {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+  gap: 24px;
+}
+
+/* ---------- the to-do lists ---------- */
+
+.todo-form {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 14px;
+}
+.todo-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 16px;
+}
+.todo-grades {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.todo-grade {
+  width: 138px;
+}
+.todo-grade.sm {
+  width: 76px;
+}
+.todo-arrow {
+  color: var(--dim);
+  font-family: var(--semi);
+}
+.todo-count {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.todo-count > .unit {
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.todo-submit {
+  height: 38px;
+  margin-left: auto;
+  padding: 0 28px;
+}
+.help {
+  display: inline-grid;
+  place-items: center;
+  width: 16px;
+  height: 16px;
+  margin-left: 4px;
+  border: 1px solid var(--rule);
+  border-radius: 50%;
+  color: var(--accent-2);
+  font-size: 11px;
+  letter-spacing: 0;
+  cursor: help;
+}
+.todo-preview {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+}
+.todo-preview-row {
+  display: grid;
+  grid-template-columns: 110px 48px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+}
+.todo-preview-row .rc-grade {
+  justify-self: start;
+}
+.todo-preview-row .rc-times {
+  font-size: 18px;
+  text-align: right;
+}
+
+.todo-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(560px, 1fr));
+  gap: 10px;
+}
+.todo {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  padding: 10px 12px 12px;
+  border: 1px solid var(--rule-soft);
+  background: var(--panel);
+}
+.todo.done {
+  border-color: color-mix(in srgb, var(--good) 30%, transparent);
+}
+.todo.done .todo-name {
+  color: var(--muted);
+}
+.todo-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+.todo-name {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--fg);
+  font-family: var(--caps);
+  font-size: 19px;
+  letter-spacing: 0.03em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.todo-what {
+  flex: none;
+  color: var(--accent-2);
+  font-family: var(--semi);
+  font-size: 14.5px;
+  white-space: nowrap;
+}
+.todo-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  font-family: var(--semi);
+  font-size: 15px;
+}
+.todo-edit {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.todo-steps {
+  display: inline-flex;
+  gap: 4px;
+}
+.todo-step {
+  padding: 1px 7px;
+  border: 1px solid var(--rule);
+  color: var(--accent-2);
+  font-size: 14px;
+  letter-spacing: 0.06em;
+}
+.todo-step.done {
+  border-color: color-mix(in srgb, var(--good) 50%, transparent);
+  background: color-mix(in srgb, var(--good) 8%, transparent);
+  color: var(--good);
+}
+/* Who can apply the target grade: a line each, the best ticked. */
+.eng-lines {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--rule-soft);
+}
+.eng-line {
+  display: grid;
+  grid-template-columns: 16px minmax(0, 1.2fr) minmax(0, 1.3fr) minmax(0, 1fr) 64px 52px;
+  align-items: center;
+  gap: 10px;
+  min-height: 40px;
+  padding: 4px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 8%, transparent);
+  font-family: var(--semi);
+  font-size: 15px;
+}
+.eng-mark {
+  width: 14px;
+  height: 14px;
+  color: var(--good);
+}
+.eng-who {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  gap: 1px;
+  line-height: 1.2;
+}
+.eng-name {
+  overflow: hidden;
+  color: var(--fg);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.eng-status {
+  color: var(--muted);
+  font-size: 13.5px;
+}
+.eng-line.best .eng-name {
+  color: var(--accent-hi);
+}
+.eng-line.locked .eng-name,
+.eng-line.locked .eng-place {
+  color: var(--dim);
+}
+.eng-line.locked .eng-status {
+  color: var(--warn);
+}
+.eng-place {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.eng-base {
+  overflow: hidden;
+  color: var(--fg);
+  text-overflow: ellipsis;
+}
+.eng-place .tag {
+  height: 20px;
+  font-size: 12px;
+}
+.eng-ly {
+  color: var(--accent-hi);
+  text-align: right;
+  white-space: nowrap;
+}
+.eng-pick {
+  border-top: 1px solid var(--rule-soft);
+}
+.eng-warnings {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.eng-warnings .note {
+  margin: 0;
+  font-family: var(--semi);
+}
+.eng-step {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 14.5px;
+}
+.eng-act {
+  justify-self: end;
+}
+.eng-foot {
+  display: flex;
+  gap: 18px;
+  padding: 6px 0 0 26px;
+}
+.todo-plan {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  margin: 0;
+  font-family: var(--semi);
+  font-size: 15px;
+}
+.todo-plan b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+
+/* ---------- missing materials ---------- */
+
+.miss-sum {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 16px;
+}
+.miss-sum b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+.ic-w.good {
+  width: 18px;
+  height: 18px;
+  color: var(--good);
+}
+.miss-tbl {
+  width: 100%;
+}
+.miss-tbl th.v {
+  width: 110px;
+}
+/* Counts sit under their headings, as the rest of the row reads. */
+.miss-tbl td.v,
+.miss-tbl th.v {
+  text-align: left;
+}
+.miss-tbl th:nth-child(2) {
+  width: 110px;
+}
+/* A heading that sorts its column: the heading's own look, with a chevron for the direction. */
+.sort-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+}
+.sort-head:hover,
+.sort-head.active {
+  color: var(--accent-2);
+}
+.sort-chev {
+  display: inline-block;
+  width: 11px;
+  height: 11px;
+  transform: rotate(180deg);
+}
+.sort-chev.down {
+  transform: none;
+}
+.miss-tbl td {
+  height: 40px;
+  vertical-align: middle;
+}
+.miss-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.miss-name .rc-grade,
+.hist-name .rc-grade {
+  font-size: 13px;
+}
+.miss-family {
+  color: var(--dim);
+  font-size: 14px;
+}
+.tbl td.miss-short {
+  color: var(--warn);
+  font-weight: 500;
+}
+/* A short material's trades, on a line of their own under it. */
+.miss-tbl tr.has-trades td {
+  border-bottom: 0;
+}
+.miss-tbl tr.miss-trade-row td {
+  height: auto;
+  padding: 0 10px 10px;
+  white-space: normal;
+}
+.miss-trade-row .warn {
+  color: var(--warn);
+}
+.miss-trade-row .dim,
+.miss-trade-row .warn {
+  display: inline-block;
+  padding-top: 6px;
+}
+.trades {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+.trade {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 9px;
+  background: color-mix(in srgb, var(--accent) 7%, transparent);
+  color: var(--muted);
+  font-size: 15px;
+  white-space: nowrap;
+}
+.trade b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+.trade-arrow {
+  color: var(--accent);
+}
+.trade.partial {
+  background: color-mix(in srgb, var(--warn) 7%, transparent);
+}
+.trade.partial b {
+  color: var(--warn);
+}
+
+/* ---------- importing a build ---------- */
+
+.build-import {
+  width: min(52rem, calc(100vw - 32px));
+}
+.build-paste {
+  width: 100%;
+  min-height: 96px;
+  padding: 8px 12px;
+  border: 0;
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline: 0;
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--rule-soft);
+  color: var(--fg);
+  font-family: var(--semi);
+  font-size: 14px;
+  resize: vertical;
+}
+.build-paste:focus {
+  border-bottom-color: var(--accent);
+}
+.build-plans {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  overflow-y: auto;
+}
+.build-plan-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+  padding-bottom: 4px;
+  border-bottom: 1px solid var(--rule);
+}
+.build-plan-head .todo-name {
+  white-space: normal;
+}
+.build-plan-head .micro {
+  color: var(--muted);
+  font-size: 14px;
+}
+.build-rows {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.build-row {
+  padding: 6px 2px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.build-row label {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.build-row input {
+  width: 18px;
+  height: 18px;
+  margin: 0;
+  accent-color: var(--accent);
+}
+.build-label {
+  color: var(--fg);
+  font-family: var(--semi);
+  font-size: 16px;
+}
+.build-row .rc-times {
+  font-size: 17px;
+}
+.build-row.done .build-label {
+  color: var(--dim);
+}
+.build-where {
+  display: block;
+  padding-left: 28px;
+  color: var(--dim);
+  font-family: var(--semi);
+  font-size: 13.5px;
+}
+.build-skipped {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  padding-top: 8px;
+  color: var(--warn);
+  font-family: var(--semi);
+  font-size: 14px;
+}
+.build-skipped .ic-w {
+  flex: none;
+  width: 15px;
+  height: 15px;
+}
+.todo-form-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: -2px 0 -2px;
+}
+
+/* The trade plan: a block per trader, a row per material it brings with the trades that do. */
+.plan-traders {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.plan-trader {
+  padding: 8px 12px 10px;
+  border: 1px solid var(--rule-soft);
+  background: var(--panel);
+}
+.plan-trader-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.plan-trader-name {
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.plan-rows {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.plan-row {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 7px 0;
+  border-bottom: 1px solid color-mix(in srgb, var(--accent) 8%, transparent);
+  font-family: var(--semi);
+  font-size: 15.5px;
+}
+.plan-row:last-child {
+  border-bottom: 0;
+}
+.plan-get {
+  color: var(--fg);
+}
+.plan-get b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+.plan-unmet {
+  margin-top: 12px;
+  border-color: color-mix(in srgb, var(--warn) 35%, transparent);
+}
+.plan-unmet .plan-trader-head .ic-w {
+  width: 16px;
+  height: 16px;
+  color: var(--warn);
+}
+.plan-unmet .plan-trader-name {
+  color: var(--warn);
+}
+.plan-unmet .micro {
+  color: var(--muted);
+  font-size: 14px;
+}
+.plan-unmet-tbl {
+  width: 100%;
+}
+.plan-unmet-tbl th:first-child {
+  width: 34%;
+}
+.plan-unmet-tbl td.miss-short {
+  color: var(--warn);
+  font-weight: 500;
+}
+
+/* ---------- material traders ---------- */
+
+.tag.trader-manufactured {
+  border-color: color-mix(in srgb, var(--warn) 45%, transparent);
+  color: var(--warn);
+}
+.tag.trader-encoded {
+  border-color: color-mix(in srgb, var(--good) 45%, transparent);
+  color: var(--good);
+}
+.trader-more {
+  align-self: center;
+  margin: 8px 0;
+}
+
+/* ---------- what was crafted ---------- */
+
+.hist-tbl {
+  width: 100%;
+}
+.hist-tbl td {
+  height: 48px;
+}
+.hist-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 17px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.tbl td.hist-ing {
+  color: var(--muted);
+  white-space: normal;
+}

@@ -1,0 +1,8 @@
+{
+  "name": "edssi-hid-usages",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Asks Windows what a stick's controls are, so bindings need not guess at bytes",
+  "main": "index.js",
+  "gypfile": true
+}

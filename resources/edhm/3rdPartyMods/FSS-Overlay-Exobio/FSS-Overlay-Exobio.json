@@ -1,0 +1,120 @@
+{
+  "mod_name": "FSS-Overlay-Exobio",
+  "author": "EDSSI",
+  "description": "Marks the FSS bands where bodies that can have life show up (MR, HMC, R, I, RI).<br>Needs the FSS-Overlay mod's shaders; installed by EDSSI in its place.",
+  "version": "1.0.0",
+  "file": "FSS-Overlay-Exobio.ini",
+  "file_full": null,
+  "managed": true,
+  "mod_type": "INIConfig",
+  "read_me": "<h4 align='center'><b>FSS Exobio Overlay</b></h4><p align='left'>Marks the Metal Rich, High Metal Content, Rocky, Icy and Rocky Ice bands of the Filtered Spectral Analysis: the bodies where life can grow.</p><p align='left'>It draws through the shaders of the <a href='https://github.com/psychicEgg/EDHM/tree/main/Odyssey/3rdPartyMods/FSS-Overlay' target='_blank'>FSS Overlay Mod</a> by psychicEgg and Parduz, maintained by Fred89210.</p><p align='center'><image=Overlay-Exobio.png;size=100%;align=top></p>",
+  "sections": [
+    {
+      "name": "Options",
+      "title": "FSS Exobio Overlay Options",
+      "ini_section": "Constants",
+      "visible": true,
+      "keys": [
+        {
+          "name": "Enable FSS Exobio Overlay",
+          "type": "toggle",
+          "key": "global $FSSexobioEnabled",
+          "value": "1",
+          "visible": true,
+          "description": "Show the overlay in the FSS"
+        },
+        {
+          "name": "Overlay Brightness",
+          "type": "decimal",
+          "key": "w6",
+          "value": "1",
+          "visible": true,
+          "description": "Default = 1.0"
+        }
+      ]
+    },
+    {
+      "name": "KeyToggle-FSS-Exobio-Enabled",
+      "title": "Enable/Disable Keybind",
+      "ini_section": "KeyToggle-FSS-Exobio-Enabled",
+      "visible": true,
+      "keys": [
+        {
+          "name": "Binding Key",
+          "type": "key_binding",
+          "key": "Key",
+          "value": "0x8f",
+          "visible": true,
+          "description": "Turns the overlay on and off"
+        }
+      ]
+    }
+  ],
+  "custom_types": [
+    {
+      "type": "key_binding",
+      "name": "None",
+      "value": "0x8f"
+    },
+    {
+      "type": "key_binding",
+      "name": "F1",
+      "value": "no_modifiers F1"
+    },
+    {
+      "type": "key_binding",
+      "name": "F2",
+      "value": "no_modifiers F2"
+    },
+    {
+      "type": "key_binding",
+      "name": "F3",
+      "value": "no_modifiers F3"
+    },
+    {
+      "type": "key_binding",
+      "name": "F4",
+      "value": "no_modifiers F4"
+    },
+    {
+      "type": "key_binding",
+      "name": "F5",
+      "value": "no_modifiers F5"
+    },
+    {
+      "type": "key_binding",
+      "name": "F6",
+      "value": "no_modifiers F6"
+    },
+    {
+      "type": "key_binding",
+      "name": "F7",
+      "value": "no_modifiers F7"
+    },
+    {
+      "type": "key_binding",
+      "name": "F8",
+      "value": "no_modifiers F8"
+    },
+    {
+      "type": "key_binding",
+      "name": "F9",
+      "value": "no_modifiers F9"
+    },
+    {
+      "type": "key_binding",
+      "name": "F10",
+      "value": "no_modifiers F10"
+    },
+    {
+      "type": "key_binding",
+      "name": "F11",
+      "value": "no_modifiers F11"
+    },
+    {
+      "type": "key_binding",
+      "name": "F12",
+      "value": "no_modifiers F12"
+    }
+  ]
+}

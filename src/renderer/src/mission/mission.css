@@ -1,0 +1,555 @@
+/* The Mission tab: route, life here and the log scroll together; the stats strip stays pinned. */
+
+.mission-page {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  container-type: inline-size;
+}
+.mscroll {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 16px;
+  min-height: 0;
+  padding-right: 6px;
+  overflow-y: auto;
+}
+.sec-none {
+  color: var(--muted);
+  font-family: var(--body);
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* ---------- route rail ---------- */
+
+.rr {
+  position: relative;
+  height: 26px;
+  margin: 8px 12px 0;
+}
+.rr-line {
+  position: absolute;
+  top: 12px;
+  right: 0;
+  left: 0;
+  height: 2px;
+  background: color-mix(in srgb, var(--accent) 30%, transparent);
+}
+.rr-node {
+  position: absolute;
+  top: 7px;
+  width: 12px;
+  height: 12px;
+  margin-left: -6px;
+  border: 2px solid var(--good);
+  background: var(--good);
+  transform: rotate(45deg);
+}
+.rr-node.no {
+  border-color: var(--warn);
+  background: var(--bg);
+}
+.rr-node.unknown {
+  border-color: var(--rule);
+  background: var(--bg);
+}
+.rr-node.flown {
+  opacity: 0.35;
+}
+.rr-node.cur {
+  z-index: 1;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  margin-left: -10px;
+  border-color: var(--accent-hi);
+  background: var(--accent-hi);
+  box-shadow: 0 0 14px var(--accent);
+  opacity: 1;
+}
+/* Past about thirty jumps a diamond each is noise: a tick per system instead. */
+.rr-ticks {
+  position: absolute;
+  top: 6px;
+  right: 0;
+  left: 0;
+  display: flex;
+  gap: 1px;
+  height: 14px;
+}
+.rr-ticks i {
+  flex: 1 1 0;
+  background: color-mix(in srgb, var(--good) 75%, transparent);
+}
+.rr-ticks i.no {
+  background: var(--warn);
+}
+.rr-ticks i.unknown {
+  background: var(--rule);
+}
+.rr-ticks i.flown {
+  opacity: 0.25;
+}
+.rr-pos {
+  position: absolute;
+  top: -14px;
+  color: var(--accent-hi);
+  font-family: var(--semi);
+  font-size: 13px;
+  transform: translateX(-50%);
+}
+.rr.long {
+  margin-top: 18px;
+}
+.rr-labels {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+  margin-top: 10px;
+}
+.rr-stop {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.rr-stop.mid {
+  align-items: center;
+  text-align: center;
+}
+.rr-stop.end {
+  align-items: flex-end;
+  text-align: right;
+}
+.rr-stop > .row {
+  max-width: 100%;
+  min-width: 0;
+}
+.rr-name {
+  min-width: 0;
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 20px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rr-detail {
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+.rr-detail.warn {
+  color: var(--warn);
+}
+
+/* ---------- life here ---------- */
+
+.bio-bodies {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.bio-body {
+  position: relative;
+  padding: 8px 12px 6px;
+  border: 1px solid var(--rule-soft);
+  background: var(--panel);
+}
+.bio-body.current {
+  border-color: var(--rule);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.bio-body.unmapped {
+  border-style: dashed;
+}
+.bio-body-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 30px;
+}
+.here-mk {
+  flex: none;
+  width: 12px;
+  height: 19px;
+  color: var(--marker);
+}
+.bio-body-name {
+  flex: none;
+  color: var(--accent);
+  font-family: var(--caps);
+  font-size: 22px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+.bio-body-tags {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.bio-body-value {
+  flex: none;
+  font-family: var(--semi);
+  font-size: 16px;
+  white-space: nowrap;
+}
+.bio-body-value b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+.bio-body-head .tag {
+  flex: none;
+  height: 20px;
+}
+.bio-rows {
+  display: flex;
+  flex-direction: column;
+  margin-top: 4px;
+}
+.bio-row {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr) 70px 46px 104px;
+  align-items: center;
+  gap: 10px;
+  height: 32px;
+  border-top: 1px solid var(--rule-soft);
+  font-family: var(--semi);
+  font-size: 16.5px;
+}
+.bio-ic {
+  width: 17px;
+  height: 17px;
+  color: var(--accent);
+}
+.bio-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.bio-var {
+  color: var(--dim);
+}
+.bio-new {
+  margin-left: 8px;
+  color: var(--good);
+  font-size: 13px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+.bio-colony {
+  color: var(--dim);
+  font-size: 14px;
+  text-align: right;
+}
+.bio-val {
+  color: var(--accent-hi);
+  font-weight: 500;
+  text-align: right;
+  white-space: nowrap;
+}
+.bio-row.analysed .bio-name,
+.bio-row.analysed .bio-val,
+.bio-row.sold .bio-name,
+.bio-row.sold .bio-val {
+  color: var(--muted);
+}
+.bio-row.lost .bio-name,
+.bio-row.lost .bio-val {
+  color: var(--dim);
+  text-decoration: line-through;
+}
+.bio-row.predicted .bio-ic,
+.bio-row.unsampled .bio-ic {
+  color: var(--dim);
+}
+
+/* What the unnamed signals of an unmapped body could be. */
+.cands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 6px 0 4px;
+}
+.cand {
+  padding: 2px 8px;
+  border: 1px solid var(--rule-soft);
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 14.5px;
+  white-space: nowrap;
+}
+.cand b {
+  margin-left: 4px;
+  color: var(--accent-2);
+  font-weight: 500;
+}
+.cand.new {
+  border-color: color-mix(in srgb, var(--good) 45%, transparent);
+}
+
+/* Finished bodies fold into a chip each, so the list never grows past a screen. */
+.done-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 0;
+}
+.done-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  height: 30px;
+  padding: 0 10px;
+  border: 1px solid color-mix(in srgb, var(--good) 35%, transparent);
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 14.5px;
+}
+.done-chip b {
+  color: var(--good);
+  font-family: var(--caps);
+  font-size: 17px;
+  font-weight: 600;
+}
+
+/* ---------- worth a probe ---------- */
+
+.probe-tbl td:first-child {
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 19px;
+  letter-spacing: 0.03em;
+}
+
+/* ---------- since last sale ---------- */
+
+.tl {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.tl-stop {
+  position: relative;
+  padding-left: 22px;
+}
+.tl-stop::before {
+  content: '';
+  position: absolute;
+  top: 14px;
+  bottom: -14px;
+  left: 5px;
+  width: 2px;
+  background: var(--rule-soft);
+}
+.tl-stop:last-child::before {
+  display: none;
+}
+.tl-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  height: 32px;
+}
+.tl-dot {
+  position: absolute;
+  top: 10px;
+  left: 0;
+  width: 12px;
+  height: 12px;
+  border: 2px solid var(--accent);
+  background: var(--bg);
+  transform: rotate(45deg);
+}
+.tl-stop.here .tl-dot {
+  background: var(--accent);
+  box-shadow: 0 0 10px var(--accent);
+}
+.tl-stop.sale .tl-dot {
+  border-color: var(--dim);
+}
+.tl-stop.older .tl-dot {
+  border-style: dotted;
+}
+.tl-sys {
+  min-width: 0;
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 19px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.tl-val {
+  color: var(--accent-hi);
+  font-family: var(--semi);
+  font-size: 16.5px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+.tl-entry {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 28px;
+  padding-left: 2px;
+  font-family: var(--semi);
+  font-size: 16px;
+}
+.tl-name {
+  overflow: hidden;
+  color: var(--fg);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tl-entry.sold .tl-name,
+.tl-entry.lost .tl-name {
+  color: var(--dim);
+}
+.tl-entry .dim {
+  white-space: nowrap;
+}
+.tl-when {
+  color: var(--muted);
+  white-space: nowrap;
+}
+.tl-v {
+  min-width: 60px;
+  color: var(--accent-hi);
+  text-align: right;
+  white-space: nowrap;
+}
+.tl-gap {
+  margin: 2px 0 6px;
+  color: var(--dim);
+  font-family: var(--semi);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.tl-more {
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  gap: 10px;
+  text-align: left;
+}
+.tl-more:hover {
+  background: var(--tint);
+}
+.tl-chev {
+  width: 14px;
+  height: 14px;
+  color: var(--accent);
+}
+
+/* ---------- stats strip ---------- */
+
+.strip2 {
+  display: grid;
+  flex: none;
+  grid-template-columns: auto 1fr 1fr 1fr 1.5fr;
+  align-items: center;
+  gap: 22px;
+  padding: 12px 18px;
+}
+.strip2 .s2 + .s2 {
+  padding-left: 22px;
+  border-left: 1px solid var(--rule-soft);
+}
+.strip2-seg button {
+  width: 108px;
+  height: 34px;
+  padding: 0 10px;
+  font-size: 16px;
+  letter-spacing: 0.1em;
+}
+.strip2-empty {
+  grid-column: 2 / -1;
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 17px;
+}
+.s2 {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+.s2 .k {
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 16px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.s2 .v {
+  overflow: hidden;
+  color: var(--accent-hi);
+  font-family: var(--caps);
+  font-size: 46px;
+  font-weight: 600;
+  line-height: 1.02;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.s2 .v small {
+  margin-left: 4px;
+  color: var(--accent-2);
+  font-size: 24px;
+  font-weight: 500;
+}
+.s2 .d {
+  overflow: hidden;
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 19px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.s2 .d.warn {
+  color: var(--warn);
+}
+.s2-legend {
+  display: grid;
+  grid-template-columns: auto auto;
+  justify-content: start;
+  column-gap: 12px;
+  row-gap: 2px;
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 18px;
+  white-space: nowrap;
+}
+.s2-legend b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+.s2-legend .sw {
+  width: 12px;
+  height: 12px;
+}
+/* Where the money came from is the first to go when the strip is short of room. */
+@container (width < 780px) {
+  .strip2 {
+    grid-template-columns: auto 1fr 1fr 1fr;
+  }
+  .strip2 .s2-src {
+    display: none;
+  }
+}

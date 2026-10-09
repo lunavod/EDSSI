@@ -1,0 +1,293 @@
+@import './hud.css';
+@import './hud/side-panel.css';
+@import './mission/mission.css';
+@import './materials/materials.css';
+@import './ships/ships.css';
+@import './commodities/commodities.css';
+@import './journal/journal.css';
+@import './hud/route.css';
+@import './comms/comms.css';
+@import './browser/browser.css';
+@import './settings/settings.css';
+
+/*
+ * The VR panel (see src/main/vr-overlay-service.ts): the Mission module drawn into a head-locked
+ * SteamVR overlay. The page itself has to be see-through, because everything the panel doesn't
+ * paint is the cockpit the commander is flying.
+ */
+:root.vr {
+  background: transparent;
+  /*
+   * A fallback only. The main process sets this from the panel's real pixels-per-metre, so that a
+   * line of type is the same height in metres whatever density a panel ends up drawn at.
+   */
+  font-size: 26px;
+}
+
+.vr-panel {
+  position: relative;
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  height: 100vh;
+  /* The scrolling is the inner box's; this one stays put so the backing can be placed on it. */
+  overflow: hidden;
+  /*
+   * In rem, so the words clear the fade at any density: both this and `--vr-fade` are worked out
+   * from the panel's real pixels-per-metre, and a padding pinned in pixels would fall inside the
+   * fade on a panel drawn more finely than the one it was measured on.
+   *
+   * Roomier than the window's, and deliberately: the slab now fades away towards its edges, so
+   * text set as close to them as a window allows would sit on backing that is already going. This
+   * clears the 2 cm fade with something to spare.
+   */
+  padding: 0.95rem 1.15rem;
+}
+
+/*
+ * The panel's backing, as a layer of its own rather than a background on the panel itself.
+ *
+ * It has to be separate because it is masked: the slab fades out towards the edges, so the panel
+ * ends in the starfield instead of against it, and a mask on the panel itself would thin the words
+ * exactly as much as the slab behind them. `--vr-background` says how dark it is — dark enough to
+ * read against a bright starfield, see-through enough to keep the cockpit — and `--vr-fade` how
+ * far in from each edge it takes to get there. The main process sets both per panel from metres
+ * (see vr/panels.ts); at 0 the fade is simply a hard edge again.
+ *
+ * Placed against the panel, which does not scroll — the box inside it does. It was `fixed` at
+ * first, to pin it while the content scrolled underneath, and that is what made the cockpit
+ * blink: a fixed layer is composited on its own, and offscreen rendering drops it on a partial
+ * repaint. Every change in Comms took the slab away for a frame, and a panel of text with no
+ * slab behind it looks exactly like a panel that has gone out.
+ */
+.vr-panel::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  /* Behind the text, in front of nothing: the page itself is transparent. */
+  z-index: -1;
+  background: rgb(0 0 0 / var(--vr-background, 0.9));
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent,
+      #000 var(--vr-fade, 0px),
+      #000 calc(100% - var(--vr-fade, 0px)),
+      transparent
+    ),
+    linear-gradient(
+      to bottom,
+      transparent,
+      #000 var(--vr-fade, 0px),
+      #000 calc(100% - var(--vr-fade, 0px)),
+      transparent
+    );
+  /* Both edges at once: a pixel is kept only where it survives the horizontal and the vertical. */
+  mask-composite: intersect;
+}
+
+/*
+ * One pixel in the corner that the main process flips (`--vr-nudge`, 0 or 1) when it needs the
+ * panel painted again: `invalidate()` gives an offscreen window with nothing new to draw no frame
+ * at all. Both of its states round to fully transparent, so nothing is ever seen; what matters is
+ * that the page has changed, and Chromium paints a page that has changed.
+ */
+.vr-panel::after {
+  content: '';
+  position: absolute;
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  inline-size: 1px;
+  block-size: 1px;
+  pointer-events: none;
+  background: rgb(0 0 0 / calc(var(--vr-nudge, 0) * 0.001));
+}
+
+/* The box that actually scrolls: a wheel event to the middle of the panel is the only way in. */
+.vr-panel-scroll {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr);
+  min-block-size: 0;
+  /* Never `hidden`: a panel that quietly drops what won't fit is worse than one that scrolls. */
+  overflow: hidden auto;
+}
+
+/*
+ * The panels are the window's own components, drawn larger: by how much the panel's type is than
+ * the window's 20 px, which the main process works out from the panel's real pixels-per-metre and
+ * sets as `--vr-zoom`. The padding and the fade stay in the panel's own pixels, outside it.
+ */
+.vr-panel > .tabs,
+.vr-panel-scroll {
+  zoom: var(--vr-zoom, 1.3);
+  /* The window's own type, before the zoom; the root's size is the panel's, for its padding. */
+  font-size: 16px;
+  line-height: 1.35;
+}
+
+/* The main panel's tabs sit above its page and don't scroll with it; nothing presses them. */
+.vr-panel-main {
+  grid-template-rows: auto minmax(0, 1fr);
+  row-gap: 12px;
+}
+
+.vr-panel .tab {
+  cursor: default;
+}
+
+/*
+ * The strips above and below are short, so they get less padding and no room to waste. The side
+ * panels are narrow rather than short.
+ */
+.vr-panel-route,
+.vr-panel-stats {
+  padding: 0.31rem 0.54rem;
+  /*
+   * The tint the cells are drawn in, before `--vr-background` says how solid they are: a near
+   * black lifted towards the accent. Opaque here so that the one alpha applied below is the whole
+   * of it — mixing into a colour that was already translucent would leave the accent's tenth
+   * behind at every setting, and a strip turned down to nothing would still be faintly there.
+   */
+  --vr-cell: color-mix(in srgb, var(--accent) 10%, #000);
+}
+
+/*
+ * The strips carry no slab, so there is nothing for the fade to work on and nothing hiding the
+ * cockpit behind them: what `--vr-background` buys them is their own backing, below — the same
+ * number that sets the slab on the panels that have one.
+ */
+.vr-panel-route::before,
+.vr-panel-stats::before {
+  content: none;
+}
+
+.vr-panel-route .sec,
+.vr-panel-stats .strip2 {
+  padding: 10px 14px;
+  border: 1px solid var(--rule-soft);
+  background: rgb(from var(--vr-cell) r g b / var(--vr-background, 0.88));
+}
+
+/* No period buttons in VR, so the column they sat in is gone too. */
+.strip2.no-periods {
+  grid-template-columns: 1fr 1fr 1fr 1.5fr;
+}
+
+/* The side panel takes its whole panel; in the window it is a column beside the modules. */
+.vr-panel-sidebar .side {
+  width: 100%;
+}
+
+/* A dialog over the whole window, in the HUD's colours. */
+
+.modal {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: min(44rem, calc(100vw - 32px));
+  max-height: calc(100vh - 64px);
+  padding: 14px 16px;
+  border: 1.5px solid var(--accent);
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: 0 0 24px var(--wash-2);
+}
+
+.modal:not([open]) {
+  display: none;
+}
+
+.modal::backdrop {
+  background: rgb(0 0 0 / 0.7);
+}
+
+.modal-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1.5px solid var(--rule);
+}
+
+.modal-head h2 {
+  flex: 1;
+  margin: 0;
+}
+
+.modal-head .link {
+  font-size: 1.2rem;
+}
+
+.modal-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.modal-scroll {
+  max-height: 50vh;
+}
+
+.modal p {
+  margin: 0;
+}
+
+.whats-new-notes {
+  overflow: auto;
+}
+
+.whats-new-notes ul {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin: 6px 0 12px;
+  padding-left: 1.2em;
+}
+
+.chip:disabled,
+.link:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.screenshot-drop {
+  min-height: 8rem;
+  padding: 10px;
+  border: 2px dashed var(--rule);
+  overflow: auto;
+}
+
+.screenshot-drop[data-dragging] {
+  border-color: var(--accent);
+  background: var(--wash);
+}
+
+.screenshot-thumbs {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.screenshot-thumbs li {
+  position: relative;
+  border: 1px solid var(--rule);
+}
+
+.screenshot-thumbs img {
+  display: block;
+  width: 100%;
+  height: 8rem;
+  object-fit: cover;
+  object-position: top;
+}
+
+.screenshot-remove {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  padding: 0 6px;
+  background: rgb(0 0 0 / 0.7);
+}

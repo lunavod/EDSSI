@@ -1,0 +1,82 @@
+appId: com.edssi.app
+productName: EDSSI
+directories:
+  buildResources: build
+  output: dist
+files:
+  - out/**
+  - package.json
+  # The native input modules only; everything else is bundled into out/ by electron-vite.
+  - node_modules/uiohook-napi/**
+  - node_modules/node-hid/**
+  - node_modules/node-addon-api/**
+  - node_modules/node-gyp-build/**
+  # koffi, for sending keys to the game; Windows x64 only.
+  - node_modules/koffi/**
+  - '!node_modules/koffi/build/koffi/{darwin,freebsd,linux,musl,openbsd}_*/**'
+  - '!node_modules/koffi/build/koffi/win32_{arm64,ia32}/**'
+  - '!node_modules/koffi/{src,vendor,doc}/**'
+  # onnxruntime, for Kokoro's voice; Windows x64 only, and only what it loads.
+  - node_modules/onnxruntime-node/package.json
+  - node_modules/onnxruntime-node/dist/**
+  - node_modules/onnxruntime-node/bin/napi-v6/win32/x64/**
+  - node_modules/onnxruntime-common/**
+  # The VR host is a program of its own, so it rides beside the app (below), not in the asar.
+  - '!out/vr-overlay-host/**'
+asar: true
+extraResources:
+  # EDSSI's own EDHM mods, copied into the game folder, so they stay plain files.
+  - from: resources/edhm
+    to: edhm
+  # The "What's new" notes, read at start (src/main/update-service.ts).
+  - CHANGELOG_USER.md
+  # Where src/main/input/usages.ts and src/main/vr/host.ts look in a packaged build. Built by
+  # `npm run hid:build` and `npm run vr:build`; a build without them still runs, without stick
+  # usages or the VR cockpit.
+  - from: native/hid-usages
+    to: hid-usages
+    filter:
+      - index.js
+      - package.json
+      - build/Release/hid_usages.node
+  - from: out/vr-overlay-host
+    to: vr-overlay-host
+# A .node file has to be a real file on disk for the loader to find it.
+asarUnpack:
+  - node_modules/uiohook-napi/**
+  - node_modules/node-hid/**
+  - node_modules/koffi/**
+  - node_modules/onnxruntime-node/**
+win:
+  target: nsis
+  executableName: edssi
+  signAndEditExecutable: true
+  # Releases are signed with the Certum cloud certificate, which only the release machine holds
+  # (SimplySign Desktop presents it as a smart card), so the thumbprint is given by the workflow
+  # (.github/workflows/release.yml) rather than here: a local `npm run dist:win` builds unsigned.
+  signtoolOptions:
+    signingHashAlgorithms:
+      - sha256
+    # electron-updater checks every downloaded installer is signed by this, the certificate
+    # subject's full DN (a bare CN works, with a warning). If the certificate is reissued under
+    # another subject, add the new one here before releasing with it, or updates are refused.
+    publisherName:
+      - CN=Egor Pokrovskiy, O=Egor Pokrovskiy, L=Kiryat Motzkin, S=Haifa District, C=IL
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+  shortcutName: ${productName}
+  uninstallDisplayName: ${productName}
+  # The wizard on a first install; an update runs it silently (/S), which skips every page.
+  oneClick: false
+  perMachine: false
+  # Never allowToChangeInstallationDirectory: with oneClick off, a silent update then fails to
+  # start EDSSI again afterwards (electron-builder #2179).
+publish:
+  provider: generic
+  # Never change this: every installed EDSSI has it in its app-update.yml and asks it forever. It
+  # is the Cloudflare R2 bucket edssi-updates on a custom domain; moving the files means pointing
+  # this name somewhere else, not a new URL.
+  url: https://updates.edssi.app
+  # R2 answers a request for several byte ranges at once with HTTP 400, which breaks the
+  # differential download; one range per request works.
+  useMultipleRangeRequest: false

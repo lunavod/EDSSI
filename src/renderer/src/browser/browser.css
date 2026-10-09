@@ -1,0 +1,60 @@
+/* The Browser tab: the page is a native view the main process lays over the frame. */
+
+.browser {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+.bbar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+}
+.bbar .input input {
+  font-size: 18px;
+}
+.webframe {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  border: 1px solid var(--rule);
+}
+.webframe.empty-frame {
+  border-color: transparent;
+}
+.bempty {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 16px;
+  height: 100%;
+}
+.qlinks {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 200px));
+  justify-content: center;
+  gap: 10px;
+}
+.qlink {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 12px 14px;
+  border: 1px solid var(--rule-soft);
+  background: var(--panel);
+  text-align: left;
+}
+.qlink:hover {
+  border-color: var(--accent);
+  background: var(--wash);
+}
+.ql-n {
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 21px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}

@@ -1,0 +1,434 @@
+/* The Route tab: the plotted route, a CSV route and the map. */
+
+.route-page {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  outline: 2px dashed transparent;
+  outline-offset: -2px;
+}
+.route-page[data-dragging] {
+  outline-color: var(--accent);
+}
+.route-empty {
+  color: var(--muted);
+  font-size: 15.5px;
+}
+.route-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-right: 6px;
+  overflow-y: auto;
+}
+.route-page .tbl {
+  font-size: 17.5px;
+}
+.route-page .tbl th {
+  font-size: 14px;
+}
+.route-page .tbl td {
+  height: 38px;
+}
+.route-page .tbl.compact td {
+  height: 34px;
+}
+.route-page .star {
+  min-width: 28px;
+  height: 24px;
+  font-size: 14px;
+}
+.route-page .tbl td.idxc {
+  width: 48px;
+  color: var(--dim);
+}
+.new-tag {
+  height: 20px;
+  margin-left: 4px;
+  font-size: 12.5px;
+}
+.micro-ic {
+  display: inline-block;
+  width: 13px;
+  height: 13px;
+  margin-right: 6px;
+  vertical-align: -2px;
+}
+
+/* ---------- the plotted route's summary ---------- */
+
+.sumbar {
+  flex: none;
+  padding: 10px 14px;
+}
+.sum-dest {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--accent-hi);
+  font-family: var(--caps);
+  font-size: 24px;
+  letter-spacing: 0.03em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.sum-fig {
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 16.5px;
+  letter-spacing: 0.03em;
+  white-space: nowrap;
+}
+.sum-fig b {
+  color: var(--accent-hi);
+  font-size: 19px;
+  font-weight: 500;
+}
+.sum-note {
+  gap: 8px;
+  color: var(--fg);
+  font-size: 16px;
+}
+.sum-note .ic-w {
+  width: 16px;
+  height: 16px;
+  color: var(--accent);
+}
+.sum-note b {
+  color: var(--good);
+  font-weight: 500;
+}
+.sum-note b.warn {
+  color: var(--warn);
+}
+/* A long route as one strip of ticks: dim once flown, amber where the star can't be scooped. */
+.ticks-flat {
+  position: relative;
+  display: flex;
+  gap: 1px;
+  height: 12px;
+  margin: 10px 0 8px;
+}
+.ticks-flat i {
+  flex: 1 1 0;
+  background: color-mix(in srgb, var(--good) 70%, transparent);
+}
+.ticks-flat i.no {
+  background: var(--warn);
+}
+.ticks-flat i.unknown {
+  background: var(--rule);
+}
+.ticks-flat i.flown {
+  opacity: 0.25;
+}
+.flat-pos {
+  position: absolute;
+  top: -4px;
+  bottom: -4px;
+  width: 3px;
+  margin-left: -1px;
+  background: var(--fg);
+  box-shadow: 0 0 8px var(--accent);
+}
+/* What is flown and what is left, folded into a row each. */
+.tbl tr.fold td {
+  height: 34px;
+  padding: 0;
+  background: var(--tint);
+}
+.fold-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  height: 34px;
+  padding: 0 12px;
+  border: 0;
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 16px;
+  letter-spacing: 0.03em;
+  text-align: left;
+}
+.fold-btn:hover {
+  background: var(--wash);
+  color: var(--fg);
+}
+.fold-ic {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  color: var(--accent);
+  transform: rotate(-90deg);
+}
+.fold-btn[aria-expanded='true'] .fold-ic {
+  transform: none;
+}
+
+/* ---------- a CSV route ---------- */
+
+.csv-now {
+  position: relative;
+  display: grid;
+  flex: none;
+  grid-template-columns: auto 30px minmax(0, 1.3fr) auto auto;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 16px;
+  border: 1px solid var(--rule-soft);
+  background: var(--panel);
+}
+.csv-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.csv-cell .micro {
+  font-size: 14px;
+}
+.csv-cell.right {
+  align-items: flex-end;
+  padding-left: 20px;
+  border-left: 1px solid var(--rule-soft);
+}
+.csv-cell.next .micro {
+  color: var(--good);
+}
+.csv-cell.off .micro {
+  color: var(--warn);
+}
+.csv-arrow {
+  width: 22px;
+  height: 22px;
+  color: var(--accent);
+}
+.csv-sys {
+  overflow: hidden;
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 24px;
+  letter-spacing: 0.03em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.csv-sys small {
+  color: var(--muted);
+  font-size: 15px;
+}
+.csv-bar {
+  position: absolute;
+  right: -1px;
+  bottom: -1px;
+  left: -1px;
+  height: 3px;
+}
+/* A row's number sets where the commander is on the route. */
+.idx {
+  width: 32px;
+  height: 26px;
+  border: 1px solid var(--rule-soft);
+  background: transparent;
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 14px;
+}
+.idx:hover {
+  border-color: var(--accent);
+  color: var(--accent-hi);
+}
+.idx.cur {
+  border-color: var(--accent-hi);
+  background: var(--accent-hi);
+  color: var(--ink);
+}
+.tbl tr.next td {
+  background: var(--tint);
+}
+.file-name {
+  max-width: 260px;
+}
+
+/* ---------- saved routes, to switch between ---------- */
+
+.saved-routes {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  gap: 8px;
+}
+.saved-bar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+.saved-bar > .micro {
+  flex: none;
+}
+.saved-bar .chips {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+.saved-bar .hint {
+  flex: 1 1 auto;
+}
+.saved-chip {
+  display: inline-flex;
+}
+.saved-chip .chip {
+  border-right: 0;
+}
+.saved-x {
+  display: grid;
+  place-items: center;
+  width: 26px;
+  height: 30px;
+  padding: 0 6px;
+  border: 1px solid var(--rule);
+  border-left: 0;
+  background: transparent;
+  color: var(--dim);
+}
+.saved-chip .chip[aria-pressed='true'] + .saved-x {
+  border-color: var(--accent);
+  background: var(--wash-2);
+}
+.saved-chip .chip[aria-pressed='false'] + .saved-x {
+  border-color: var(--rule-soft);
+}
+.saved-x .ic-w {
+  width: 12px;
+  height: 12px;
+}
+.saved-x:hover {
+  color: var(--danger);
+}
+.saved-actions {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+  margin-left: auto;
+}
+.saved-form {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  max-width: 640px;
+}
+.saved-form .hint {
+  flex: none;
+}
+
+/* ---------- the map ---------- */
+
+.map {
+  position: relative;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(
+      80% 60% at 50% 55%,
+      color-mix(in srgb, var(--accent) 7%, transparent),
+      transparent 70%
+    ),
+    var(--panel);
+}
+.map > .route-empty {
+  padding: 16px;
+}
+.map-legend {
+  position: absolute;
+  bottom: 14px;
+  left: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 18px;
+  padding: 8px 12px;
+  border: 1px solid var(--rule-soft);
+  background: color-mix(in srgb, var(--bg) 80%, transparent);
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 16px;
+  pointer-events: none;
+}
+.map-legend i {
+  display: inline-block;
+  width: 18px;
+  height: 3px;
+  margin-right: 7px;
+  vertical-align: 4px;
+}
+.lg-flown {
+  background: var(--muted);
+}
+.lg-ahead {
+  background: var(--accent);
+}
+.map-legend i.lg-here {
+  width: 8px;
+  height: 8px;
+  vertical-align: 1px;
+  background: var(--marker);
+}
+.lg-plot {
+  background: repeating-linear-gradient(90deg, var(--warn) 0 5px, transparent 5px 9px);
+}
+.map-legend .note-only {
+  color: var(--dim);
+}
+.map-labels {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+/* Moved by transform to its point; the margin sets it beside the point, or under it. */
+.map-label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: -0.7em 0 0 8px;
+  color: var(--accent-hi);
+  font-family: var(--caps);
+  font-size: 17px;
+  letter-spacing: 0.08em;
+  text-shadow:
+    0 0 3px var(--bg),
+    0 0 6px var(--bg);
+  text-transform: uppercase;
+  white-space: nowrap;
+  will-change: transform;
+}
+.map-label[data-below] {
+  margin-top: 0.4em;
+}
+.map-label[data-kind='strong'] {
+  color: var(--fg);
+  font-size: 19px;
+}
+.map-label[data-kind='faint'] {
+  color: var(--dim);
+  font-size: 14px;
+}
+.map-label em {
+  color: var(--muted);
+  font-style: normal;
+}
+.chip .box {
+  display: grid;
+  place-items: center;
+  width: 12px;
+  height: 12px;
+  border: 1.5px solid currentColor;
+}
+.chip[aria-pressed='true'] .box {
+  border-color: var(--accent);
+  background: var(--accent);
+}

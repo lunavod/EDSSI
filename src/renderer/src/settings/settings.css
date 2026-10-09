@@ -1,0 +1,773 @@
+/* The Settings tab: the settings file as a screen, one column of sections, a save bar below. */
+
+.settings {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+}
+/* A page's unsaved count and its warning, side by side when it has both. */
+.settings .subtab .count {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.subtab .badge-u {
+  display: grid;
+  place-items: center;
+  min-width: 20px;
+  height: 18px;
+  margin-left: 2px;
+  background: var(--accent-hi);
+  color: var(--ink);
+  font-family: var(--semi);
+  font-size: 13px;
+}
+.subtab .badge-t {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  margin-left: 2px;
+  border: 1.5px solid var(--warn);
+  color: var(--warn);
+  font-family: var(--semi);
+  font-size: 13px;
+}
+/* Eight pages and the search share one row: the search gives way first, then wraps to its own
+   line rather than run under the side panel. */
+.settings .subtabs {
+  flex-wrap: wrap;
+  row-gap: 6px;
+  min-width: 0;
+}
+.settings .subtab {
+  padding: 0 10px;
+  letter-spacing: 0.05em;
+}
+/* Whatever room the tabs leave, up to its full width; a wrap only below the narrowest. */
+.settings .subtabs .sub-actions {
+  flex: 1 1 140px;
+  /* Its content would otherwise insist on the input's own 20 characters. */
+  min-width: 0;
+  max-width: 210px;
+}
+.settings .subtabs .input {
+  width: 100%;
+}
+.scontent {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 14px;
+  min-height: 0;
+  padding-right: 6px;
+  overflow-y: auto;
+}
+.settings-crumb {
+  align-self: flex-start;
+}
+.settings-empty {
+  color: var(--muted);
+  font-size: 15.5px;
+}
+
+/* A section: a panel with a title, a line of help, and its fields. */
+.ss {
+  flex: none;
+}
+.ss[data-inactive='true'] .ss-body,
+.ss[data-inactive='true'] .settings-panel {
+  opacity: 0.55;
+}
+.ss-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 18px 4px;
+}
+.ss-title {
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 19px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.ss-help {
+  padding: 0 18px 6px;
+  color: var(--muted);
+  font-size: 15.5px;
+}
+.ss-note {
+  margin: 0 18px 8px;
+}
+.ss-body {
+  padding: 0 18px 6px;
+}
+.upl-line {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 0 8px;
+  color: var(--muted);
+  font-size: 15.5px;
+}
+.dot-s {
+  flex: none;
+  width: 8px;
+  height: 8px;
+  background: var(--dim);
+}
+.dot-s.ok {
+  background: var(--good);
+  box-shadow: 0 0 6px var(--good);
+}
+.dot-s.warn {
+  background: var(--warn);
+}
+.dot-s.danger {
+  background: var(--danger);
+}
+/* The upload services side by side. */
+.svc3 {
+  display: grid;
+  flex: none;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+.svc3 .sf {
+  grid-template-columns: 90px minmax(0, 1fr);
+  gap: 10px;
+  padding: 8px 0;
+}
+.svc3 .sf-help {
+  display: none;
+}
+.svc3 .sf-c .row {
+  justify-content: flex-end;
+}
+.svc3 .sf-c .input {
+  width: 100%;
+}
+
+/* One setting: its name and what it does on the left, the control on the right. */
+.sf {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
+  align-items: center;
+  gap: 28px;
+  padding: 12px 0;
+  border-top: 1px solid var(--rule-soft);
+}
+.ss-body > .sf:first-child,
+.settings-panel + .sf {
+  border-top: 0;
+}
+.sf.sf-stack {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 8px;
+}
+/* An unsaved change is marked by a bar at its edge. */
+.sf.unsaved {
+  margin-left: -18px;
+  padding-left: 15px;
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.sf.inactive .sf-name,
+.sf.inactive .sf-c {
+  opacity: 0.55;
+}
+.sf-name {
+  display: flex;
+  align-items: center;
+  color: var(--fg);
+  font-family: var(--caps);
+  font-size: 19px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.sf-help {
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 15.5px;
+}
+.sf-note {
+  margin-top: 2px;
+  color: var(--dim);
+  font-size: 14px;
+  font-style: italic;
+}
+.sf-c {
+  min-width: 0;
+}
+.sf-c > .row {
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.sf-problem {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  color: var(--danger);
+  font-size: 14px;
+}
+.sf.problem .input {
+  border-bottom-color: var(--danger);
+}
+.dimlink {
+  color: var(--dim);
+  font-size: 13px;
+}
+.sf .input {
+  width: 100%;
+}
+.sf .input.num {
+  width: 160px;
+}
+.sf textarea.area {
+  width: 100%;
+  min-height: 84px;
+  padding: 8px 12px;
+  border: 0;
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  outline: 0;
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--rule-soft);
+  color: var(--fg);
+  font-family: var(--semi);
+  font-size: 16px;
+  resize: vertical;
+}
+.sf textarea.area:focus {
+  border-bottom-color: var(--accent);
+}
+/* A choice as a segmented row; the radios inside are only for the keyboard and screen readers. */
+.seg label {
+  display: inline-flex;
+  align-items: center;
+  height: 34px;
+  padding: 0 14px;
+  color: var(--accent-2);
+  font-family: var(--semi);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.seg label + label {
+  border-left: 1px solid var(--rule-soft);
+}
+.seg label:hover {
+  background: var(--wash);
+}
+.seg label:has(:checked) {
+  background: var(--accent-hi);
+  color: var(--ink);
+}
+/* What the chosen option comes to (Auto's pick): lit, but more faintly than the choice itself. */
+.seg label[data-implied='true'] {
+  background: var(--wash-2);
+  box-shadow: inset 0 -2px 0 var(--accent);
+  color: var(--accent-hi);
+}
+.seg label:has(:focus-visible) {
+  outline: 2px solid var(--accent-hi);
+  outline-offset: 2px;
+}
+.seg.sm label {
+  height: 28px;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+/* Keywords as removable tokens, with a box to add more. */
+.words {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  min-height: 42px;
+  padding: 6px;
+  border-bottom: 2px solid color-mix(in srgb, var(--accent) 45%, transparent);
+  background: var(--well);
+  box-shadow: inset 0 0 0 1px var(--rule-soft);
+}
+.words input {
+  flex: 1;
+  min-width: 100px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  font-family: var(--semi);
+  font-size: 15px;
+}
+.words input::placeholder {
+  color: var(--faint);
+}
+.words .tagin {
+  height: 26px;
+  font-size: 14px;
+}
+
+/* Alerts as a grid of cards: title, one line, switch; the number that tunes it inside. */
+.agrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding: 4px 0 12px;
+}
+.acard {
+  padding: 12px 14px;
+  border: 1px solid var(--rule-soft);
+  background: color-mix(in srgb, var(--accent) 2%, transparent);
+}
+.acard.on {
+  border-color: var(--rule);
+}
+.acard.unsaved {
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.acard.inactive {
+  opacity: 0.55;
+}
+.acard-t {
+  color: var(--fg);
+  font-family: var(--caps);
+  font-size: 19px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.acard-d {
+  color: var(--muted);
+  font-size: 15.5px;
+}
+.acard-x {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 10px;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px solid var(--rule-soft);
+}
+.acard-x .input {
+  width: auto;
+  height: 32px;
+  font-size: 15px;
+}
+.acard-x .input input {
+  width: 64px;
+}
+
+/* A panel built into a section: bindings, the EDHM mod, the upload log. */
+.settings-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding-bottom: 10px;
+}
+.settings-help {
+  color: var(--muted);
+  font-size: 15.5px;
+}
+.settings-problem {
+  color: var(--danger);
+  font-size: 15px;
+}
+.settings-subtitle {
+  margin-top: 6px;
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.settings-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.settings-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 0 10px;
+  color: var(--fg);
+  font-size: 15.5px;
+}
+.settings-status-dot {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  background: var(--dim);
+}
+.settings-status[data-tone='good'] .settings-status-dot {
+  background: var(--good);
+  box-shadow: 0 0 8px var(--good);
+}
+.settings-status[data-tone='trouble'] {
+  color: var(--warn);
+}
+.settings-status[data-tone='trouble'] .settings-status-dot {
+  background: var(--warn);
+}
+.hud-color-line {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.hud-color-swatch {
+  display: inline-block;
+  flex: none;
+  width: 22px;
+  height: 22px;
+  box-shadow: 0 0 10px currentColor;
+}
+
+/* Bindings, drawn as key caps; the one held lights up. */
+.bindings {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.binding {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  min-height: 48px;
+  padding: 8px 12px;
+  border: 1px solid var(--rule-soft);
+}
+.binding[data-held='true'] {
+  border-color: var(--accent);
+  background: var(--wash);
+}
+.binding.empty {
+  color: var(--muted);
+  font-size: 15.5px;
+}
+.binding-dot {
+  flex: none;
+  width: 10px;
+  height: 10px;
+  margin-right: 6px;
+  border: 1.5px solid var(--dim);
+}
+.binding[data-held='true'] .binding-dot {
+  border-color: var(--good);
+  background: var(--good);
+  box-shadow: 0 0 8px var(--good);
+}
+.kbdkey.lg {
+  gap: 6px;
+  height: 30px;
+  padding: 0 10px;
+  font-size: 14.5px;
+}
+.kbdkey .ic-w {
+  width: 15px;
+  height: 15px;
+}
+.plus {
+  color: var(--dim);
+}
+.binding-kind {
+  margin-left: 10px;
+  color: var(--dim);
+  font-family: var(--semi);
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.binding .link + .link {
+  color: var(--dim);
+  font-size: 13px;
+}
+/* Capturing a new binding is an unmistakable pulsing row. */
+.capture {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 12px 14px;
+  border: 1.5px dashed var(--accent);
+  background: var(--tint);
+  color: var(--muted);
+  font-size: 15px;
+}
+.capture b {
+  display: block;
+  color: var(--accent-hi);
+  font-family: var(--caps);
+  font-size: 19px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.capture-pulse {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin: 0 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--accent) 25%, transparent),
+    0 0 0 12px color-mix(in srgb, var(--accent) 10%, transparent);
+  animation: capture-pulse 1.2s ease-in-out infinite;
+}
+@keyframes capture-pulse {
+  50% {
+    box-shadow:
+      0 0 0 9px color-mix(in srgb, var(--accent) 18%, transparent),
+      0 0 0 18px color-mix(in srgb, var(--accent) 6%, transparent);
+  }
+}
+.devices-line {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 14px;
+  margin-top: 6px;
+}
+.devices-line .fg {
+  font-family: var(--semi);
+  font-size: 14px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+
+/* The paste and VR cockpit bindings: a command, then how it is bound. */
+.vr-binding {
+  flex-direction: column;
+  align-items: stretch;
+  gap: 6px;
+}
+.vr-binding-head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.vr-binding-command {
+  flex: 1 1 auto;
+  min-width: 0;
+  color: var(--fg);
+  font-family: var(--caps);
+  font-size: 18px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+.vr-binding-detail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  padding-left: 18px;
+}
+.vr-binding-control {
+  flex: 1 1 14rem;
+  min-width: 0;
+  color: var(--accent-hi);
+  font-family: var(--semi);
+  font-size: 15px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.vr-add-binding .input {
+  width: 280px;
+}
+
+/* The upload log: one request per row, coloured by how it went. */
+.upload-log-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+.upload-log {
+  display: flex;
+  flex-direction: column;
+}
+.upload-log-head,
+.upload-log-row {
+  display: grid;
+  grid-template-columns: 110px 80px 160px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  padding: 6px 10px;
+  border-bottom: 1px solid var(--rule-soft);
+  font-family: var(--semi);
+  font-size: 15.5px;
+}
+.upload-log-head {
+  border-bottom-color: var(--rule);
+  color: var(--dim);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.upload-log-row > :first-child {
+  color: var(--muted);
+}
+.upload-log-outcome {
+  color: var(--good);
+}
+.upload-log-row[data-tone='warning'] .upload-log-outcome {
+  color: var(--warn);
+}
+.upload-log-row[data-tone='danger'] .upload-log-outcome {
+  color: var(--danger);
+}
+.upload-log-what {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--fg);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.upload-log-detail {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--dim);
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.upload-log-refused ul {
+  margin: 4px 0 0;
+  padding-left: 18px;
+  list-style: disc;
+}
+
+/* The save bar: quiet while all is saved, lit while there is something to save. */
+.sfoot {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 12px;
+  min-height: 58px;
+  padding: 8px 16px;
+  border-top: 1px solid var(--rule);
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 16px;
+}
+.sfoot.dirty {
+  border: 1px solid var(--accent);
+  background: var(--wash);
+  box-shadow: 0 -8px 24px -16px var(--accent);
+  color: var(--fg);
+}
+.sfoot.invalid {
+  border: 1px solid color-mix(in srgb, var(--danger) 60%, transparent);
+}
+.sfoot b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+.sfoot .changed {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+.dot-u {
+  flex: none;
+  width: 9px;
+  height: 9px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+}
+.sfoot .path {
+  overflow: hidden;
+  max-width: 280px;
+  color: var(--muted);
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* A line to hear in the voice, under its settings: a row like the fields'. */
+/* The line and its button side by side, where the column's inputs are otherwise full width. */
+.voice-test .sf-c > .row {
+  flex-wrap: nowrap;
+  gap: 10px;
+}
+.voice-test .sf-c .input {
+  flex: 1 1 auto;
+  width: auto;
+}
+/* Wide enough for either word, so it doesn't jump as it changes. */
+.voice-play {
+  min-width: 92px;
+}
+
+/* How far Kokoro's voice is in getting ready, under the line to try. */
+.kokoro-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: 10px;
+  color: var(--dim);
+  font-size: 14px;
+}
+/* Loading has no measure: a stretch of the bar that sweeps back and forth. */
+.bar.busy {
+  overflow: hidden;
+}
+.bar.busy > i {
+  width: 30%;
+  animation: bar-busy 1.1s ease-in-out infinite alternate;
+}
+@keyframes bar-busy {
+  from {
+    left: 0;
+  }
+  to {
+    left: 70%;
+  }
+}
+
+/* A Quickstart step: its number beside the title, how it stands, and the way to the rest. */
+.qs-num {
+  display: inline-grid;
+  flex: none;
+  place-items: center;
+  width: 26px;
+  height: 26px;
+  border: 1.5px solid var(--accent);
+  color: var(--accent-hi);
+  font-family: var(--semi);
+  font-size: 16px;
+}
+/* The number's box is taller than a title: room under it before the description. */
+.ss-head:has(.qs-num) {
+  padding-bottom: 10px;
+}
+.qs-more {
+  margin-left: auto;
+  font-size: 15px;
+}
+.qs-status {
+  padding: 2px 18px 10px;
+}
+.settings-status[data-tone='busy'] .settings-status-dot {
+  background: var(--accent);
+  animation: qs-pulse 1.2s ease-in-out infinite alternate;
+}
+@keyframes qs-pulse {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 1;
+  }
+}

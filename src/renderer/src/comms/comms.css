@@ -1,0 +1,313 @@
+/* The Comms tab: the conversation with the ship, and the bar to talk or type in. */
+
+/* One of the module's pages: the chat or the browser. */
+.comms-page {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+}
+.comms {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+}
+.clog {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  padding: 4px 8px 4px 2px;
+  overflow-y: auto;
+}
+.clog-empty {
+  margin: auto;
+  color: var(--muted);
+  font-size: 16px;
+}
+.msg {
+  max-width: 86%;
+}
+.msg.cmdr {
+  align-self: flex-end;
+  text-align: right;
+}
+.msg-head {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.msg.cmdr .msg-head {
+  justify-content: flex-end;
+}
+.msg-who {
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 16px;
+  letter-spacing: 0.16em;
+}
+.msg.cmdr .msg-who {
+  color: var(--muted);
+}
+.msg.error .msg-who {
+  color: var(--danger);
+}
+.msg-t {
+  color: var(--dim);
+  font-family: var(--semi);
+  font-size: 14px;
+}
+.msg-text {
+  padding: 10px 14px;
+  border-left: 3px solid var(--accent);
+  background: var(--panel);
+  color: var(--fg);
+  font-size: 18.5px;
+  line-height: 1.45;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.msg.cmdr .msg-text {
+  border-right: 3px solid var(--rule);
+  border-left: 0;
+  background: transparent;
+  color: var(--accent-2);
+}
+.msg.error .msg-text {
+  border-left-color: var(--danger);
+  color: var(--danger);
+}
+.msg-src {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin-top: 4px;
+  color: var(--dim);
+  font-family: var(--semi);
+  font-size: 14.5px;
+}
+.msg-src a {
+  color: var(--accent-2);
+}
+.caret {
+  display: inline-block;
+  width: 10px;
+  height: 18px;
+  margin-left: 4px;
+  background: var(--accent);
+  box-shadow: 0 0 8px var(--accent);
+  vertical-align: -3px;
+  animation: caret-blink 1s steps(2) infinite;
+}
+@keyframes caret-blink {
+  50% {
+    opacity: 0.2;
+  }
+}
+
+/* A tool call: one slim line, opened to show what it was asked and what it said. */
+.tool {
+  max-width: 86%;
+  border: 1px solid var(--rule-soft);
+  background: color-mix(in srgb, var(--accent) 3%, transparent);
+}
+.tool summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 36px;
+  padding: 0 10px;
+  font-family: var(--semi);
+  font-size: 15.5px;
+  list-style: none;
+  cursor: pointer;
+}
+.tool summary::-webkit-details-marker {
+  display: none;
+}
+.tool summary:hover {
+  background: var(--tint);
+}
+.tool-ic {
+  flex: none;
+  width: 14px;
+  height: 14px;
+  color: var(--dim);
+}
+.tool-name {
+  flex: none;
+  color: var(--accent-2);
+  letter-spacing: 0.04em;
+}
+.tool summary code {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--dim);
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.tool-chev {
+  flex: none;
+  width: 12px;
+  height: 12px;
+  color: var(--dim);
+}
+.tool[open] .tool-chev {
+  transform: rotate(90deg);
+}
+.tool.fail {
+  border-color: color-mix(in srgb, var(--danger) 35%, transparent);
+}
+.tool .tag {
+  flex: none;
+  height: 18px;
+}
+.tool-body {
+  padding: 8px 12px 10px;
+  border-top: 1px solid var(--rule-soft);
+}
+.tool-part + .tool-part {
+  margin-top: 10px;
+}
+.tool-part h3 {
+  color: var(--dim);
+  font-family: var(--semi);
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.json {
+  max-height: 360px;
+  margin: 4px 0 0;
+  overflow: auto;
+  color: var(--muted);
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+}
+.json-key {
+  color: var(--accent-2);
+}
+.json-string {
+  color: var(--good);
+}
+.json-number {
+  color: var(--warn);
+}
+.json-literal {
+  color: var(--marker);
+}
+.json-punct {
+  color: var(--dim);
+}
+
+/* Talk and type share one bar. */
+.cbar {
+  display: flex;
+  flex: none;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  border: 1px solid var(--rule);
+  background: var(--panel);
+}
+.cbar.live {
+  border-color: var(--accent);
+  box-shadow: 0 0 24px -10px var(--accent);
+}
+.cbar .input input {
+  font-size: 19px;
+}
+.mic {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 8px;
+  height: 46px;
+  padding: 0 16px 0 12px;
+  border: 1.5px solid var(--accent);
+  background: var(--wash);
+  color: var(--accent-hi);
+  font-family: var(--caps);
+  font-size: 18px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.mic .ic-w {
+  width: 22px;
+  height: 22px;
+}
+.mic[aria-pressed='true'] {
+  background: var(--accent-hi);
+  color: var(--ink);
+  box-shadow: 0 0 18px var(--accent);
+}
+.mic:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+.send {
+  width: 44px;
+  height: 44px;
+  padding: 11px;
+}
+.cfoot {
+  flex: none;
+  gap: 14px;
+}
+.comms-trouble {
+  flex: none;
+}
+
+/* The assistant waiting on the commander: a yes or no, or a hand with something. */
+.prompt {
+  flex: none;
+  padding: 14px 16px;
+  border-color: color-mix(in srgb, var(--warn) 45%, transparent);
+}
+.prompt-q {
+  margin: 8px 0;
+  color: var(--fg);
+  font-family: var(--caps);
+  font-size: 24px;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+}
+.prompt-detail {
+  margin: 0 0 12px;
+  padding: 8px 10px;
+  background: color-mix(in srgb, var(--accent) 5%, transparent);
+  color: var(--muted);
+  font-family: ui-monospace, monospace;
+  font-size: 13px;
+  white-space: pre-wrap;
+}
+
+/* In a headset: no bar, no buttons; what the ship is doing, and the conversation. */
+.comms-vr .clog {
+  padding-right: 0;
+}
+.comms-vr-head {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 10px;
+}
+.comms-vr-status {
+  color: var(--accent);
+  font-family: var(--caps);
+  font-size: 22px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.comms-vr .tool summary {
+  cursor: default;
+}

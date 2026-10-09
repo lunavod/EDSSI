@@ -1,0 +1,22 @@
+# The dev channel: an app of its own (EDSSI Dev, installed beside EDSSI), updating from
+# updates-dev.edssi.app, which is the same R2 bucket under another name. `dev-v*` tags build it
+# (.github/workflows/release.yml); it never touches latest.yml or the GitHub releases.
+extends: ./electron-builder.yml
+appId: com.edssi.app.dev
+productName: EDSSI Dev
+# Its own name inside the app as well: Electron names the data folder after productName
+# (%APPDATA%\EDSSI Dev, so the database, the update marker and "What's new" aren't EDSSI's), and
+# electron-updater names its download cache after name (edssi-dev-updater). ~/.edssi/config.yaml
+# stays shared.
+extraMetadata:
+  name: edssi-dev
+  productName: EDSSI Dev
+win:
+  executableName: edssi-dev
+nsis:
+  artifactName: ${name}-${version}-setup.${ext}
+publish:
+  provider: generic
+  url: https://updates-dev.edssi.app
+  channel: dev
+  useMultipleRangeRequest: false

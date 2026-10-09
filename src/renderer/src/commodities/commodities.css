@@ -1,0 +1,515 @@
+/* The Commodities tab: the shopping list, markets here, a market search and shopping plans. */
+
+.comm-page {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 12px;
+  min-height: 0;
+  outline: 2px dashed transparent;
+  outline-offset: -2px;
+}
+/* A CSV or screenshots held over the list. */
+.comm-page[data-dragging] {
+  outline-color: var(--accent);
+}
+.comm-empty {
+  color: var(--muted);
+  font-size: 15.5px;
+}
+.comm-problem {
+  flex: none;
+}
+
+/* The list's summary: what is left, how far along, and the actions. */
+.list-sum {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--semi);
+  font-size: 15px;
+}
+.list-sum .bar {
+  flex: 1 1 60px;
+  min-width: 60px;
+  margin: 0 10px;
+}
+.sep-v {
+  width: 1px;
+  height: 22px;
+  margin: 0 4px;
+  background: var(--rule);
+}
+.sum-big {
+  color: var(--accent-hi);
+  font-family: var(--caps);
+  font-size: 24px;
+  font-weight: 600;
+}
+.list-sum .confirm {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--warn);
+}
+.import-ask {
+  display: flex;
+  flex: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+/* The list above, the pinned plan docked below; each scrolls on its own. */
+.dock-top {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow-y: auto;
+}
+.dock {
+  flex: none;
+  max-height: 50%;
+  min-height: 0;
+  /* Room for the panel's bracketed corners, which sit a pixel outside it: they'd scroll it. */
+  padding: 0 1px 1px 0;
+  overflow-y: auto;
+}
+.dock .plan {
+  border-color: var(--rule);
+}
+.dock .plan-head {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  border-bottom: 1px solid var(--rule-soft);
+  background: var(--panel);
+}
+
+.shop td {
+  height: 40px;
+}
+.shop th:first-child,
+.shop td:first-child {
+  width: 30%;
+}
+.shop .progress {
+  width: 24%;
+}
+.cell-input {
+  width: 100%;
+  min-width: 160px;
+  height: 32px;
+  padding: 0 10px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  box-shadow: inset 0 -2px 0 var(--rule-soft);
+  font-family: var(--semi);
+  font-size: 16.5px;
+}
+.cell-input:focus {
+  box-shadow: inset 0 -2px 0 var(--accent);
+}
+.cell-input::placeholder {
+  color: var(--faint);
+}
+.shop-left {
+  font-weight: 500;
+}
+.shop .stepper input {
+  width: 70px;
+}
+.shop tr.past td,
+.shop tr.past .cell-input {
+  color: var(--muted);
+}
+.shop tr.past .stepper input {
+  color: var(--dim);
+}
+.shop .done {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: var(--good);
+}
+.shop .done .ic-w {
+  width: 14px;
+  height: 14px;
+}
+.stepper button:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+/* ---------- plans ---------- */
+
+.plans {
+  display: grid;
+  flex: 1 1 auto;
+  align-content: start;
+  gap: 14px;
+  min-height: 0;
+  padding-right: 6px;
+  overflow-y: auto;
+}
+.plans-note {
+  color: var(--dim);
+  font-size: 15.5px;
+}
+.plan {
+  display: flex;
+  flex-direction: column;
+}
+.plan.pinned {
+  border-color: var(--rule);
+}
+.plan-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 12px 14px 8px;
+}
+.plans .plan-head {
+  flex-wrap: nowrap;
+}
+.plan-pin {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  color: var(--accent);
+}
+.plan-title {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 21px;
+  letter-spacing: 0.04em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.plan-fig {
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 16.5px;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+}
+.plan-fig b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+.plan-short {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 14px 8px;
+  color: var(--warn);
+  font-size: 16.5px;
+}
+.plan-short .ic-w {
+  width: 16px;
+  height: 16px;
+}
+.stops {
+  display: flex;
+  flex-direction: column;
+  border-top: 1px solid var(--rule-soft);
+}
+.stop {
+  display: grid;
+  grid-template-columns: 32px minmax(0, 1fr);
+  gap: 10px;
+  padding: 10px 14px;
+  border-bottom: 1px solid var(--rule-soft);
+}
+.stop:last-child {
+  border-bottom: 0;
+}
+.stop.cur {
+  background: var(--tint);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
+.stop.past {
+  opacity: 0.7;
+}
+.stop-meta {
+  flex-wrap: wrap;
+  gap: 4px 12px;
+  font-size: 14.5px;
+  letter-spacing: 0.06em;
+}
+.stop-meta > * {
+  white-space: nowrap;
+}
+.stop-sys {
+  color: var(--fg);
+  font-size: 16.5px;
+  letter-spacing: 0.02em;
+  text-transform: none;
+}
+.stop-n {
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid var(--accent);
+  color: var(--accent-hi);
+  font-family: var(--caps);
+  font-size: 16px;
+}
+.stop.cur .stop-n {
+  border-color: var(--accent-hi);
+  background: var(--accent-hi);
+  color: var(--ink);
+}
+.stop-st {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 21px;
+  letter-spacing: 0.03em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.stop-cost {
+  color: var(--accent-hi);
+  font-family: var(--semi);
+  font-size: 17px;
+  white-space: nowrap;
+}
+.buys {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 6px;
+}
+.buy {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 10px;
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  color: var(--fg);
+  font-family: var(--semi);
+  font-size: 16.5px;
+}
+.buy b {
+  color: var(--accent-hi);
+  font-weight: 500;
+}
+.buy.done {
+  color: var(--dim);
+  text-decoration: line-through;
+  text-decoration-color: var(--good);
+}
+.buy.done b {
+  color: var(--dim);
+}
+.buy-ok {
+  width: 13px;
+  height: 13px;
+  color: var(--good);
+}
+
+/* ---------- market filters ---------- */
+
+.mf {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 14px 16px;
+}
+.mf2 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px 24px;
+  margin-top: 12px;
+}
+.mf2 .seg button {
+  height: 36px;
+}
+.mf2 .switch {
+  height: 38px;
+}
+.mf2 .go {
+  margin-left: auto;
+}
+.filters-open {
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+}
+.search-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+.search-row .seg button {
+  height: 44px;
+}
+/* Chips wrap onto more lines rather than spilling out of the box. */
+.input.chips {
+  flex-wrap: wrap;
+  height: auto;
+  min-height: 46px;
+  padding-block: 8px;
+  row-gap: 6px;
+}
+.input.chips > input {
+  flex: 1 1 120px;
+  min-width: 120px;
+  height: 28px;
+}
+.tagin {
+  display: inline-flex;
+  flex: none;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 4px 0 10px;
+  background: var(--wash-2);
+  color: var(--accent-hi);
+  font-size: 16px;
+}
+.tagin button {
+  width: 22px;
+  height: 22px;
+  padding: 5px;
+  border: 0;
+  background: transparent;
+  color: var(--accent-2);
+}
+.form-status {
+  color: var(--muted);
+  font-size: 14.5px;
+}
+
+/* ---------- results ---------- */
+
+.results {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 10px;
+  min-height: 0;
+  padding-right: 6px;
+  overflow-y: auto;
+}
+.st-name {
+  padding-top: 4px;
+  color: var(--accent-2);
+  font-family: var(--caps);
+  font-size: 18px;
+  letter-spacing: 0.03em;
+  line-height: 1.1;
+  text-transform: uppercase;
+}
+.st-meta {
+  padding-bottom: 4px;
+  color: var(--muted);
+  font-size: 13.5px;
+}
+.offers {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 6px 0;
+  white-space: normal;
+}
+.where {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 9px;
+  border: 1px solid var(--rule-soft);
+  color: var(--muted);
+  font-family: var(--semi);
+  font-size: 14.5px;
+}
+.where b {
+  margin-right: 4px;
+  color: var(--fg);
+  font-weight: 500;
+}
+.where.live {
+  border-color: var(--rule);
+  background: var(--tint);
+}
+
+/* A chip's own tonnes, typed in place: "Steel ≥ [100 t] ×" (no "≥" when selling). */
+.tagin-name {
+  white-space: nowrap;
+}
+.tagin-qty {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding-left: 8px;
+  border-left: 1px solid var(--rule);
+  color: var(--dim);
+  font-family: var(--semi);
+  font-size: 12.5px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.tagin-qty .input {
+  width: 92px;
+  height: 22px;
+  padding: 0 6px;
+  border-bottom-width: 1px;
+  font-size: 15px;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.tagin-qty .input .unit {
+  font-size: 12px;
+}
+
+/* The hold's commodities in the Sell page's import: rows apart, each one a target to click. */
+.sell-pick {
+  border-spacing: 0 4px;
+  border-collapse: separate;
+}
+.sell-pick td {
+  height: 44px;
+  border-bottom: 0;
+  background: var(--tint);
+}
+.sell-pick label {
+  display: block;
+  cursor: pointer;
+}
+
+/* Search and Sell with several commodities: each station's prices on a line under it. */
+.tbl tr.has-deals td {
+  padding-top: 12px;
+  padding-bottom: 10px;
+  border-bottom: 0;
+}
+.tbl tr.deals td {
+  height: auto;
+  padding-top: 0;
+  padding-bottom: 16px;
+}
+.tbl tr.deals .offers {
+  gap: 8px 10px;
+  padding: 0;
+}
+.tbl tr.deals .where {
+  white-space: nowrap;
+}
+
+/* Empties the commodities box; it stays at the end of the box's last line. */
+.chips-clear {
+  margin-left: auto;
+  border-color: transparent;
+}

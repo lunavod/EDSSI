@@ -1,0 +1,271 @@
+# Releases EDSSI. A `vX.Y.Z` tag (made by the /release skill, after bumping package.json) builds a
+# signed installer, puts it on the update server every installed EDSSI asks, and makes a GitHub
+# release. A `dev-vX.Y.Z-dev.N` tag builds EDSSI Dev for the dev channel instead. docs/releasing.md
+# has the whole of it, and what the machine and the repository need.
+
+name: Release
+
+on:
+  push:
+    tags: ['v*', 'dev-v*']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: release-${{ github.ref }}
+  cancel-in-progress: false
+
+env:
+  # The R2 bucket behind updates.edssi.app and updates-dev.edssi.app.
+  BUCKET: edssi-updates
+  # Certum's "Standard Code Signing in the Cloud" certificate: non-exportable, presented to Windows
+  # by SimplySign Desktop as a smart card, so the release machine must have a SimplySign session
+  # (mobile OTP, about two hours) when a tag is pushed. Without one, packaging fails before anything
+  # is uploaded: sign in and push the tag again.
+  CERT_SHA1: FDC26DE8450054B07F21CD236E81F1054DCD3F9E
+  TIMESTAMP_SERVER: http://time.certum.pl
+
+jobs:
+  build:
+    if: startsWith(github.ref, 'refs/tags/v')
+    # Self-hosted, as only that machine holds the signing certificate.
+    runs-on: [self-hosted, windows, certum-signing]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      # The default checkout cleans out everything untracked and ignored, which matters here:
+      # extensions/ is ignored, and an installer must never carry a private extension.
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Refuse private extensions
+        run: |
+          if ((Test-Path extensions) -and (Get-ChildItem extensions -Force)) {
+            throw 'extensions/ is not empty: a release is built from the repository alone'
+          }
+
+      - name: Check the tag matches package.json
+        run: |
+          $version = (Get-Content package.json -Raw | ConvertFrom-Json).version
+          if ("v$version" -ne '${{ github.ref_name }}') {
+            throw "package.json says $version, the tag ${{ github.ref_name }}"
+          }
+
+      # No npm cache: on a self-hosted machine it already persists between runs, and saving it
+      # again would only tar it up after every release.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check
+        run: npm run check
+
+      # Both ride beside the app as extraResources (electron-builder.yml).
+      - name: Build the stick usages addon
+        run: npm run hid:build
+
+      - name: Build the VR overlay host
+        run: npm run vr:build
+
+      - name: Build
+        run: npm run build
+
+      - name: Package and sign the installer
+        run: >-
+          npx electron-builder --win --publish never
+          "-c.win.signtoolOptions.certificateSha1=$env:CERT_SHA1"
+          "-c.win.signtoolOptions.rfc3161TimeStampServer=$env:TIMESTAMP_SERVER"
+
+      - name: Check the signature
+        run: |
+          foreach ($file in Get-ChildItem dist/edssi-*-setup.exe, dist/win-unpacked/edssi.exe) {
+            $signature = Get-AuthenticodeSignature $file.FullName
+            if ($signature.Status -ne 'Valid') { throw "$($file.Name) is not signed: $($signature.StatusMessage)" }
+            Write-Host "$($file.Name): $($signature.SignerCertificate.Subject)"
+          }
+
+      - name: Upload to the update server
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          $endpoint = "https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
+          # The installer and its blockmap first: their names carry the version, so they never
+          # change and the edge can keep them for good.
+          foreach ($file in Get-ChildItem dist/edssi-*-setup.exe, dist/edssi-*-setup.exe.blockmap) {
+            Write-Host "Uploading $($file.Name)"
+            aws s3 cp $file.FullName "s3://$env:BUCKET/$($file.Name)" --endpoint-url $endpoint --cache-control 'public, max-age=31536000, immutable'
+            if ($LASTEXITCODE -ne 0) { throw "upload failed for $($file.Name)" }
+          }
+          # latest.yml last, never cached: it is what every EDSSI asks, and it must only ever name
+          # files that are already there.
+          aws s3 cp dist/latest.yml "s3://$env:BUCKET/latest.yml" --endpoint-url $endpoint --cache-control 'no-cache' --content-type 'text/yaml'
+          if ($LASTEXITCODE -ne 0) { throw 'upload failed for latest.yml' }
+
+      # The three newest releases stay, so an EDSSI a release or two behind still has the blockmap
+      # of what it runs to download only the difference.
+      - name: Prune old releases
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          $endpoint = "https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
+          # `aws s3 ls` rows are "<date> <time> <size> <key>", and the names have no spaces.
+          $builds = foreach ($line in aws s3 ls "s3://$env:BUCKET/" --endpoint-url $endpoint) {
+            $parts = $line.Trim() -split '\s+'
+            if ($parts.Count -ge 4 -and $parts[3] -match '^edssi-(\d+\.\d+\.\d+)-setup\.exe$') {
+              [pscustomobject]@{ Version = [version]$Matches[1]; Key = $parts[3] }
+            }
+          }
+          foreach ($old in $builds | Sort-Object Version -Descending | Select-Object -Skip 3) {
+            Write-Host "Deleting $($old.Key)"
+            aws s3 rm "s3://$env:BUCKET/$($old.Key)" --endpoint-url $endpoint
+            aws s3 rm "s3://$env:BUCKET/$($old.Key).blockmap" --endpoint-url $endpoint
+          }
+
+  # The installer isn't handed over as an Actions artifact (a few hundred MB per release eats the
+  # storage quota): this job fetches it back from the update server.
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Fetch the installer
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          endpoint="https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
+          version="${GITHUB_REF_NAME#v}"
+          mkdir -p installer
+          aws s3 cp "s3://$BUCKET/edssi-${version}-setup.exe" installer/ --endpoint-url "$endpoint"
+          aws s3 cp "s3://$BUCKET/edssi-${version}-setup.exe.blockmap" installer/ --endpoint-url "$endpoint"
+          aws s3 cp "s3://$BUCKET/latest.yml" installer/ --endpoint-url "$endpoint"
+
+      - name: Write the release notes
+        run: |
+          version="${GITHUB_REF_NAME#v}"
+          # This version's section of CHANGELOG.md, then the commits since the last release.
+          awk -v v="## ${version}" '$0 ~ "^## " { on = index($0, v) == 1 } on' CHANGELOG.md > notes.md
+          previous=$(git tag --list 'v*' --sort=-v:refname | sed -n '2p')
+          {
+            echo
+            echo '### Commits'
+            git log --pretty=format:'- %s' ${previous:+$previous..}"$GITHUB_REF_NAME"
+          } >> notes.md
+          cat notes.md
+
+      - name: Make the GitHub release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: EDSSI ${{ github.ref_name }}
+          body_path: notes.md
+          files: installer/*
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Announce on Discord
+        env:
+          DISCORD_RELEASE_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
+        run: npx --yes jiti@2.7.0 scripts/post-discord-release.ts
+
+  # The dev channel: EDSSI Dev, an app of its own updating from updates-dev.edssi.app. The tag
+  # gives the version (dev-v0.3.0-dev.1 is 0.3.0-dev.1). Never touches latest.yml, never makes a
+  # GitHub release, never announces.
+  build-dev:
+    if: startsWith(github.ref, 'refs/tags/dev-v')
+    runs-on: [self-hosted, windows, certum-signing]
+    defaults:
+      run:
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+
+      - name: Refuse private extensions
+        run: |
+          if ((Test-Path extensions) -and (Get-ChildItem extensions -Force)) {
+            throw 'extensions/ is not empty: a release is built from the repository alone'
+          }
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Take the version from the tag
+        run: |
+          $version = '${{ github.ref_name }}' -replace '^dev-v', ''
+          npm version $version --no-git-tag-version --allow-same-version
+          if ($LASTEXITCODE -ne 0) { throw "not a version: $version" }
+
+      # Dev builds skip lint and tests to be quick; `npm run build` still typechecks.
+      - name: Build the stick usages addon
+        run: npm run hid:build
+
+      - name: Build the VR overlay host
+        run: npm run vr:build
+
+      - name: Build
+        run: npm run build
+
+      - name: Package and sign the installer
+        run: >-
+          npx electron-builder --win --publish never --config electron-builder.dev.yml
+          "-c.win.signtoolOptions.certificateSha1=$env:CERT_SHA1"
+          "-c.win.signtoolOptions.rfc3161TimeStampServer=$env:TIMESTAMP_SERVER"
+
+      - name: Upload to the dev update server
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          $endpoint = "https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
+          foreach ($file in Get-ChildItem dist/edssi-dev-*-setup.exe, dist/edssi-dev-*-setup.exe.blockmap) {
+            Write-Host "Uploading $($file.Name)"
+            aws s3 cp $file.FullName "s3://$env:BUCKET/$($file.Name)" --endpoint-url $endpoint --cache-control 'public, max-age=31536000, immutable'
+            if ($LASTEXITCODE -ne 0) { throw "upload failed for $($file.Name)" }
+          }
+          aws s3 cp dist/dev.yml "s3://$env:BUCKET/dev.yml" --endpoint-url $endpoint --cache-control 'no-cache' --content-type 'text/yaml'
+          if ($LASTEXITCODE -ne 0) { throw 'upload failed for dev.yml' }
+
+      # By upload time rather than version: dev versions are whatever the tags said.
+      - name: Prune old dev builds
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.R2_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.R2_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: auto
+        run: |
+          $endpoint = "https://${{ secrets.R2_ACCOUNT_ID }}.r2.cloudflarestorage.com"
+          $builds = foreach ($line in aws s3 ls "s3://$env:BUCKET/" --endpoint-url $endpoint) {
+            $parts = $line.Trim() -split '\s+'
+            if ($parts.Count -ge 4 -and $parts[3] -like 'edssi-dev-*-setup.exe') {
+              [pscustomobject]@{ When = [datetime]"$($parts[0]) $($parts[1])"; Key = $parts[3] }
+            }
+          }
+          foreach ($old in $builds | Sort-Object When -Descending | Select-Object -Skip 3) {
+            Write-Host "Deleting $($old.Key)"
+            aws s3 rm "s3://$env:BUCKET/$($old.Key)" --endpoint-url $endpoint
+            aws s3 rm "s3://$env:BUCKET/$($old.Key).blockmap" --endpoint-url $endpoint
+          }

@@ -1,0 +1,5 @@
+# Keep LF everywhere regardless of core.autocrlf; oxfmt enforces LF.
+* text=auto eol=lf
+
+# The EDHM mod is installed into the game as-is; 3Dmigoto and its .bat-era tooling expect CRLF.
+resources/edhm/** -text

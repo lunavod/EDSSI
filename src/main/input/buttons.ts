@@ -3,7 +3,7 @@
  *
  * EDSSI never reads a report descriptor, so it has to tell a button from an axis by how the bytes
  * behave. Four things separate them, and all four are needed — each one alone lets something
- * through (see `docs/unverified.md` for the recordings these came from):
+ * through:
  *
  * - A button flips exactly one bit. An axis or a counter is a number, so it usually carries several
  *   bits at once when it changes.

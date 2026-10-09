@@ -2,8 +2,8 @@
  * Markets that sell commodities, from Spansh's station search: what the Commodities tab's Search
  * page shows, and what its Plan page plans over; and markets that buy them, for its Sell page
  * (the same, asking for `demand` where buying asks for `supply`). Each item in `marketplace` is one commodity a
- * station must stock, and Spansh wants all of them (checked against the live site; see
- * docs/unverified.md). A result row carries the station's whole market, so a station found for one
+ * station must stock, and Spansh wants all of them (checked against the live site). A
+ * result row carries the station's whole market, so a station found for one
  * commodity also says what it has of the others.
  */
 

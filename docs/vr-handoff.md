@@ -48,9 +48,8 @@ The lesson is the same one the cockpit taught: two of these were settled by a me
 took ten minutes to write (`--presses`, `EDSSI_INPUT_LOG`), after an evening of plausible theories
 about button chatter. Both are still here.
 
-What hasn't been checked, because it takes hands on a stick, is in `docs/unverified.md` under
-**Stick bindings**. The first one to try is capture itself: bind `toggle` to a button and see that
-it is the button you meant.
+The first thing to try with hands on a stick is capture itself: bind `toggle` to a button and
+see that it is the button you meant.
 
 ## Smaller things noticed along the way
 
@@ -72,8 +71,8 @@ it is the button you meant.
   when that window is closed and only the cockpit is up — nothing would be listening, and nothing
   says so.
 - A hand-edit reloads the layout twice per save. The second is a no-op and cannot loop; ignored.
-- `docs/unverified.md` holds everything needing a real headset. The one to check first is whether
-  gaze picks the panel the commander expects, because every tuning key depends on it.
+- In a real headset, check first whether gaze picks the panel the commander expects, because
+  every tuning key depends on it.
 
 ## What the cockpit cost to get working
 

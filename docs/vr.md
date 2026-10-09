@@ -298,4 +298,3 @@ before asking the commander to put one on.
   caused three separate "why hasn't that changed" bugs.
 - **The host must never be left running.** It is told EDSSI's pid and exits when that process goes;
   an orphan holds the overlay keys and the next EDSSI silently shows a stale cockpit.
-- `docs/unverified.md` lists everything that still needs a real headset.

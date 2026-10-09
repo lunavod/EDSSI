@@ -104,5 +104,3 @@ Payloads are typed but **not validated at runtime**. Keep that in mind:
 - oxfmt: 100-column lines, single quotes, sorted imports, LF line endings (enforced by
   `.gitattributes`).
 - Tests are colocated as `*.test.ts` next to the code they cover.
-- Anything that relies on game behaviour or UI that couldn't be checked against real journals or
-  a running app goes into `docs/unverified.md`, with how to check it.

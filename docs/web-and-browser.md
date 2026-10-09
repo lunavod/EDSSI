@@ -80,5 +80,5 @@ commander can see and step into. Built in the order below; each step is usable o
 
 ## Open questions
 
-- Whether the ChatGPT (codex) backend accepts hosted `web_search`; see `docs/unverified.md`.
+- Whether the ChatGPT (codex) backend accepts hosted `web_search`.
 - Game sites with APIs (Spansh, Inara, Canonn) are better as their own tools than via the browser.

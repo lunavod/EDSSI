@@ -360,7 +360,7 @@ export function moduleCount(todo: BlueprintTodo): number {
 /**
  * Rolls at a grade the engineer is at that rank for, after which they rank up. Seen in the
  * journal: each rank from 1 to 5 came on the third roll at the grade equal to it, whether or not
- * the grade was full yet (see docs/unverified.md).
+ * the grade was full yet.
  */
 export const RANK_UP_ROLLS = 3;
 

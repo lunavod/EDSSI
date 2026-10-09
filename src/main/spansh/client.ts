@@ -1,7 +1,7 @@
 /**
  * Spansh (spansh.co.uk): searches over every known station, system and body, and its route
  * plotters. There is no documented API; this is what the site itself calls, found in its bundle
- * and checked against the live server (see docs/unverified.md). Searches answer at once; a route
+ * and checked against the live server. Searches answer at once; a route
  * is a job that is queued, then polled until it is done.
  */
 

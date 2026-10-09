@@ -368,8 +368,8 @@ Data flows one way: journal files → main process → IPC → renderer.
   process goes: closing stdin is the tidy wind-down, but a killed EDSSI closes nothing, and a host
   left holding its overlay keys makes the next one fail with `KeyInUse` and show a cockpit from a
   build that no longer exists. Build the host with `npm run vr:build`. How to run it, the keys and what to
-  know before changing it are in `docs/vr.md`; what is still unfinished is in `docs/vr-handoff.md`,
-  and what needs a real headset is in `docs/unverified.md`. `npm run vr:shots` photographs the five panels from a
+  know before changing it are in `docs/vr.md`, and what is still unfinished is in
+  `docs/vr-handoff.md`. `npm run vr:shots` photographs the five panels from a
   real EDSSI — the commander's own layout and journals, its own scratch config and database, and
   SteamVR untouched — and `npm run vr:preview` draws the cockpit from the same matrices the overlays
   use, so the layout and the panels' contents can both be looked at without a headset.
@@ -540,5 +540,3 @@ Payloads are typed but **not validated at runtime**. Keep that in mind:
   window; the VR panels scale them by `--vr-zoom`. The approved mockups are the "Approved" page of
   the design canvas (see the project memory). Keep the text greys' contrast floors: nothing to be
   read below `--dim` or 13 px.
-- Anything that relies on game behaviour or UI that couldn't be checked against real journals or
-  a running app goes into `docs/unverified.md`, with how to check it.

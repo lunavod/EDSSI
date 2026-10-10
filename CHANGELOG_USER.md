@@ -3,6 +3,12 @@
 What each version of EDSSI brought, as EDSSI shows it after an update. Plain words for
 commanders; the technical record is CHANGELOG.md.
 
+## 1.1.0
+
+- **A stronger default model** for the assistant.
+- **Whisper listens by default**, on your PC, so hearing you needs no OpenAI key.
+- **Clearer Quickstart**, with neater settings.
+
 ## 1.0.0
 
 - **First release.** EDSSI follows your journal while you play and shows the session at a glance:

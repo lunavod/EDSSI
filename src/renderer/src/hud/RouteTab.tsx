@@ -12,7 +12,7 @@ import { RouteView } from './RouteView';
 import { Tabs } from './Tabs';
 
 /**
- * Every extension's pages, as one hook. The extensions are fixed when the bundle is built, so the
+ * Every extension's pages, as one hook. The extensions are fixed before this module loads, so the
  * hooks inside are always called in the same order.
  */
 const useExtensionPages = RENDERER_EXTENSIONS.reduce<(context: RoutePagesContext) => RoutePages[]>(

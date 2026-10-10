@@ -23,6 +23,7 @@
     "dist:dir": "npm run build && electron-builder --dir",
     "dist:win": "npm run build && electron-builder --win",
     "postinstall": "install-electron",
+    "build:extension": "jiti scripts/build-extension.ts",
     "send-session": "jiti scripts/send-session.ts",
     "hid": "jiti scripts/hid-axes.ts",
     "hid:build": "node-gyp rebuild --directory=native/hid-usages",

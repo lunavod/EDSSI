@@ -80,6 +80,7 @@ const api: EdssiApi = {
         ipcRenderer.removeListener(EXTENSION_CHANNEL_PREFIX + channel, handler);
       };
     },
+    installed: () => ipcRenderer.invoke(IpcChannel.ExtensionsInstalled),
   },
   history: {
     getSnapshot: (): Promise<HistorySnapshot> => ipcRenderer.invoke(IpcChannel.HistorySnapshot),

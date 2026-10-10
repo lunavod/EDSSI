@@ -29,7 +29,7 @@ import { locateSystems, type SystemLocator } from './csv-route/locate';
 import { startEdhmService } from './edhm-service';
 import { EdsmClient } from './edsm';
 import { startEdsmService } from './edsm-service';
-import { startExtensions } from './extensions';
+import { loadInstalledExtensions, startExtensions } from './extensions';
 import { startFlightAlertService } from './flight-alert-service';
 import { startHistoryService } from './history-service';
 import { startPasteBinding } from './input/paste';
@@ -99,7 +99,15 @@ function createWindow(settings: SettingsStore, browser: Browser): void {
   browser.attach(win);
   rememberBounds(win, (rect) => screen.getDisplayMatching(rect));
 
-  win.once('ready-to-show', () => win.show());
+  // The app is imported only once the installed extensions are loaded (main.tsx), so a built
+  // window's first paint is the empty page, after which Chromium stops painting it while hidden
+  // and `ready-to-show` never comes. Once the page has loaded will do: its background is the
+  // window's own colour, and the app paints a moment later.
+  const show = () => {
+    if (!win.isVisible()) win.show();
+  };
+  win.once('ready-to-show', show);
+  win.webContents.once('did-finish-load', show);
   // The VR panels are offscreen windows of their own, so `window-all-closed` won't fire while they
   // are up: closing the HUD has to end the app itself, or EDSSI would go on running unseen.
   win.on('closed', () => {
@@ -433,6 +441,8 @@ void app.whenReady().then(async () => {
     callback(permission === 'media');
   });
 
+  // Before the settings file is read: they add sections of their own to it.
+  await loadInstalledExtensions();
   const browser = new Browser();
   const settings = startServices(browser);
   createWindow(settings, browser);

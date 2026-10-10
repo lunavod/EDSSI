@@ -1,8 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
-import { App } from './App';
-import { isVrPanel, VrPanel } from './vr/VrPanel';
+import { loadInstalledExtensions } from './extensions';
 
 import '@fontsource/saira/400.css';
 import '@fontsource/saira/500.css';
@@ -25,8 +24,14 @@ if (!root) throw new Error('#root element missing');
 const panel = window.location.hash.startsWith('#vr/') ? window.location.hash.slice(4) : undefined;
 if (panel !== undefined) document.documentElement.classList.add('vr');
 
-createRoot(root).render(
-  <StrictMode>
-    {panel !== undefined && isVrPanel(panel) ? <VrPanel panel={panel} /> : <App />}
-  </StrictMode>,
-);
+// The app is imported only once the installed extensions are in: its modules read the list of
+// extensions as they load (the Settings tab's pages, the Route tab's).
+void loadInstalledExtensions()
+  .then(() => Promise.all([import('./App'), import('./vr/VrPanel')]))
+  .then(([{ App }, { isVrPanel, VrPanel }]) => {
+    createRoot(root).render(
+      <StrictMode>
+        {panel !== undefined && isVrPanel(panel) ? <VrPanel panel={panel} /> : <App />}
+      </StrictMode>,
+    );
+  });

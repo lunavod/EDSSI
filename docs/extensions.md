@@ -2,7 +2,8 @@
 
 An extension is a feature built into EDSSI from outside this repository. Each is a folder in
 `extensions/`, which git ignores, so a build without one has none of it: no pages, no settings, no
-code. A build picks up whatever is there when it is made.
+code. A build picks up whatever is there when it is made, and any build loads the extensions
+installed beside its settings (see [Installed extensions](#installed-extensions)).
 
 ## Layout
 
@@ -22,6 +23,40 @@ An extension imports EDSSI's code by relative path (`../../../src/shared/csv-rou
 dependencies from EDSSI's `node_modules`. `npm run check` typechecks, lints, formats and tests it
 with the rest, as long as the folder is a git repository of its own; otherwise EDSSI's `.gitignore`
 hides it from oxlint and oxfmt.
+
+## Installed extensions
+
+The same folder can instead be built on its own and installed, so that any build of EDSSI, a
+release included, has it without it ever being compiled in:
+
+```
+npm run build:extension -- <name or folder> [--out <folder>] [--install]
+```
+
+`scripts/build-extension.ts` writes `main.js` (with the `build.json` entries beside it),
+`renderer.js`, `renderer.css` and an `extension.json` manifest into `out/extensions/<name>/`;
+`--install` copies them to `<config dir>/extensions/<name>/` (`~/.edssi`, or `EDSSI_CONFIG_DIR`).
+EDSSI loads every folder there at start, after the app is ready and before the settings file is
+read (`loadInstalledExtensions` in `src/main/extensions.ts`), and the window loads their window
+sides before the app's modules (`main.tsx`), over the `edssi-ext://<name>/` scheme. One compiled in
+under the same name wins. Restart EDSSI to pick up a new build.
+
+EDSSI's own code that an extension imports is bundled into it, a copy of it as it was when built.
+What has to be EDSSI's copy is not bundled (`src/shared/extensions.ts`):
+
+- **React and zod** (`SHARED_MAIN_MODULES`, `SHARED_RENDERER_MODULES`): each import is a stand-in
+  for the running EDSSI's module, put on `globalThis.__edssiExtensionHost`. Hooks only work with
+  the React that renders them, and settings schemas are merged into EDSSI's own.
+- **Native modules** (`HOST_NATIVE_MODULES`): `require`d from EDSSI's folder, named by
+  `EDSSI_APP_PATH`, which utility processes and worker threads inherit.
+- **`electron` and `node:` builtins** stay plain imports.
+
+So a module EDSSI keeps state in, a React context or a class checked with `instanceof` won't work
+across the line; give the extension what it needs through its context instead.
+
+`extension.json` carries `EXTENSION_API_VERSION`, and EDSSI leaves out an extension built for
+another, saying so in the log. Bump it whenever the contexts, the extension types or the shared
+modules change in a way an extension built before would trip over.
 
 ## What an extension can add
 

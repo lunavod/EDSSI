@@ -21,6 +21,8 @@ platform.
 - `/release` (Claude Code skill) — check, bump, write both changelogs, tag `vX.Y.Z` and push;
   `.github/workflows/release.yml` builds, signs and publishes it. `dev-v*` tags build EDSSI Dev.
   All of it, and the one-time setup, in `docs/releasing.md`.
+- `npm run build:extension -- <name> [--install]` — build an extension on its own, for any build of
+  EDSSI to load (see the extensions entry below).
 - `npm run gen:journal-types` — regenerate event types (see below).
 - `npm run gen:recipes` — regenerate crafting recipes from EDDiscovery (see the materials service).
 - `python scripts/generate-icon.py` — redraw the app icon (`build/icon.ico` for the installer and
@@ -378,8 +380,13 @@ Data flows one way: journal files → main process → IPC → renderer.
   `import.meta.glob`, so a build without one has none of it. An extension adds its own settings
   sections, Route tab pages, assistant toolsets, system locators and IPC (`ext:` channels), and
   main-process entries through its `build.json`. The public code never names one: a new extension
-  point is named for what it offers. How it fits together is in `docs/extensions.md`; an
-  extension's own notes live in its folder.
+  point is named for what it offers. `npm run build:extension -- <name> --install` builds one on
+  its own into `<config dir>/extensions/<name>/`, which any build loads at start
+  (`src/main/installed-extensions.ts`, `src/shared/extensions.ts`): EDSSI's code it imports is
+  bundled in, but React and zod are the running EDSSI's (stand-ins for `globalThis`), native
+  modules come from EDSSI's folder (`EDSSI_APP_PATH`), and the window loads it over `edssi-ext://`
+  before importing the app. `EXTENSION_API_VERSION` gates it. How it fits together is in
+  `docs/extensions.md`; an extension's own notes live in its folder.
 - **`src/main/config/`** — `~/.edssi/config.yaml` (override the folder with `EDSSI_CONFIG_DIR`):
   API keys, the model, voice settings and the push-to-talk bindings. The zod schema lives in
   `src/shared/settings.ts` (the renderer needs it for the Settings tab), where every field has a

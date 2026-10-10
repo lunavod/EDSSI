@@ -23,6 +23,8 @@ files:
   - node_modules/onnxruntime-common/**
   # The VR host is a program of its own, so it rides beside the app (below), not in the asar.
   - '!out/vr-overlay-host/**'
+  # Extensions built on their own (npm run build:extension) are installed, never shipped.
+  - '!out/extensions/**'
 asar: true
 extraResources:
   # EDSSI's own EDHM mods, copied into the game folder, so they stay plain files.

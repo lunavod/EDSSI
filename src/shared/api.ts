@@ -27,6 +27,7 @@ import type {
 import type { CsvRouteState } from './csv-route';
 import type { FssOverlayInstallResult, FssOverlayStatus, HudColor } from './edhm';
 import type { SystemExternalInfo } from './edsm';
+import type { InstalledRendererExtension } from './extensions';
 import type { HistorySnapshot } from './history';
 import type { CaptureResult, InputSnapshot } from './input';
 import type { JournalMessage, JournalSnapshot } from './journal';
@@ -99,6 +100,8 @@ export interface EdssiApi {
     invoke(channel: string, ...args: unknown[]): Promise<unknown>;
     /** Subscribes to what an extension broadcasts. Returns an unsubscribe function. */
     on(channel: string, listener: (payload: unknown) => void): () => void;
+    /** The installed extensions' window sides (`src/shared/extensions.ts`), to load. */
+    installed(): Promise<InstalledRendererExtension[]>;
   };
   history: {
     /** The ledger and current system survey, worked out from every journal. */
@@ -351,6 +354,7 @@ export const IpcChannel = {
   JournalMessage: 'journal:message',
   NavRoutesRecent: 'nav-routes:recent',
   NavRouteChanged: 'nav-routes:changed',
+  ExtensionsInstalled: 'extensions:installed',
   CsvRouteGet: 'csv-route:get',
   CsvRouteChanged: 'csv-route:changed',
   CsvRouteOpen: 'csv-route:open',

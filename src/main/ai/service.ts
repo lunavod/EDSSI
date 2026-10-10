@@ -640,6 +640,8 @@ export function startAssistantService(options: AssistantServiceOptions): Assista
   ipcMain.handle(IpcChannel.AssistantPreviewVoice, (_event, preview: unknown) =>
     previewVoice(preview),
   );
+  // The Settings tab with Kokoro picked: it's about to be tried, so load it now, not on Play.
+  ipcMain.handle(IpcChannel.AssistantPrepareKokoro, () => kokoro.prepare());
 
   /**
    * One line in the voice the Settings tab describes, saved or not, so a voice can be heard before

@@ -108,5 +108,16 @@ from [EDDiscovery](https://github.com/EDDiscovery/EDDiscovery), life prediction 
 [EDMC](https://github.com/EDCD/EDMarketConnector), and search and routing from
 [Spansh](https://spansh.co.uk), [EDSM](https://www.edsm.net) and [Inara](https://inara.cz).
 
+## Licence
+
+EDSSI is free software: you can redistribute it and/or modify it under the terms of the
+[GNU General Public License](LICENSE), version 3 or (at your option) any later version. It comes
+with no warranty.
+
+It includes [eSpeak NG](https://github.com/espeak-ng/espeak-ng) (GPL-3.0-or-later), by way of the
+`phonemizer` package, for the local Kokoro voice, and life-prediction rules generated from
+EDMC-BioScan (GPL-2.0-or-later) and EDMC-ExploData (GPL-2.0). EDSY's ship data (CC BY-NC 4.0) is
+downloaded at runtime and isn't distributed with EDSSI.
+
 Elite Dangerous is a trademark of Frontier Developments plc. EDSSI is not affiliated with or
 endorsed by Frontier.

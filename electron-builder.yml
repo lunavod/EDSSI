@@ -30,6 +30,8 @@ extraResources:
     to: edhm
   # The "What's new" notes, read at start (src/main/update-service.ts).
   - CHANGELOG_USER.md
+  # The GPL asks that every copy carries the licence.
+  - LICENSE
   # Where src/main/input/usages.ts and src/main/vr/host.ts look in a packaged build. Built by
   # `npm run hid:build` and `npm run vr:build`; a build without them still runs, without stick
   # usages or the VR cockpit.

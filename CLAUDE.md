@@ -118,7 +118,9 @@ Data flows one way: journal files → main process → IPC → renderer.
 - **`src/main/upload-service.ts`** + **`src/main/uploads/`**: sends the journal to EDSM, Inara and
   EDDN so EDDI/EDMC needn't run. It follows the session reader. `game-state.ts` tracks who, where, which
   ship and which build. EDSM gets raw lines with its `_system…` fields (`edsm-journal.ts`). Inara
-  gets its own events, translated by `inara-events.ts` following EDMC's plugin. EDDN (`eddn.ts`,
+  gets its own events, translated by `inara-events.ts` following EDMC's plugin; it is left off the
+  Settings tab (the file still takes its key) until Inara whitelists EDSSI, as it answers no other
+  application. EDDN (`eddn.ts`,
   no key) gets one message per request on the schema for each event, built from each schema's
   allowed keys, checked against the location it tracks, and for station data read from the
   companion file the line announces; `EDSSI_EDDN_TEST` sends to the test schemas. `batcher.ts`
@@ -413,7 +415,7 @@ Data flows one way: journal files → main process → IPC → renderer.
   of Electron, so it is tested with a scripted provider. `model/` holds the two providers, which
   both speak the Responses API: an API key, or a ChatGPT sign-in against the Codex backend
   (`model/chatgpt-auth.ts` does the OAuth, keeping its tokens out of the Codex CLI's own file).
-  `speech.ts` picks the voice (`voice.speech.provider`; `auto` is Inworld once it has a key):
+  `speech.ts` picks the voice (`voice.speech.provider`, Kokoro unless told otherwise):
   Inworld's (`inworld.ts`, a raw-HTTP stream of base64 PCM), or Kokoro-82M on the CPU
   (`kokoro/`). **onnxruntime never runs in the main process**: it holds a process-wide lock while
   it loads and runs a model, which froze every window for a second or more per sentence, so the

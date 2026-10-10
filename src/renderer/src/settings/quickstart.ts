@@ -94,7 +94,7 @@ function speakingStatus(settings: Settings, setup: AssistantSetup | undefined): 
   const who =
     speech.provider === 'wyoming'
       ? 'your Wyoming server'
-      : speech.provider === 'inworld' || (speech.provider === 'auto' && inworldKey)
+      : speech.provider === 'inworld'
         ? `Inworld (${settings.inworld.voice})`
         : `Kokoro (${isKokoroVoice(settings.kokoro.voice) ? kokoroVoiceLabel(settings.kokoro.voice).split(' — ')[0] : settings.kokoro.voice})`;
   if (setup?.voiceOutput) return { tone: 'good', text: `Ready: answers are spoken by ${who}.` };

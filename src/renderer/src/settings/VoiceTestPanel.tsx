@@ -16,8 +16,8 @@ function textAt(get: Getter, path: readonly string[]): string | undefined {
 }
 
 /**
- * What to ask for: the line, in the voice the settings on screen pick (Auto's pick, for Auto),
- * with that provider's own settings as they stand — saved or not.
+ * What to ask for: the line, in the voice the settings on screen pick, with that provider's own
+ * settings as they stand — saved or not.
  */
 export function previewFor(get: Getter, text: string): VoicePreview | undefined {
   const speed = get(['voice', 'speech', 'speed']);

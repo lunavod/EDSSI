@@ -173,7 +173,7 @@ export function VrBindingsPanel({
   if (quick) {
     return (
       <div className="settings-panel">
-        <ul className="bindings vr-bindings">
+        <ul className="bindings vr-bindings vr-bindings-quick">
           {quick.map((of) => {
             const mine = rows.filter((row) => row.command === of);
             const first = mine[0];
@@ -191,9 +191,12 @@ export function VrBindingsPanel({
                   <span className="binding-dot" aria-hidden="true" />
                   <span className="vr-binding-command">{VR_COMMAND_LABELS[of]}</span>
                   <span className="vr-binding-control">
-                    {first ? mine.map((row) => bindingLabel(row.action.binding)).join(', ') : ''}
+                    {first ? (
+                      mine.map((row) => bindingLabel(row.action.binding)).join(', ')
+                    ) : (
+                      <span className="muted">Not bound</span>
+                    )}
                   </span>
-                  {!first && <span className="muted">Not bound</span>}
                   <button
                     type="button"
                     className="link"

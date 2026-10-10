@@ -14,8 +14,8 @@ describe('parseSettings', () => {
     const { settings, problem } = parseSettings(null);
     expect(problem).toBeUndefined();
     expect(settings).toEqual(DEFAULT_SETTINGS);
-    expect(settings.assistant.model).toBe('gpt-5.6-luna');
-    expect(settings.assistant.reasoning_effort).toBe('low');
+    expect(settings.assistant.model).toBe('gpt-5.6-terra');
+    expect(settings.assistant.reasoning_effort).toBe('medium');
     expect(settings.assistant.ultrathink).toEqual({
       model: 'gpt-5.6-terra',
       reasoning_effort: 'high',
@@ -27,7 +27,7 @@ describe('parseSettings', () => {
     const { settings, problem } = parseSettings({ assistant: { provider: 'codex' } });
     expect(problem).toBeUndefined();
     expect(settings.assistant.provider).toBe('codex');
-    expect(settings.assistant.model).toBe('gpt-5.6-luna');
+    expect(settings.assistant.model).toBe('gpt-5.6-terra');
     expect(settings.voice.transcription.model).toBe('gpt-transcribe');
   });
 
@@ -60,6 +60,22 @@ describe('parseSettings', () => {
     const { parse } = await import('yaml');
     const { SETTINGS_TEMPLATE } = await import('./settings');
     expect(parseSettings(parse(SETTINGS_TEMPLATE)).problem).toBeUndefined();
+  });
+
+  it('listens with Whisper and speaks with Kokoro by default', () => {
+    expect(DEFAULT_SETTINGS.voice.transcription.provider).toBe('whisper');
+    expect(DEFAULT_SETTINGS.voice.speech.provider).toBe('kokoro');
+  });
+
+  it('reads an old speaking provider of auto as what it came to', () => {
+    const auto = { voice: { speech: { provider: 'auto', speed: 1.2 } } };
+    expect(parseSettings(auto).settings.voice.speech).toMatchObject({
+      provider: 'kokoro',
+      speed: 1.2,
+    });
+    const keyed = parseSettings({ ...auto, inworld: { api_key: 'key' } });
+    expect(keyed.problem).toBeUndefined();
+    expect(keyed.settings.voice.speech.provider).toBe('inworld');
   });
 
   it('takes the keywords the commander lists for transcription', () => {

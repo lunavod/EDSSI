@@ -676,7 +676,6 @@ function SettingsSection({
         saved={saved(field.path)}
         draft={draft[key]}
         inactive={sectionOn && !holds(field.when, get) ? field.when?.note : undefined}
-        implied={field.kind === 'choice' ? field.implied?.(get) : undefined}
         onEdit={onEdit}
         onCommit={onCommit}
       />

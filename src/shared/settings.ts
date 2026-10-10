@@ -31,16 +31,13 @@ export const PROVIDERS = ['openai', 'codex'] as const;
 
 export type ProviderName = (typeof PROVIDERS)[number];
 
-/**
- * Who reads answers aloud: Inworld on its own key, or Kokoro on this machine. `auto` is Inworld
- * once it has a key, and Kokoro until then.
- */
-export const SPEECH_PROVIDERS = ['auto', 'inworld', 'kokoro', 'wyoming'] as const;
+/** Who reads answers aloud: Kokoro on this machine, Inworld on its own key, or a Wyoming server. */
+export const SPEECH_PROVIDERS = ['kokoro', 'inworld', 'wyoming'] as const;
 
 export type SpeechProviderName = (typeof SPEECH_PROVIDERS)[number];
 
 /** Who listens: OpenAI on the key, whisper.cpp on this machine, or a Wyoming server. */
-export const TRANSCRIPTION_PROVIDERS = ['openai', 'whisper', 'wyoming'] as const;
+export const TRANSCRIPTION_PROVIDERS = ['whisper', 'openai', 'wyoming'] as const;
 
 export type TranscriptionProviderName = (typeof TRANSCRIPTION_PROVIDERS)[number];
 
@@ -318,8 +315,8 @@ export const SettingsSchema = z.object({
   assistant: section({
     enabled: flag(true),
     provider: choice(PROVIDERS, 'openai'),
-    model: text().transform((value) => value ?? 'gpt-5.6-luna'),
-    reasoning_effort: choice(REASONING_EFFORTS, 'low'),
+    model: text().transform((value) => value ?? 'gpt-5.6-terra'),
+    reasoning_effort: choice(REASONING_EFFORTS, 'medium'),
     /** Takes over from the two above for any question that says "ultrathink". */
     ultrathink: section({
       model: text().transform((value) => value ?? 'gpt-5.6-terra'),
@@ -365,7 +362,7 @@ export const SettingsSchema = z.object({
     microphone: text(),
     transcription: section({
       enabled: flag(true),
-      provider: choice(TRANSCRIPTION_PROVIDERS, 'openai'),
+      provider: choice(TRANSCRIPTION_PROVIDERS, 'whisper'),
       /** OpenAI's model; whisper.cpp's is under `whisper`. */
       model: text().transform((value) => value ?? 'gpt-transcribe'),
       /** ISO-639-1, e.g. `en`. Unset lets the model work it out, which is slower and less exact. */
@@ -374,7 +371,7 @@ export const SettingsSchema = z.object({
     }),
     speech: section({
       enabled: flag(true),
-      provider: choice(SPEECH_PROVIDERS, 'auto'),
+      provider: choice(SPEECH_PROVIDERS, 'kokoro'),
       /** How to deliver the words; only Inworld's `inworld-tts-2` follows it. */
       instructions: text().transform((value) => value ?? DEFAULT_SPEECH_INSTRUCTIONS),
       /** 1 is the voice's own pace. Inworld keeps it between 0.5 and 1.5, Kokoro to 2. */
@@ -622,10 +619,30 @@ export function extensionSettings<S extends z.ZodType>(
 /** Never throws: a file EDSSI can't make sense of falls back to the defaults with a problem. */
 export function parseSettings(raw: unknown): ParsedSettings {
   if (raw === undefined || raw === null) return { settings: defaultSettings() };
-  const result = fullSchema().safeParse(raw);
+  const result = fullSchema().safeParse(withoutAutoSpeech(raw));
   return result.success
     ? { settings: result.data }
     : { settings: defaultSettings(), problem: z.prettifyError(result.error) };
+}
+
+/**
+ * A file from before `auto` was dropped from the speaking providers, read as what it came to:
+ * Inworld once it had a key, Kokoro until then.
+ */
+function withoutAutoSpeech(raw: unknown): unknown {
+  const root = asRecord(raw);
+  const voice = asRecord(root?.['voice']);
+  const speech = asRecord(voice?.['speech']);
+  if (!root || !voice || speech?.['provider'] !== 'auto') return raw;
+  const key = asRecord(root['inworld'])?.['api_key'];
+  const provider = typeof key === 'string' && key.trim() ? 'inworld' : 'kokoro';
+  return { ...root, voice: { ...voice, speech: { ...speech, provider } } };
+}
+
+function asRecord(value: unknown): Record<string, unknown> | undefined {
+  if (typeof value !== 'object' || value === null) return undefined;
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- a parsed YAML mapping
+  return value as Record<string, unknown>;
 }
 
 /** Written the first time EDSSI starts without a settings file, to fill the key in. */
@@ -643,7 +660,7 @@ openai:
   api_key:
 
 # Speech from Inworld, whose voices are the most natural. Used when voice.speech.provider is
-# inworld, or auto with a key here. Listening goes through OpenAI.
+# inworld.
 inworld:
   # https://platform.inworld.ai → Settings → API Keys. Copy the "Base64 credentials".
   api_key:
@@ -652,8 +669,7 @@ inworld:
   voice: Ashley
 
 # Kokoro, which speaks on this PC: no key, and no network once its voice (330 MB) is downloaded,
-# which happens the first time it's used. Used when voice.speech.provider is kokoro, or auto with no
-# Inworld key.
+# which happens the first time it's used. Used when voice.speech.provider is kokoro.
 kokoro:
   # a = American, b = British; f = a woman, m = a man. af_heart, af_bella, bf_emma, bf_isabella,
   # am_michael, am_fenrir, bm_george, bm_fable and more.
@@ -680,9 +696,9 @@ assistant:
   # openai: pay per request with the key above.
   # codex: your ChatGPT plan, after signing in from the Comms tab.
   provider: openai
-  model: gpt-5.6-luna
+  model: gpt-5.6-terra
   # none, minimal, low, medium, high, xhigh or max. Higher thinks longer and costs more.
-  reasoning_effort: low
+  reasoning_effort: medium
   # Say "ultrathink" in a question to have that one answered by this model, thinking this hard.
   ultrathink:
     model: gpt-5.6-terra
@@ -708,16 +724,16 @@ voice:
     - key: Control+Alt+Space
   transcription:
     enabled: true
-    # openai (with the key above), whisper (on this PC) or wyoming.
-    provider: openai
+    # whisper (on this PC), openai (with the key above) or wyoming.
+    provider: whisper
     # OpenAI's model.
     model: gpt-transcribe
     # Setting the language makes transcription faster and more accurate.
     language: en
   speech:
     enabled: true
-    # auto (Inworld once it has a key, Kokoro until then), inworld, kokoro or wyoming.
-    provider: auto
+    # kokoro (on this PC), inworld (with its key above) or wyoming.
+    provider: kokoro
     # 1 is the voice's own pace; Inworld keeps between 0.5 and 1.5, Kokoro up to 2.
     speed: 1
     instructions: ${JSON.stringify(DEFAULT_SPEECH_INSTRUCTIONS)}

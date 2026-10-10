@@ -15,7 +15,6 @@ import {
   patchFor,
   problemWith,
   search,
-  speakingProvider,
 } from './fields';
 
 // The settings' own pages; a guide (Quickstart) borrows fields from them.
@@ -44,10 +43,14 @@ describe('the pages', () => {
     const shown = FIELDS.map(fieldKey);
     expect(new Set(shown).size).toBe(shown.length);
     // Bindings are made by pressing them, in their own panels, rather than as fields: push-to-talk
-    // on the Voice page, paste on the Routes one and the cockpit's commands on the VR one.
+    // on the Voice page, paste on the Routes one and the cockpit's commands on the VR one. Inara is
+    // left off until it has whitelisted EDSSI.
     const settings = leaves(DEFAULT_SETTINGS).filter(
       (key) =>
-        key !== 'voice.push_to_talk' && key !== 'input.paste' && !key.startsWith('vr.bindings'),
+        key !== 'voice.push_to_talk' &&
+        key !== 'input.paste' &&
+        !key.startsWith('vr.bindings') &&
+        !key.startsWith('inara.'),
     );
     expect(shown).toEqual(expect.arrayContaining(settings));
     // Text with no default (keys, names) is left out of the parsed defaults, so only its section
@@ -139,21 +142,13 @@ describe('hidden', () => {
         .flatMap((section) => section.fields)
         .find((candidate) => candidate.path.join('.') === `${provider}.voice`)!;
     const speakingBy =
-      (provider: string, inworldKey?: string) =>
+      (provider: string) =>
       (path: readonly string[]): unknown =>
-        path.join('.') === 'voice.speech.provider'
-          ? provider
-          : path.join('.') === 'inworld.api_key'
-            ? inworldKey
-            : undefined;
+        path.join('.') === 'voice.speech.provider' ? provider : undefined;
     expect(hidden(field('kokoro'), speakingBy('inworld'))).toBe(true);
     expect(hidden(field('kokoro'), speakingBy('kokoro'))).toBe(false);
-    // Auto shows only the provider it comes to: Kokoro until Inworld has a key, then Inworld.
-    expect(hidden(field('kokoro'), speakingBy('auto'))).toBe(false);
-    expect(hidden(field('inworld'), speakingBy('auto'))).toBe(true);
-    expect(hidden(field('inworld'), speakingBy('auto', 'key'))).toBe(false);
-    expect(hidden(field('kokoro'), speakingBy('auto', 'key'))).toBe(true);
-    expect(hidden(field('wyoming'), speakingBy('auto'))).toBe(true);
+    expect(hidden(field('inworld'), speakingBy('inworld'))).toBe(false);
+    expect(hidden(field('wyoming'), speakingBy('kokoro'))).toBe(true);
   });
 });
 
@@ -175,12 +170,14 @@ describe('the Quickstart page', () => {
     expect(hidden(key, at({ 'assistant.provider': 'openai' }))).toBe(false);
   });
 
-  it('marks the provider Auto comes to', () => {
-    expect(speakingProvider(at({ 'voice.speech.provider': 'auto' }))).toBe('kokoro');
-    expect(
-      speakingProvider(at({ 'voice.speech.provider': 'auto', 'inworld.api_key': 'key' })),
-    ).toBe('inworld');
-    expect(speakingProvider(at({ 'voice.speech.provider': 'wyoming' }))).toBe('wyoming');
+  it('hides the Assistant page’s OpenAI key on the ChatGPT plan too', () => {
+    const own = PAGES.find((page) => page.id === 'assistant')!
+      .sections.flatMap((section) => section.fields)
+      .find((candidate) => fieldKey(candidate) === 'openai.api_key')!;
+    const plan = { 'assistant.provider': 'codex' };
+    expect(hidden(own, at({ ...plan, 'voice.transcription.provider': 'whisper' }))).toBe(true);
+    expect(hidden(own, at({ ...plan, 'voice.transcription.provider': 'openai' }))).toBe(false);
+    expect(hidden(own, at({ 'assistant.provider': 'openai' }))).toBe(false);
   });
 });
 

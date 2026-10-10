@@ -38,7 +38,7 @@ describe('previewFor', () => {
     expect(
       previewFor(
         at({
-          'voice.speech.provider': 'auto',
+          'voice.speech.provider': 'inworld',
           'inworld.api_key': 'key',
           'inworld.voice': 'Craig',
           'voice.speech.speed': 1.2,

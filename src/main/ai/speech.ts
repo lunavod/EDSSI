@@ -164,12 +164,10 @@ export type Speaker = (
   signal: AbortSignal,
 ) => Promise<void>;
 
-/** Who will speak, as the settings have it: `auto` is Inworld once it has a key. */
+/** Who will speak, as the settings have it. */
 export function speechProvider(settings: Settings): 'inworld' | 'kokoro' | 'wyoming' | undefined {
   const speech = settings.voice.speech;
-  if (!speech.enabled) return undefined;
-  if (speech.provider !== 'auto') return speech.provider;
-  return inworldKey(settings) ? 'inworld' : 'kokoro';
+  return speech.enabled ? speech.provider : undefined;
 }
 
 function inworldKey(settings: Settings): string | undefined {

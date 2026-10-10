@@ -55,12 +55,12 @@ describe('stepStatus', () => {
   });
 
   it('points hearing at the OpenAI key, or at Whisper getting ready', () => {
-    expect(stepStatus('hearing', settings(), { ...SETUP, voiceInput: false }).text).toMatch(
+    const openai = settings((s) => (s.voice.transcription.provider = 'openai'));
+    expect(stepStatus('hearing', openai, { ...SETUP, voiceInput: false }).text).toMatch(
       /OpenAI API key, in step 1/,
     );
-    const whisper = settings((s) => (s.voice.transcription.provider = 'whisper'));
     expect(
-      stepStatus('hearing', whisper, {
+      stepStatus('hearing', settings(), {
         ...SETUP,
         voiceInput: false,
         hearingNote: 'Downloading Whisper base.en for listening: 40% of 148 MB.',

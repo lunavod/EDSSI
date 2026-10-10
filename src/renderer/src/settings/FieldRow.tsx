@@ -14,8 +14,6 @@ interface FieldRowProps {
   draft: unknown;
   /** Why the field does nothing as things stand, if it doesn't. */
   inactive: string | undefined;
-  /** For a choice: the option the chosen one comes to, such as `auto`'s pick. */
-  implied?: string | undefined;
   onEdit: (field: Field, value: unknown) => void;
   onCommit: () => void;
 }
@@ -24,15 +22,7 @@ interface FieldRowProps {
  * One setting: its label and what it does, the control, and around them whether it is unsaved,
  * whether it differs from the default (with a way back), and anything wrong with it.
  */
-export function FieldRow({
-  field,
-  saved,
-  draft,
-  inactive,
-  implied,
-  onEdit,
-  onCommit,
-}: FieldRowProps) {
+export function FieldRow({ field, saved, draft, inactive, onEdit, onCommit }: FieldRowProps) {
   const key = fieldKey(field);
   const edited = draft !== undefined;
   const shown = edited ? draft : saved;
@@ -70,13 +60,7 @@ export function FieldRow({
       </div>
       <div className="sf-c">
         <div className="row">
-          <FieldInput
-            field={field}
-            value={shown}
-            implied={implied}
-            onEdit={onEdit}
-            onCommit={onCommit}
-          />
+          <FieldInput field={field} value={shown} onEdit={onEdit} onCommit={onCommit} />
           {custom && <DefaultButton field={field} fallback={fallback} onEdit={onEdit} />}
         </div>
         {problem && (
@@ -88,6 +72,11 @@ export function FieldRow({
           </div>
         )}
       </div>
+      {field.aside && (
+        <p className="sf-aside">
+          <HelpText text={field.aside} />
+        </p>
+      )}
     </div>
   );
 }
@@ -141,14 +130,12 @@ interface FieldInputProps {
   field: Field;
   /** The draft or the saved value; null is "back to the default". */
   value: unknown;
-  /** For a choice: the option the chosen one comes to, marked more faintly. */
-  implied?: string | undefined;
   onEdit: (field: Field, value: unknown) => void;
   onCommit: () => void;
 }
 
 /** One control per kind of setting. Empty text is saved as "not set", never the empty string. */
-export function FieldInput({ field, value, implied, onEdit, onCommit }: FieldInputProps) {
+export function FieldInput({ field, value, onEdit, onCommit }: FieldInputProps) {
   const id = fieldKey(field);
   const current = value === null ? defaultAt(field.path) : value;
 
@@ -160,17 +147,7 @@ export function FieldInput({ field, value, implied, onEdit, onCommit }: FieldInp
       return (
         <div id={id} className="seg" role="radiogroup" aria-label={field.label}>
           {field.options.map((option) => (
-            <label
-              key={option}
-              title={
-                option === implied && current !== option
-                  ? `What ${field.labels?.[String(current)] ?? String(current)} comes to now`
-                  : field.labels?.[option]
-                    ? option
-                    : undefined
-              }
-              data-implied={option === implied && current !== option ? 'true' : undefined}
-            >
+            <label key={option} title={field.labels?.[option] ? option : undefined}>
               <input
                 type="radio"
                 className="visually-hidden"

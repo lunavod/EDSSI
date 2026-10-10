@@ -52,8 +52,8 @@ export interface Condition {
   /** The values that make it apply. */
   is: readonly unknown[];
   /**
-   * In place of `is`, for a condition that depends on more than its own setting — such as which
-   * provider `auto` comes to.
+   * In place of `is`, for a condition that depends on more than its own setting — such as whether
+   * anything still uses the OpenAI key.
    */
   test?: (get: Getter) => boolean;
   /** Why it is dimmed, e.g. "Only used when Speaking uses inworld." */
@@ -71,6 +71,8 @@ interface FieldBase {
   label: string;
   /** One line under the label, saying what it does. */
   help?: string;
+  /** A paragraph of its own under that, for what someone choosing it ought to know. */
+  aside?: string;
   when?: Condition;
   /** A problem with a value the schema would take but that won't work, e.g. a malformed URL. */
   validate?: (value: unknown) => string | undefined;
@@ -99,8 +101,6 @@ export type Field = FieldBase &
         kind: 'choice';
         options: readonly string[];
         labels?: Readonly<Record<string, string>>;
-        /** The option the chosen one comes to, such as `auto`'s pick, marked more faintly. */
-        implied?: (get: Getter) => string | undefined;
       }
     /** A dropdown, for a choice with too many options to lay out side by side as `choice` does. */
     | { kind: 'select'; options: readonly string[]; labels?: Readonly<Record<string, string>> }
@@ -210,19 +210,27 @@ const CARRIER_WEBHOOK_ON: Condition = {
 
 const hasOpenAiKey = (get: Getter) => typeof get(['openai', 'api_key']) === 'string';
 
-/** Who speaks: the provider chosen, or for `auto` the one it comes to (Inworld once it has a key). */
+/** The OpenAI account: on the ChatGPT plan only hearing through OpenAI still needs it. */
+const OPENAI_USED: Condition = {
+  path: ['assistant', 'provider'],
+  is: ['openai'],
+  test: (get) =>
+    get(['assistant', 'provider']) === 'openai' ||
+    get(['voice', 'transcription', 'provider']) === 'openai',
+  note: 'Not needed on the ChatGPT plan unless OpenAI is hearing you.',
+  hide: true,
+};
+
+/** Who speaks: the provider chosen. */
 export function speakingProvider(get: Getter): string | undefined {
   const chosen = get(['voice', 'speech', 'provider']);
-  if (chosen !== 'auto') return typeof chosen === 'string' ? chosen : undefined;
-  return typeof get(['inworld', 'api_key']) === 'string' ? 'inworld' : 'kokoro';
+  return typeof chosen === 'string' ? chosen : undefined;
 }
 
-/** Only the provider that will actually speak: under `auto`, the one it comes to. */
 function speechBy(provider: 'inworld' | 'kokoro' | 'wyoming', label: string): Condition {
   return {
     path: ['voice', 'speech', 'provider'],
     is: [provider],
-    test: (get) => speakingProvider(get) === provider,
     note: `Only used when answers are spoken by ${label}.`,
     hide: true,
   };
@@ -318,6 +326,8 @@ const BUILT_IN_PAGES: Page[] = [
             options: PROVIDERS,
             labels: { openai: 'API key', codex: 'ChatGPT plan' },
             help: 'An API key is billed per request; a ChatGPT plan uses your subscription.',
+            aside:
+              'Your API key and ChatGPT sign-in are stored only on this PC, and used only with OpenAI: never shared or uploaded anywhere else. The assistant only runs when you speak or type a question to it, or import screenshots, so nothing runs or is billed in the background.',
             when: ASSISTANT_ON,
           },
           { kind: 'text', path: ['assistant', 'model'], label: 'Model', when: ASSISTANT_ON },
@@ -386,7 +396,7 @@ const BUILT_IN_PAGES: Page[] = [
       {
         id: 'openai',
         title: 'OpenAI account',
-        help: 'Hearing you always goes through OpenAI, so it needs a key even on a ChatGPT plan.',
+        help: 'Hearing you through OpenAI needs a key even on a ChatGPT plan.',
         fields: [
           {
             kind: 'text',
@@ -395,6 +405,7 @@ const BUILT_IN_PAGES: Page[] = [
             secret: true,
             placeholder: 'sk-…',
             help: 'From platform.openai.com/api-keys.',
+            when: OPENAI_USED,
           },
           {
             kind: 'text',
@@ -403,6 +414,7 @@ const BUILT_IN_PAGES: Page[] = [
             placeholder: 'OpenAI’s own',
             help: 'Only for an OpenAI-compatible gateway.',
             validate: validateUrl,
+            when: OPENAI_USED,
           },
         ],
       },
@@ -552,10 +564,8 @@ const BUILT_IN_PAGES: Page[] = [
             path: ['voice', 'speech', 'provider'],
             label: 'Provider',
             options: SPEECH_PROVIDERS,
-            labels: { auto: 'Auto', inworld: 'Inworld', kokoro: 'Kokoro', wyoming: 'Wyoming' },
-            help: 'Auto is Inworld once it has a key, and Kokoro until then: free, on this PC.',
-            implied: (get) =>
-              get(['voice', 'speech', 'provider']) === 'auto' ? speakingProvider(get) : undefined,
+            labels: { inworld: 'Inworld', kokoro: 'Kokoro', wyoming: 'Wyoming' },
+            help: 'Kokoro runs on this PC, free; Inworld sounds the most natural, on a key of its own.',
             when: SPEECH_ON,
           },
           {
@@ -625,7 +635,7 @@ const BUILT_IN_PAGES: Page[] = [
             // Wyoming's synthesize has no speed; a Piper voice's pace is set on the server.
             when: {
               path: ['voice', 'speech', 'provider'],
-              is: ['auto', 'inworld', 'kokoro'],
+              is: ['inworld', 'kokoro'],
               note: 'Only used by Inworld and Kokoro.',
               hide: true,
             },
@@ -815,22 +825,7 @@ const BUILT_IN_PAGES: Page[] = [
           },
         ],
       },
-      {
-        id: 'inara',
-        title: 'Inara',
-        help: 'Travel, ranks, ships, missions and inventory, on inara.cz.',
-        upload: 'inara',
-        fields: [
-          { kind: 'flag', path: ['inara', 'upload'], label: 'Upload' },
-          {
-            kind: 'text',
-            path: ['inara', 'api_key'],
-            label: 'API key',
-            secret: true,
-            help: 'On inara.cz: Settings, then Inara API. The personal key.',
-          },
-        ],
-      },
+      // No Inara section until Inara has whitelisted EDSSI: it answers no other application.
       {
         id: 'eddn',
         title: 'EDDN',
@@ -961,16 +956,7 @@ const QUICKSTART: Page = {
         reuse('assistant', 'assistant.provider'),
         reuse('assistant', 'openai.api_key', {
           help: 'From platform.openai.com/api-keys. Needed for the API key, and for hearing you through OpenAI.',
-          // On the ChatGPT plan only hearing through OpenAI still needs it.
-          when: {
-            path: ['assistant', 'provider'],
-            is: ['openai'],
-            test: (get) =>
-              get(['assistant', 'provider']) === 'openai' ||
-              get(['voice', 'transcription', 'provider']) === 'openai',
-            note: 'Not needed on the ChatGPT plan unless OpenAI is hearing you.',
-            hide: true,
-          },
+          when: OPENAI_USED,
         }),
       ],
     },

@@ -31,8 +31,8 @@ describe('modelFor', () => {
       ultrathink: true,
     });
     expect(modelFor(DEFAULT_SETTINGS.assistant, 'which engineer first?')).toEqual({
-      model: 'gpt-5.6-luna',
-      reasoningEffort: 'low',
+      model: 'gpt-5.6-terra',
+      reasoningEffort: 'medium',
       ultrathink: false,
     });
   });

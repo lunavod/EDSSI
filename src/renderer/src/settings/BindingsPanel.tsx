@@ -6,6 +6,7 @@ import {
   type InputBinding,
   type InputSnapshot,
 } from '../../../shared/input';
+import { useEdssi } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 
 interface BindingsPanelProps {
@@ -24,6 +25,7 @@ interface BindingsPanelProps {
  * which is how the commander knows they bound the one they meant.
  */
 export function BindingsPanel({ bindings, input, onSave }: BindingsPanelProps) {
+  const edssi = useEdssi();
   const [capturing, setCapturing] = useState(false);
   const [problem, setProblem] = useState<string>();
   /** Which row is being rebound, or -1 for a new one. */
@@ -35,7 +37,7 @@ export function BindingsPanel({ bindings, input, onSave }: BindingsPanelProps) {
       setCapturing(true);
       setProblem(undefined);
       try {
-        const result = await window.edssi.input.capture();
+        const result = await edssi.input.capture();
         if (!result) return;
         const already = bindings.findIndex(
           (binding) => bindingKey(binding) === bindingKey(result.binding),
@@ -56,13 +58,13 @@ export function BindingsPanel({ bindings, input, onSave }: BindingsPanelProps) {
         setCapturing(false);
       }
     },
-    [bindings, onSave],
+    [edssi, bindings, onSave],
   );
 
   const cancel = useCallback(() => {
-    void window.edssi.input.cancelCapture();
+    void edssi.input.cancelCapture();
     setCapturing(false);
-  }, []);
+  }, [edssi]);
 
   const remove = useCallback(
     (index: number) => void onSave(bindings.filter((_binding, at) => at !== index)),

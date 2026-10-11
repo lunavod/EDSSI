@@ -9,6 +9,7 @@ import {
   todoNeeds,
 } from '../../../shared/crafting';
 import { craftableTimes, type MaterialsSnapshot } from '../../../shared/materials';
+import { useEdssi } from '../api/context';
 import { NumberInput } from '../hud/Controls';
 import { Glyph } from '../hud/Glyph';
 import { Select } from '../hud/Select';
@@ -55,6 +56,7 @@ export function SynthesisTodoView({ snapshot }: { snapshot: MaterialsSnapshot | 
 }
 
 function AddSynthesis({ inventory }: { inventory: Readonly<Record<string, number>> }) {
+  const edssi = useEdssi();
   const all = syntheses();
   const [name, setName] = useState(
     () => all.find((one) => one.name === 'AFM Refill')?.name ?? all[0]?.name ?? '',
@@ -72,7 +74,7 @@ function AddSynthesis({ inventory }: { inventory: Readonly<Record<string, number
       grades[3] ? counts[2] : 0,
     ];
     if (kept.every((count) => count === 0)) return;
-    void window.edssi.materials.addTodo({
+    void edssi.materials.addTodo({
       kind: 'synthesis',
       synthesis: synthesis.name,
       counts: kept,
@@ -187,6 +189,7 @@ function SynthesisCard({
   todo: SynthesisTodo;
   inventory: Readonly<Record<string, number>>;
 }) {
+  const edssi = useEdssi();
   const synthesis = synthesisByName(todo.synthesis);
   if (!synthesis) return null;
   const lines = ingredientLines(todoNeeds(todo, []), inventory);
@@ -215,7 +218,7 @@ function SynthesisCard({
                 onChange={(count) => {
                   const counts: [number, number, number] = [...todo.counts];
                   counts[grade - 1] = count;
-                  void window.edssi.materials.updateTodo({ ...todo, counts });
+                  void edssi.materials.updateTodo({ ...todo, counts });
                 }}
               />
             </span>

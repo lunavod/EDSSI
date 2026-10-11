@@ -7,6 +7,7 @@ import {
   type BoundAction,
   type InputSnapshot,
 } from '../../../shared/input';
+import { useEdssi } from '../api/context';
 import { type BoundElsewhere, Presses, takenElsewhere } from './Presses';
 
 interface PasteBindingsPanelProps {
@@ -28,6 +29,7 @@ export function PasteBindingsPanel({
   onSave,
   elsewhere,
 }: PasteBindingsPanelProps) {
+  const edssi = useEdssi();
   /** Which row is being rebound, -1 for a new one; undefined while nothing is being captured. */
   const [target, setTarget] = useState<number>();
   const [problem, setProblem] = useState<string>();
@@ -39,7 +41,7 @@ export function PasteBindingsPanel({
       setTarget(index);
       setProblem(undefined);
       try {
-        const result = await window.edssi.input.capture();
+        const result = await edssi.input.capture();
         if (!result) return;
         const action: BoundAction = { ...bindings[index], binding: result.binding };
         const already = bindings.findIndex(
@@ -70,13 +72,13 @@ export function PasteBindingsPanel({
         setTarget(undefined);
       }
     },
-    [bindings, elsewhere, onSave],
+    [edssi, bindings, elsewhere, onSave],
   );
 
   const cancel = useCallback(() => {
-    void window.edssi.input.cancelCapture();
+    void edssi.input.cancelCapture();
     setTarget(undefined);
-  }, []);
+  }, [edssi]);
 
   const changeClicks = useCallback(
     (index: number, clicks: number) => {

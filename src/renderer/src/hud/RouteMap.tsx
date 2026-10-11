@@ -1,10 +1,11 @@
 import { Line, OrbitControls } from '@react-three/drei';
 import { Canvas, useFrame, useThree } from '@react-three/fiber';
-import { type RefObject, useEffect, useMemo, useRef, useState } from 'react';
+import { type RefObject, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { CanvasTexture, Color, type GridHelper, Vector3 } from 'three';
 import type { OrbitControls as OrbitControlsImpl } from 'three/examples/jsm/controls/OrbitControls.js';
 
 import type { CsvRoute, CsvRouteState } from '../../../shared/csv-route';
+import { useEdssiInstance } from '../api/context';
 import {
   bounds,
   type Bounds,
@@ -69,6 +70,13 @@ export function RouteMap({
   const [view, setView] = useState<{ kind: View; at: number }>({ kind: 'fit', at: 0 });
   const [hovered, setHovered] = useState<MapStop>();
   const palette = usePalette();
+  const { api: edssi } = useEdssiInstance();
+  // Through the main process: the sandboxed window has no `navigator.clipboard`. Made out here,
+  // where the provider is, rather than inside the canvas.
+  const copyName = useCallback(
+    (stop: MapStop) => void edssi.clipboard.writeText(stop.name),
+    [edssi],
+  );
   /** The overlay's label elements by key, which the scene moves each frame it draws. */
   const labelElements = useRef(new Map<string, HTMLElement>());
 
@@ -159,6 +167,7 @@ export function RouteMap({
               view={view}
               palette={palette}
               onHover={setHovered}
+              onPick={copyName}
             />
             <LabelMover labels={labels} elements={labelElements} />
           </Canvas>
@@ -240,6 +249,7 @@ function Scene({
   view,
   palette,
   onHover,
+  onPick,
 }: {
   main: MapStop[] | undefined;
   extra: MapStop[] | undefined;
@@ -248,6 +258,7 @@ function Scene({
   view: { kind: View; at: number };
   palette: Palette;
   onHover: (stop: MapStop | undefined) => void;
+  onPick: (stop: MapStop) => void;
 }) {
   const sprite = useMemo(() => dotTexture(), []);
   const all = useMemo(() => [...(main ?? []), ...(extra ?? [])], [main, extra]);
@@ -256,7 +267,7 @@ function Scene({
   return (
     <>
       <CameraRig box={box} view={view} />
-      <Picker stops={all} onHover={onHover} />
+      <Picker stops={all} onHover={onHover} onPick={onPick} />
       <PlaneGrid box={box} color={palette.grid} />
       {main && main.length > 0 && (
         <>
@@ -494,9 +505,12 @@ function CameraRig({ box, view }: { box: Bounds; view: { kind: View; at: number 
 function Picker({
   stops,
   onHover,
+  onPick,
 }: {
   stops: readonly MapStop[];
   onHover: (stop: MapStop | undefined) => void;
+  /** A stop clicked: its name goes on the clipboard. */
+  onPick: (stop: MapStop) => void;
 }) {
   const camera = useThree((state) => state.camera);
   const gl = useThree((state) => state.gl);
@@ -544,7 +558,7 @@ function Picker({
       const click = down && Math.hypot(event.clientX - down.x, event.clientY - down.y) < 4;
       down = undefined;
       const stop = click ? nearest(event) : undefined;
-      if (stop) void navigator.clipboard.writeText(stop.name);
+      if (stop) onPick(stop);
     };
     const leave = () => {
       hovered = undefined;
@@ -561,7 +575,7 @@ function Picker({
       element.removeEventListener('pointerup', release);
       element.removeEventListener('pointerleave', leave);
     };
-  }, [camera, gl, invalidate, stops, onHover]);
+  }, [camera, gl, invalidate, stops, onHover, onPick]);
 
   return null;
 }
@@ -581,19 +595,28 @@ function dotTexture(): CanvasTexture {
   return new CanvasTexture(canvas);
 }
 
-/** The palette, read again whenever the root's style changes (the HUD colour is set there). */
+/**
+ * The palette, read again whenever the theme root's style changes (the HUD colour is set there).
+ */
 function usePalette(): Palette {
-  const [palette, setPalette] = useState(readPalette);
+  const { themeRoot } = useEdssiInstance();
+  const [palette, setPalette] = useState(() => readPalette(themeRoot()));
   useEffect(() => {
-    const observer = new MutationObserver(() => setPalette(readPalette()));
-    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
-    return () => observer.disconnect();
-  }, []);
+    const root = themeRoot();
+    // Read again once mounted: an embedded EDSSI's root may not have been there at first.
+    const frame = requestAnimationFrame(() => setPalette(readPalette(root)));
+    const observer = new MutationObserver(() => setPalette(readPalette(root)));
+    observer.observe(root, { attributes: true, attributeFilter: ['style'] });
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+    };
+  }, [themeRoot]);
   return palette;
 }
 
-function readPalette(): Palette {
-  const style = getComputedStyle(document.documentElement);
+function readPalette(root: HTMLElement): Palette {
+  const style = getComputedStyle(root);
   const read = (name: string) => resolveColor(style.getPropertyValue(name).trim());
   return {
     ahead: read('--accent'),

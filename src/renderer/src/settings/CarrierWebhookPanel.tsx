@@ -1,6 +1,7 @@
 import { useState } from 'react';
 
 import type { CarrierWebhookSettings } from '../../../shared/settings';
+import { useEdssi } from '../api/context';
 import type { Getter } from './fields';
 
 /**
@@ -8,6 +9,7 @@ import type { Getter } from './fields';
  * are on screen, saved or not, so a webhook can be tried before it is kept.
  */
 export function CarrierWebhookPanel({ get }: { get: Getter }) {
+  const edssi = useEdssi();
   const [sending, setSending] = useState(false);
   const [result, setResult] = useState<string>();
 
@@ -20,7 +22,7 @@ export function CarrierWebhookPanel({ get }: { get: Getter }) {
     setSending(true);
     setResult(undefined);
     try {
-      setResult(await window.edssi.carrierWebhook.test(draft));
+      setResult(await edssi.carrierWebhook.test(draft));
     } catch (error) {
       setResult(`Error: ${error instanceof Error ? error.message : String(error)}`);
     } finally {

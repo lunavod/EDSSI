@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react';
 
+import { useLocalDevices } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 import { Select } from '../hud/Select';
 import { Suggest } from '../hud/Suggest';
@@ -273,6 +274,8 @@ function DeviceInput({
 }) {
   const [devices, setDevices] = useState<string[]>([]);
   const [unnamed, setUnnamed] = useState(false);
+  // Embedded in someone else's page (the mock UI), the visitor's devices are none of its business.
+  const localDevices = useLocalDevices();
 
   const look = useCallback(async (): Promise<void> => {
     const found = await inputNames();
@@ -281,6 +284,7 @@ function DeviceInput({
   }, []);
 
   useEffect(() => {
+    if (!localDevices) return undefined;
     const refresh = (): void => {
       void look().catch((error: unknown) =>
         console.error('[voice] could not list the inputs', error),
@@ -291,7 +295,7 @@ function DeviceInput({
     // One named handler, so the listener that is added is the one that is taken away again.
     navigator.mediaDevices.addEventListener('devicechange', refresh);
     return () => navigator.mediaDevices.removeEventListener('devicechange', refresh);
-  }, [look]);
+  }, [localDevices, look]);
 
   /** Asks for a microphone and lets go at once, which is all it takes to be told the names. */
   const reveal = async (): Promise<void> => {

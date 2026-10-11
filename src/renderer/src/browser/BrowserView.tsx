@@ -2,6 +2,7 @@ import { type FormEvent, useEffect, useRef, useState } from 'react';
 
 import type { BrowserState } from '../../../shared/browser';
 import type { CommanderPrompt } from '../../../shared/prompts';
+import { useEdssi } from '../api/context';
 import { PromptBar } from '../comms/PromptBar';
 import { Glyph } from '../hud/Glyph';
 
@@ -17,6 +18,7 @@ interface BrowserViewProps {
  * process lays over the frame below, so this reports where the frame is whenever it moves.
  */
 export function BrowserView({ active, prompt }: BrowserViewProps) {
+  const edssi = useEdssi();
   const state = useBrowserState();
   const frame = useRef<HTMLDivElement>(null);
   const [address, setAddress] = useState('');
@@ -27,7 +29,7 @@ export function BrowserView({ active, prompt }: BrowserViewProps) {
     if (!active || !element) return undefined;
     const report = (): void => {
       const rect = element.getBoundingClientRect();
-      void window.edssi.browser.setBounds({
+      void edssi.browser.setBounds({
         x: rect.left,
         y: rect.top,
         width: rect.width,
@@ -41,16 +43,16 @@ export function BrowserView({ active, prompt }: BrowserViewProps) {
     return () => {
       observer.disconnect();
       window.removeEventListener('resize', report);
-      void window.edssi.browser.setBounds(null);
+      void edssi.browser.setBounds(null);
     };
-  }, [active]);
+  }, [edssi, active]);
 
   const submit = (event: FormEvent): void => {
     event.preventDefault();
     const text = address.trim();
     if (!text) return;
     setEditing(false);
-    void window.edssi.browser.navigate(text);
+    void edssi.browser.navigate(text);
   };
 
   return (
@@ -61,7 +63,7 @@ export function BrowserView({ active, prompt }: BrowserViewProps) {
           className="ibtn"
           aria-label="Back"
           disabled={!state.canGoBack}
-          onClick={() => void window.edssi.browser.back()}
+          onClick={() => void edssi.browser.back()}
         >
           <Glyph name="back" />
         </button>
@@ -70,7 +72,7 @@ export function BrowserView({ active, prompt }: BrowserViewProps) {
           className="ibtn"
           aria-label="Forward"
           disabled={!state.canGoForward}
-          onClick={() => void window.edssi.browser.forward()}
+          onClick={() => void edssi.browser.forward()}
         >
           <Glyph name="forward" />
         </button>
@@ -79,7 +81,7 @@ export function BrowserView({ active, prompt }: BrowserViewProps) {
           className="ibtn"
           aria-label="Reload"
           disabled={!state.url}
-          onClick={() => void window.edssi.browser.reload()}
+          onClick={() => void edssi.browser.reload()}
         >
           <Glyph name="reload" />
         </button>
@@ -119,7 +121,7 @@ export function BrowserView({ active, prompt }: BrowserViewProps) {
                   type="button"
                   className="qlink"
                   title={link.url}
-                  onClick={() => void window.edssi.browser.navigate(link.url)}
+                  onClick={() => void edssi.browser.navigate(link.url)}
                 >
                   <span className="ql-n">{link.name}</span>
                 </button>
@@ -144,6 +146,7 @@ const QUICK_LINKS = [
 ];
 
 function useBrowserState(): BrowserState {
+  const edssi = useEdssi();
   const [state, setState] = useState<BrowserState>({
     loading: false,
     canGoBack: false,
@@ -151,8 +154,8 @@ function useBrowserState(): BrowserState {
   });
   useEffect(() => {
     let live = true;
-    const unsubscribe = window.edssi.browser.onChange(setState);
-    window.edssi.browser.getState().then(
+    const unsubscribe = edssi.browser.onChange(setState);
+    edssi.browser.getState().then(
       (next) => {
         if (live) setState(next);
       },
@@ -162,6 +165,6 @@ function useBrowserState(): BrowserState {
       live = false;
       unsubscribe();
     };
-  }, []);
+  }, [edssi]);
   return state;
 }

@@ -14,6 +14,7 @@ import {
   type VrCommand,
   VR_REPEAT_COMMANDS,
 } from '../../../shared/vr';
+import { useEdssi } from '../api/context';
 import { Select } from '../hud/Select';
 import { Toggle } from './FieldRow';
 import { type BoundElsewhere, Presses, takenElsewhere } from './Presses';
@@ -58,6 +59,7 @@ export function VrBindingsPanel({
   elsewhere = [],
   quick,
 }: VrBindingsPanelProps) {
+  const edssi = useEdssi();
   const [command, setCommand] = useState<VrCommand>('toggle');
   /** What the capture will do with what is pressed: add a binding, or replace this row's. */
   const [capturing, setCapturing] = useState<{ row?: Row; target?: VrCommand } | undefined>();
@@ -80,7 +82,7 @@ export function VrBindingsPanel({
       setProblem(undefined);
       const into = row?.command ?? target ?? command;
       try {
-        const result = await window.edssi.input.capture();
+        const result = await edssi.input.capture();
         if (!result) return;
         const action: BoundAction = { ...row?.action, binding: result.binding };
         // The same control pressed the same way can't run two commands; it would run both. The row
@@ -125,13 +127,13 @@ export function VrBindingsPanel({
         setCapturing(undefined);
       }
     },
-    [bindings, bound, command, elsewhere, onSave],
+    [edssi, bindings, bound, command, elsewhere, onSave],
   );
 
   const cancel = useCallback(() => {
-    void window.edssi.input.cancelCapture();
+    void edssi.input.cancelCapture();
     setCapturing(undefined);
-  }, []);
+  }, [edssi]);
 
   const change = useCallback(
     (row: Row, how: Partial<BoundAction>) => {

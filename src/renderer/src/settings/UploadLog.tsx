@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import type { UploadLogEntry } from '../../../shared/uploads';
+import { useEdssi } from '../api/context';
 import {
   formatDateTime,
   formatShortDateTime,
@@ -20,19 +21,20 @@ const SERVICE: Record<UploadLogEntry['target'], string> = {
  * send-session script writes here too, from its own process, hence the refresh.
  */
 export function UploadLog({ logVersion }: { logVersion: number | undefined }) {
+  const edssi = useEdssi();
   const [entries, setEntries] = useState<UploadLogEntry[]>();
   const [problem, setProblem] = useState<string>();
   const [onlyProblems, setOnlyProblems] = useState(false);
 
   const load = useCallback(() => {
-    window.edssi.uploads.getLog(LIMIT).then(
+    edssi.uploads.getLog(LIMIT).then(
       (next) => {
         setEntries(next);
         setProblem(undefined);
       },
       (error: unknown) => setProblem(error instanceof Error ? error.message : String(error)),
     );
-  }, []);
+  }, [edssi]);
 
   // Fetched again whenever the live upload adds a request; before its first snapshot, not at all.
   useEffect(() => {

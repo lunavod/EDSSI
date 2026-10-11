@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react';
 
+import type { EdssiApi } from '../../../shared/api';
 import {
   commodityKey,
   remaining,
@@ -22,9 +23,12 @@ export interface HereCheck {
  * jumps are to systems with nothing to buy, and Spansh needn't be asked about each. The last
  * market opened in the game here is read from its Market.json instead.
  */
-export function checkHere(set: (update: (current: HereCheck) => HereCheck) => void): void {
+export function checkHere(
+  edssi: EdssiApi,
+  set: (update: (current: HereCheck) => HereCheck) => void,
+): void {
   set((current) => ({ ...current, busy: true, problem: undefined }));
-  void window.edssi.commodities.here().then(
+  void edssi.commodities.here().then(
     (outcome) =>
       set((current) =>
         'error' in outcome

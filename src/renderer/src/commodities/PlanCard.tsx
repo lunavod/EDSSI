@@ -6,6 +6,7 @@ import {
   purchaseLeft,
   type ShoppingPlan,
 } from '../../../shared/commodities';
+import { useEdssi } from '../api/context';
 import { CopyButton } from '../hud/CopyButton';
 import { Glyph } from '../hud/Glyph';
 import { Icon } from '../hud/Icon';
@@ -187,6 +188,7 @@ export function PlanCard({
 
 /** The pinned plan: what is left of it, with what has been bought struck through. */
 export function PinnedCard({ pinned, where }: { pinned: PinnedPlan; where: Whereabouts }) {
+  const edssi = useEdssi();
   // Nothing can press Unpin in a headset.
   const vr = useInVr();
   return (
@@ -198,11 +200,7 @@ export function PinnedCard({ pinned, where }: { pinned: PinnedPlan; where: Where
       where={where}
       action={
         !vr && (
-          <button
-            type="button"
-            className="link"
-            onClick={() => void window.edssi.commodities.pin(null)}
-          >
+          <button type="button" className="link" onClick={() => void edssi.commodities.pin(null)}>
             Unpin
           </button>
         )

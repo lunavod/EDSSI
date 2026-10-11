@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { AssistantPhase, VoicePreview } from '../../../shared/assistant';
 import { DEFAULT_KOKORO_VOICE, type KokoroState } from '../../../shared/kokoro';
+import { useEdssi } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 import { type Getter, speakingProvider } from './fields';
 
@@ -67,6 +68,7 @@ export function previewFor(get: Getter, text: string): VoicePreview | undefined 
  * along that is and plays the line the moment it is.
  */
 export function VoiceTestPanel({ get }: { get: Getter }) {
+  const edssi = useEdssi();
   const [text, setText] = useState(SAMPLE);
   const [problem, setProblem] = useState<string>();
   const [phase, setPhase] = useState<AssistantPhase>('idle');
@@ -89,7 +91,7 @@ export function VoiceTestPanel({ get }: { get: Getter }) {
     setProblem(undefined);
     setStarting(true);
     try {
-      const why = await window.edssi.assistant.previewVoice(preview);
+      const why = await edssi.assistant.previewVoice(preview);
       // Kokoro not ready yet: asking has set it going (again, after a failure), and the progress
       // below says how far it is.
       if (why !== undefined && preview.provider === 'kokoro' && latest.current.kind !== 'ready') {
@@ -111,8 +113,8 @@ export function VoiceTestPanel({ get }: { get: Getter }) {
 
   // Shown with Kokoro picked means it's about to be tried: load it now, not when Play is pressed.
   useEffect(() => {
-    if (isKokoro) void window.edssi.assistant.prepareKokoro();
-  }, [isKokoro]);
+    if (isKokoro) void edssi.assistant.prepareKokoro();
+  }, [edssi, isKokoro]);
 
   useEffect(() => {
     const take = (state: KokoroState, now: AssistantPhase) => {
@@ -125,13 +127,11 @@ export function VoiceTestPanel({ get }: { get: Getter }) {
       setWaiting(false);
       if (next === 'play') void playRef.current();
     };
-    void window.edssi.assistant
+    void edssi.assistant
       .getSnapshot()
       .then((snapshot) => take(snapshot.setup.kokoro, snapshot.phase));
-    return window.edssi.assistant.onChange((snapshot) =>
-      take(snapshot.setup.kokoro, snapshot.phase),
-    );
-  }, []);
+    return edssi.assistant.onChange((snapshot) => take(snapshot.setup.kokoro, snapshot.phase));
+  }, [edssi]);
 
   // From the press until the first word, which is a second or so, while waiting for the voice
   // to be ready, and while it speaks.
@@ -139,7 +139,7 @@ export function VoiceTestPanel({ get }: { get: Getter }) {
 
   const stop = () => {
     if (waitingRef.current) wait(false);
-    else void window.edssi.assistant.cancel();
+    else void edssi.assistant.cancel();
   };
 
   return (

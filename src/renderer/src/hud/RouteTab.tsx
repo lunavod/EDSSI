@@ -2,6 +2,7 @@ import { useState } from 'react';
 
 import type { CsvRouteState } from '../../../shared/csv-route';
 import { activeRoute, nextJump, type PlottedRoute, positionOf } from '../../../shared/nav-routes';
+import { useEdssi } from '../api/context';
 import { RENDERER_EXTENSIONS, type RoutePages, type RoutePagesContext } from '../extensions';
 import { CsvRouteActions, CsvRouteView } from './CsvRouteView';
 import { Glyph } from './Glyph';
@@ -41,6 +42,7 @@ export function RouteTab({
   /** In the main tank now, t. */
   fuel: number | undefined;
 }) {
+  const edssi = useEdssi();
   const [tab, setTab] = useState('plotted');
   const extended = useExtensionPages({ csvRoute, here: system, fuel, active: tab, show: setTab });
   const extraPages = extended.flatMap((pages) => pages.pages);
@@ -84,7 +86,7 @@ export function RouteTab({
                   type="button"
                   className="btn ghost sm"
                   title={`Copy ${next.system.StarSystem}, to paste into the galaxy map`}
-                  onClick={() => void window.edssi.clipboard.writeText(next.system.StarSystem)}
+                  onClick={() => void edssi.clipboard.writeText(next.system.StarSystem)}
                 >
                   <span className="ic-w">
                     <Icon src={ICONS.copy} />

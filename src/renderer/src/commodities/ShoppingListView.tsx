@@ -9,6 +9,7 @@ import {
   type ShoppingList,
   type ShoppingNeed,
 } from '../../../shared/commodities';
+import { useEdssi } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 import { Suggest } from '../hud/Suggest';
 import { formatNumber } from '../journal/format';
@@ -18,8 +19,6 @@ import { useCommodityNameList } from './useCommodities';
 let idCount = 0;
 /** Ids for lines made in the window; the main process keeps whatever it is sent. */
 const newId = () => `new-${Date.now()}-${++idCount}`;
-
-const save = (items: ShoppingItem[]) => void window.edssi.commodities.setList(items);
 
 /**
  * The shopping list: how much of each commodity is needed and how much is bought. Both can be
@@ -43,6 +42,8 @@ export function ShoppingListView({
   const [clearing, setClearing] = useState(false);
   /** Open while screenshots of the colonisation panel are being read, with any dropped here. */
   const [screenshots, setScreenshots] = useState<{ files: File[] }>();
+  const edssi = useEdssi();
+  const save = (items: ShoppingItem[]) => void edssi.commodities.setList(items);
 
   if (!list) return <p className="comm-empty">Loading…</p>;
   const { items } = list;
@@ -63,7 +64,7 @@ export function ShoppingListView({
     setImporting(undefined);
   };
   const pick = () =>
-    void window.edssi.commodities.pickCsv().then((outcome) => {
+    void edssi.commodities.pickCsv().then((outcome) => {
       if (!outcome) return;
       if ('error' in outcome) setProblem(outcome.error);
       else imported(outcome.result.needs, outcome.result.fileName);

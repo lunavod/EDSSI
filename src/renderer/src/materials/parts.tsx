@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import type { NewCraftingTodo } from '../../../shared/crafting';
+import { useEdssi } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 import type { IngredientLine } from './materials';
 
@@ -53,6 +54,7 @@ const ADDED_MS = 1500;
 
 /** Puts a recipe on a to-do list, and says so for a moment. */
 export function AddTodoButton({ todo, title }: { todo: NewCraftingTodo; title: string }) {
+  const edssi = useEdssi();
   const [added, setAdded] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -63,7 +65,7 @@ export function AddTodoButton({ todo, title }: { todo: NewCraftingTodo; title: s
       aria-label={title}
       title={added ? 'Added to the to-do list' : title}
       onClick={() => {
-        void window.edssi.materials.addTodo(todo);
+        void edssi.materials.addTodo(todo);
         setAdded(true);
         clearTimeout(timer.current);
         timer.current = setTimeout(() => setAdded(false), ADDED_MS);
@@ -96,13 +98,14 @@ export function TodoStatus({ done, short }: { done: boolean; short: number }) {
 
 /** A to-do's remove button. */
 export function RemoveTodo({ id, name }: { id: string; name: string }) {
+  const edssi = useEdssi();
   return (
     <button
       type="button"
       className="ibtn sm"
       aria-label={`Remove ${name}`}
       title="Remove from the list"
-      onClick={() => void window.edssi.materials.removeTodo(id)}
+      onClick={() => void edssi.materials.removeTodo(id)}
     >
       <Glyph name="trash" />
     </button>

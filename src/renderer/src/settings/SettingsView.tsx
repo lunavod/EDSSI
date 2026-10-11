@@ -8,6 +8,7 @@ import type { SettingsPatch } from '../../../shared/settings';
 import type { UpdateState } from '../../../shared/updates';
 import type { UploadsSnapshot, UploadStatus } from '../../../shared/uploads';
 import { VR_COMMAND_LABELS, VR_COMMAND_NAMES, type VrCommand } from '../../../shared/vr';
+import { useEdssi, useOwnsEvent, useWindowStorage, type WindowStorage } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 import { Tabs } from '../hud/Tabs';
 import { formatShortTime } from '../journal/format';
@@ -37,7 +38,7 @@ import {
   valueAt,
 } from './fields';
 import { HelpText } from './HelpText';
-import { onOpenSettings } from './open';
+import { useSettingsRequests } from './open';
 import { PasteBindingsPanel } from './PasteBindingsPanel';
 import { type StepStatus, stepStatus } from './quickstart';
 import { UploadLog } from './UploadLog';
@@ -69,9 +70,9 @@ type Draft = Record<string, unknown>;
 
 const PAGE_KEY = 'edssi.settings.page';
 
-function initialPage(): PageId {
+function initialPage(storage: WindowStorage): PageId {
   try {
-    const saved = localStorage.getItem(PAGE_KEY);
+    const saved = storage.getItem(PAGE_KEY);
     if (PAGE_IDS.some((id) => id === saved)) {
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- checked just above
       return saved as PageId;
@@ -102,10 +103,13 @@ export function SettingsView({
   leavingFor,
   onLeave,
 }: SettingsViewProps) {
+  const edssi = useEdssi();
+  const storage = useWindowStorage();
+  const ownsEvent = useOwnsEvent();
   const [draft, setDraft] = useState<Draft>({});
   const [saving, setSaving] = useState(false);
   const [problem, setProblem] = useState<string>();
-  const [page, setPage] = useState<PageId>(initialPage);
+  const [page, setPage] = useState<PageId>(() => initialPage(storage));
   const [query, setQuery] = useState('');
   const content = useRef<HTMLDivElement>(null);
 
@@ -145,27 +149,30 @@ export function SettingsView({
 
   useEffect(() => {
     try {
-      localStorage.setItem(PAGE_KEY, page);
+      storage.setItem(PAGE_KEY, page);
     } catch {
       // Only a convenience.
     }
-  }, [page]);
+  }, [page, storage]);
 
   /** Resolves to whether the save went through. */
-  const save = useCallback(async (patch: SettingsPatch): Promise<boolean> => {
-    setSaving(true);
-    setProblem(undefined);
-    try {
-      await window.edssi.settings.save(patch);
-      return true;
-    } catch (error) {
-      console.error('[settings] failed to save', error);
-      setProblem(error instanceof Error ? error.message : String(error));
-      return false;
-    } finally {
-      setSaving(false);
-    }
-  }, []);
+  const save = useCallback(
+    async (patch: SettingsPatch): Promise<boolean> => {
+      setSaving(true);
+      setProblem(undefined);
+      try {
+        await edssi.settings.save(patch);
+        return true;
+      } catch (error) {
+        console.error('[settings] failed to save', error);
+        setProblem(error instanceof Error ? error.message : String(error));
+        return false;
+      } finally {
+        setSaving(false);
+      }
+    },
+    [edssi],
+  );
 
   const saveDraft = useCallback(async (): Promise<boolean> => {
     if (invalid > 0 || !dirty) return false;
@@ -216,14 +223,15 @@ export function SettingsView({
   useEffect(() => {
     if (!active) return undefined;
     const onKey = (event: KeyboardEvent) => {
-      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's') {
+      // Embedded in a page (the mock UI), only while typing in this EDSSI: Ctrl+S is the page's.
+      if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 's' && ownsEvent(event)) {
         event.preventDefault();
         void saveDraft();
       }
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [active, saveDraft]);
+  }, [active, ownsEvent, saveDraft]);
 
   /** Goes to a page, and to a section or field on it once that has rendered. */
   const open = useCallback((next: PageId, anchor?: string) => {
@@ -234,18 +242,23 @@ export function SettingsView({
         content.current?.scrollTo({ top: 0 });
         return;
       }
-      const element = document.getElementById(anchor);
       const pane = content.current;
+      // Within the pane, not the document: an embedded EDSSI (the mock UI) is in a shadow root.
+      const element = pane?.querySelector<HTMLElement>(`#${CSS.escape(anchor)}`);
       if (!element || !pane) return;
-      // Scrolled by hand: scrollIntoView would scroll the whole window along with the pane.
-      const top = element.getBoundingClientRect().top - pane.getBoundingClientRect().top;
+      // Scrolled by hand: scrollIntoView would scroll the whole window along with the pane. In the
+      // pane's own pixels, as a page may draw it scaled.
+      const paneBox = pane.getBoundingClientRect();
+      const scale = pane.offsetHeight > 0 ? paneBox.height / pane.offsetHeight : 1;
+      const top = (element.getBoundingClientRect().top - paneBox.top) / scale;
       pane.scrollTo({ top: pane.scrollTop + top - 8, behavior: 'smooth' });
       element.querySelector<HTMLElement>('input, textarea, button')?.focus({ preventScroll: true });
     });
   }, []);
 
   // A page asked for from elsewhere in the window, such as Comms' "Open Quickstart".
-  useEffect(() => onOpenSettings((next) => open(next)), [open]);
+  const settingsRequests = useSettingsRequests();
+  useEffect(() => settingsRequests.on((next) => open(next)), [settingsRequests, open]);
 
   const matches = useMemo(() => search(query), [query]);
 
@@ -526,7 +539,7 @@ export function SettingsView({
               type="button"
               className="link"
               style={{ fontSize: 13 }}
-              onClick={() => void window.edssi.settings.openFile()}
+              onClick={() => void edssi.settings.openFile()}
             >
               Open
             </button>
@@ -662,6 +675,7 @@ function SettingsSection({
   onCommit,
   panel,
 }: SettingsSectionProps) {
+  const edssi = useEdssi();
   const sectionOn = holds(section.when, get);
   const fields = section.fields.filter((field) => !hidden(field, get));
   const warnings = (section.checks ?? [])
@@ -708,11 +722,7 @@ function SettingsSection({
           <span className="settings-status-dot" aria-hidden="true" />
           <span className="grow">{step.status.text}</span>
           {step.signIn && (
-            <button
-              type="button"
-              className="btn sm"
-              onClick={() => void window.edssi.assistant.signIn()}
-            >
+            <button type="button" className="btn sm" onClick={() => void edssi.assistant.signIn()}>
               Sign in with ChatGPT
             </button>
           )}
@@ -895,6 +905,7 @@ function shortLabel(label: string, flag: string): string {
 
 /** Whether the assistant can answer, and the sign-in when the ChatGPT plan is waiting on one. */
 function AssistantStatus({ setup, quiet }: { setup: AssistantSetup | undefined; quiet: boolean }) {
+  const edssi = useEdssi();
   if (!setup) return null;
   const needsSignIn = setup.provider === 'codex' && !setup.signedIn;
   // The section's own warning already says what is missing.
@@ -912,11 +923,7 @@ function AssistantStatus({ setup, quiet }: { setup: AssistantSetup | undefined; 
         {setup.provider === 'codex' && setup.signedIn && ' Signed in to ChatGPT.'}
       </span>
       {needsSignIn && (
-        <button
-          type="button"
-          className="btn sm"
-          onClick={() => void window.edssi.assistant.signIn()}
-        >
+        <button type="button" className="btn sm" onClick={() => void edssi.assistant.signIn()}>
           Sign in with ChatGPT
         </button>
       )}

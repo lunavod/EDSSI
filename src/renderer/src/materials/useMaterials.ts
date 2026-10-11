@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { isNewerMaterialsSnapshot, type MaterialsSnapshot } from '../../../shared/materials';
+import { useEdssi } from '../api/context';
 
 /** Inventory, crafting history and favourite recipes from the main process, kept up to date. */
 export function useMaterials(): MaterialsSnapshot | undefined {
+  const edssi = useEdssi();
   const [snapshot, setSnapshot] = useState<MaterialsSnapshot>();
 
   useEffect(() => {
@@ -11,8 +13,8 @@ export function useMaterials(): MaterialsSnapshot | undefined {
     const offer = (next: MaterialsSnapshot) =>
       setSnapshot((current) => (isNewerMaterialsSnapshot(current, next) ? next : current));
     // Subscribe first so nothing falls between the two; versions sort out the overlap.
-    const unsubscribe = window.edssi.materials.onChange(offer);
-    window.edssi.materials.getSnapshot().then(
+    const unsubscribe = edssi.materials.onChange(offer);
+    edssi.materials.getSnapshot().then(
       (next) => {
         if (active) offer(next);
       },
@@ -22,7 +24,7 @@ export function useMaterials(): MaterialsSnapshot | undefined {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [edssi]);
 
   return snapshot;
 }

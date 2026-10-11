@@ -3,16 +3,18 @@ import { useEffect, useState } from 'react';
 import type { SettingsView } from '../../../shared/api';
 import type { InputSnapshot } from '../../../shared/input';
 import type { UploadsSnapshot } from '../../../shared/uploads';
+import { useEdssi } from '../api/context';
 
 /** The settings file as EDSSI is running it, kept up to date however it changes. */
 export function useSettings(): SettingsView | undefined {
+  const edssi = useEdssi();
   const [view, setView] = useState<SettingsView>();
 
   useEffect(() => {
     let active = true;
     // Subscribe first, so a save between the two isn't missed.
-    const unsubscribe = window.edssi.settings.onChange(setView);
-    window.edssi.settings.get().then(
+    const unsubscribe = edssi.settings.onChange(setView);
+    edssi.settings.get().then(
       (next) => {
         if (active) setView((current) => current ?? next);
       },
@@ -22,21 +24,22 @@ export function useSettings(): SettingsView | undefined {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [edssi]);
 
   return view;
 }
 
 /** The sticks EDSSI can see and which bindings are held, for the push-to-talk panel. */
 export function useInput(): InputSnapshot | undefined {
+  const edssi = useEdssi();
   const [snapshot, setSnapshot] = useState<InputSnapshot>();
 
   useEffect(() => {
     let active = true;
     const offer = (next: InputSnapshot) =>
       setSnapshot((current) => (current && current.version > next.version ? current : next));
-    const unsubscribe = window.edssi.input.onChange(offer);
-    window.edssi.input.getSnapshot().then(
+    const unsubscribe = edssi.input.onChange(offer);
+    edssi.input.getSnapshot().then(
       (next) => {
         if (active) offer(next);
       },
@@ -46,21 +49,22 @@ export function useInput(): InputSnapshot | undefined {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [edssi]);
 
   return snapshot;
 }
 
 /** Whether the journal is reaching EDSM, Inara and EDDN, for the settings sections that set them up. */
 export function useUploads(): UploadsSnapshot | undefined {
+  const edssi = useEdssi();
   const [snapshot, setSnapshot] = useState<UploadsSnapshot>();
 
   useEffect(() => {
     let active = true;
     const offer = (next: UploadsSnapshot) =>
       setSnapshot((current) => (current && current.version > next.version ? current : next));
-    const unsubscribe = window.edssi.uploads.onChange(offer);
-    window.edssi.uploads.getSnapshot().then(
+    const unsubscribe = edssi.uploads.onChange(offer);
+    edssi.uploads.getSnapshot().then(
       (next) => {
         if (active) offer(next);
       },
@@ -70,7 +74,7 @@ export function useUploads(): UploadsSnapshot | undefined {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [edssi]);
 
   return snapshot;
 }

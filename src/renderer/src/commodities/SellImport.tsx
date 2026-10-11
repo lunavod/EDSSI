@@ -1,6 +1,7 @@
 import { useEffect, useId, useRef, useState } from 'react';
 
 import { commodityKey, type HoldItem } from '../../../shared/commodities';
+import { useOpenDialog } from '../api/context';
 import { NumberInput } from '../hud/Controls';
 import { Glyph } from '../hud/Glyph';
 import { formatNumber } from '../journal/format';
@@ -39,9 +40,10 @@ export function SellImport({
   /** Tonnes by commodity key, for the ticked ones of the chosen hold. */
   const [picked, setPicked] = useState<Record<string, number>>({});
 
+  const openDialog = useOpenDialog();
   useEffect(() => {
-    if (dialog.current && !dialog.current.open) dialog.current.showModal();
-  }, []);
+    if (dialog.current) openDialog(dialog.current);
+  }, [openDialog]);
 
   const source = sources.find((known) => known.id === sourceId) ?? sources[0];
   const picks: SellPick[] = (source?.items ?? []).flatMap((item) => {

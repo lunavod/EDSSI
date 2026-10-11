@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 
 import type { PlannedBlueprint, PlannedBuild } from '../../../shared/build-import';
 import { experimentalsFor, blueprintByKey } from '../../../shared/crafting';
+import { useEdssi, useOpenDialog } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 
 /** How many rolls the grade a build asks for gets; the grades below it are planned maxed. */
@@ -19,6 +20,7 @@ const ROLL_CHOICES: readonly { label: string; rolls: number | 'max'; help: strin
  * against the commander's own ship of that type, pick, add.
  */
 export function BuildImport({ onClose }: { onClose: () => void }) {
+  const edssi = useEdssi();
   const dialog = useRef<HTMLDialogElement>(null);
   const [text, setText] = useState('');
   const [rolls, setRolls] = useState<number | 'max'>('max');
@@ -28,15 +30,16 @@ export function BuildImport({ onClose }: { onClose: () => void }) {
   const [reading, setReading] = useState(false);
   const attempt = useRef(0);
 
+  const openDialog = useOpenDialog();
   useEffect(() => {
-    if (dialog.current && !dialog.current.open) dialog.current.showModal();
-  }, []);
+    if (dialog.current) openDialog(dialog.current);
+  }, [openDialog]);
 
   const read = (pasted: string, perGrade: number | 'max') => {
     const mine = ++attempt.current;
     setReading(true);
     setProblem(undefined);
-    void window.edssi.materials
+    void edssi.materials
       .readBuild(pasted, perGrade)
       .then((outcome) => {
         if (mine !== attempt.current) return;
@@ -71,7 +74,7 @@ export function BuildImport({ onClose }: { onClose: () => void }) {
 
   const add = () => {
     if (chosen.length === 0) return;
-    void window.edssi.materials.addTodos(chosen);
+    void edssi.materials.addTodos(chosen);
     close();
   };
 

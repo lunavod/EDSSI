@@ -9,10 +9,12 @@ import {
   scoopableAt,
   starClassAt,
 } from '../../../shared/csv-route';
+import { useEdssi } from '../api/context';
 import { formatNumber } from '../journal/format';
 import { CopyButton } from './CopyButton';
 import { Glyph } from './Glyph';
 import { SavedRoutes } from './SavedRoutes';
+import { scrollNearest } from './scroll-within';
 import { StarClass } from './StarClass';
 import { starBadge } from './system-facts';
 
@@ -24,6 +26,7 @@ export function CsvRouteActions({
   route: CsvRoute | undefined;
   onProblem: (problem: string | undefined) => void;
 }) {
+  const edssi = useEdssi();
   return (
     <>
       {route && (
@@ -37,7 +40,7 @@ export function CsvRouteActions({
       <button
         type="button"
         className="btn ghost sm"
-        onClick={() => void window.edssi.csvRoute.open().then(onProblem)}
+        onClick={() => void edssi.csvRoute.open().then(onProblem)}
       >
         <span className="ic-w">
           <Glyph name="upload" />
@@ -48,7 +51,7 @@ export function CsvRouteActions({
         <button
           type="button"
           className="link"
-          onClick={() => void window.edssi.csvRoute.clear().then(() => onProblem(undefined))}
+          onClick={() => void edssi.csvRoute.clear().then(() => onProblem(undefined))}
         >
           Clear
         </button>
@@ -71,6 +74,7 @@ export function CsvRouteView({
   problem: string | undefined;
   onProblem: (problem: string | undefined) => void;
 }) {
+  const edssi = useEdssi();
   const [dragging, setDragging] = useState(false);
   const onDrop = (event: DragEvent) => {
     event.preventDefault();
@@ -79,7 +83,7 @@ export function CsvRouteView({
     if (!file) return;
     void file
       .text()
-      .then((text) => window.edssi.csvRoute.load(text, file.name))
+      .then((text) => edssi.csvRoute.load(text, file.name))
       .then(onProblem);
   };
 
@@ -120,6 +124,7 @@ export function CsvRouteView({
 }
 
 function LoadedRoute({ route, state }: { route: CsvRoute; state: CsvRouteState }) {
+  const edssi = useEdssi();
   const { position, here, copied } = state;
   const next = nextSystem(route.systems, position);
   const nextIndex = position === undefined ? 0 : position + 1;
@@ -194,9 +199,7 @@ function LoadedRoute({ route, state }: { route: CsvRoute; state: CsvRouteState }
         route={route}
         position={position}
         here={here}
-        onPick={(index) =>
-          void window.edssi.csvRoute.setPosition(index === position ? null : index)
-        }
+        onPick={(index) => void edssi.csvRoute.setPosition(index === position ? null : index)}
       />
     </>
   );
@@ -253,7 +256,7 @@ export function RouteTable({
   const current = useRef<HTMLTableRowElement>(null);
   // Brings the commander's row into view each time they move along, or load another route.
   useEffect(() => {
-    current.current?.scrollIntoView({ block: 'center' });
+    if (current.current) scrollNearest(current.current, 'center');
     // oxlint-disable-next-line react/exhaustive-effect-dependencies -- run on each move, on purpose
   }, [position, route]);
 

@@ -1,16 +1,18 @@
 import { useEffect, useState } from 'react';
 
 import type { UpdateState, WhatsNew } from '../../../shared/updates';
+import { useEdssi } from '../api/context';
 import { formatShortTime } from '../journal/format';
 import { WhatsNewDialog } from './WhatsNew';
 
 /** The Settings tab's About page: the version running, updating it, and the release notes. */
 export function UpdatesPanel({ state }: { state: UpdateState | undefined }) {
+  const edssi = useEdssi();
   const [whatsNew, setWhatsNew] = useState<WhatsNew>();
   const [showNotes, setShowNotes] = useState(false);
   useEffect(() => {
-    void window.edssi.updates.getWhatsNew().then(setWhatsNew);
-  }, []);
+    void edssi.updates.getWhatsNew().then(setWhatsNew);
+  }, [edssi]);
 
   return (
     <div className="settings-panel">
@@ -24,7 +26,7 @@ export function UpdatesPanel({ state }: { state: UpdateState | undefined }) {
           <button
             type="button"
             className="btn primary sm"
-            onClick={() => void window.edssi.updates.install()}
+            onClick={() => void edssi.updates.install()}
           >
             Restart and update to {state.version}
           </button>
@@ -34,7 +36,7 @@ export function UpdatesPanel({ state }: { state: UpdateState | undefined }) {
               type="button"
               className="btn ghost sm"
               disabled={state?.status === 'checking' || state?.status === 'downloading'}
-              onClick={() => void window.edssi.updates.check()}
+              onClick={() => void edssi.updates.check()}
             >
               Check for updates
             </button>

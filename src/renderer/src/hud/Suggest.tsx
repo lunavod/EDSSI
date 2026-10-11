@@ -10,6 +10,7 @@ import {
   useState,
 } from 'react';
 
+import { popupPlace } from './popup-place';
 import { scrollWithin } from './scroll-within';
 
 /** More than this and the list is only shown once something is typed. */
@@ -65,16 +66,12 @@ export function Suggest({
     const measure = () => {
       const anchor = ref.current?.closest('.input') ?? ref.current;
       if (!anchor) return;
-      const box = anchor.getBoundingClientRect();
-      const below = window.innerHeight - box.bottom;
-      const up = below < 220 && box.top > below;
-      setPlace({
-        left: box.left,
-        width: Math.max(box.width, 220),
-        ...(up
-          ? { bottom: window.innerHeight - box.top + 2, maxHeight: Math.min(320, box.top - 8) }
-          : { top: box.bottom + 2, maxHeight: Math.min(320, below - 8) }),
+      const { minWidth, ...place } = popupPlace(anchor, {
+        minWidth: 220,
+        room: 220,
+        maxHeight: 320,
       });
+      setPlace({ ...place, width: minWidth });
     };
     measure();
     window.addEventListener('resize', measure);

@@ -1,6 +1,7 @@
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
+import { EdssiProvider } from './api/EdssiProvider';
 import { loadInstalledExtensions } from './extensions';
 
 import '@fontsource/saira/400.css';
@@ -26,12 +27,16 @@ if (panel !== undefined) document.documentElement.classList.add('vr');
 
 // The app is imported only once the installed extensions are in: its modules read the list of
 // extensions as they load (the Settings tab's pages, the Route tab's).
-void loadInstalledExtensions()
+// The only reader of `window.edssi`: everything below asks the provider (see `api/context.ts`).
+const api = window.edssi;
+void loadInstalledExtensions(api)
   .then(() => Promise.all([import('./App'), import('./vr/VrPanel')]))
   .then(([{ App }, { isVrPanel, VrPanel }]) => {
     createRoot(root).render(
       <StrictMode>
-        {panel !== undefined && isVrPanel(panel) ? <VrPanel panel={panel} /> : <App />}
+        <EdssiProvider api={api}>
+          {panel !== undefined && isVrPanel(panel) ? <VrPanel panel={panel} /> : <App />}
+        </EdssiProvider>
       </StrictMode>,
     );
   });

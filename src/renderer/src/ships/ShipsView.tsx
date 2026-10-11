@@ -9,6 +9,7 @@ import type {
   SlotView,
   StockFit,
 } from '../../../shared/ships';
+import { useEdssi } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 import { Select } from '../hud/Select';
 import { formatCompact, formatNumber, formatShortDateTime } from '../journal/format';
@@ -126,11 +127,12 @@ export function ShipsView({
 
 /** A hull as the shipyard sells it, asked of the main process when one is picked. */
 function useStockFit(ship: string | undefined): StockFit | undefined {
+  const edssi = useEdssi();
   const [fit, setFit] = useState<StockFit>();
   useEffect(() => {
     let active = true;
     if (ship !== undefined) {
-      window.edssi.ships.stockFit(ship).then(
+      edssi.ships.stockFit(ship).then(
         (next) => {
           if (active) setFit(next);
         },
@@ -140,7 +142,7 @@ function useStockFit(ship: string | undefined): StockFit | undefined {
     return () => {
       active = false;
     };
-  }, [ship]);
+  }, [edssi, ship]);
   return fit?.ship === ship ? fit : undefined;
 }
 
@@ -441,10 +443,11 @@ const EXPORTS: readonly { target: ShipExportTarget; label: string; title: string
 
 /** Sends the ship's last loadout to EDSY or Coriolis, or saves its slots as a CSV. */
 function ExportBar({ ship }: { ship: ShipView }) {
+  const edssi = useEdssi();
   const [problem, setProblem] = useState<{ shipId: number; text: string }>();
   const send = (target: ShipExportTarget) => {
     setProblem(undefined);
-    void window.edssi.ships.export(ship.shipId, target).then(
+    void edssi.ships.export(ship.shipId, target).then(
       (text) => text !== undefined && setProblem({ shipId: ship.shipId, text }),
       (error: unknown) => setProblem({ shipId: ship.shipId, text: String(error) }),
     );
@@ -489,10 +492,11 @@ function JournalOnlyNote({ ship, catalog }: { ship: ShipView; catalog: CatalogSt
 }
 
 function CatalogFoot({ ship, catalog }: { ship: ShipView; catalog: CatalogStatus }) {
+  const edssi = useEdssi();
   const [checking, setChecking] = useState(false);
   const check = () => {
     setChecking(true);
-    void window.edssi.ships.refreshCatalog().finally(() => setChecking(false));
+    void edssi.ships.refreshCatalog().finally(() => setChecking(false));
   };
   return (
     <footer className="sh-foot">

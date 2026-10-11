@@ -3,6 +3,7 @@ import { useMemo, useState } from 'react';
 import type { CarriersSnapshot } from '../../../shared/carriers';
 import { remaining, sellableHold, type ShoppingList } from '../../../shared/commodities';
 import type { CargoEvent } from '../../../shared/journal-events.generated';
+import { useEdssi } from '../api/context';
 import { Tabs } from '../hud/Tabs';
 import { formatNumber } from '../journal/format';
 import { checkHere, type HereCheck, HereActions, InThisSystemView } from './InThisSystemView';
@@ -76,6 +77,7 @@ export function CommoditiesView({
   cargo?: CargoEvent;
   carriers?: CarriersSnapshot;
 }) {
+  const edssi = useEdssi();
   const [tab, setTab] = useState<SubTab>('list');
   const [hereCheck, setHereCheck] = useState<HereCheck>({ busy: false });
   const names = useCommodityNames();
@@ -103,7 +105,7 @@ export function CommoditiesView({
             <HereActions
               check={hereCheck}
               canCheck={listed}
-              onCheck={() => checkHere(setHereCheck)}
+              onCheck={() => checkHere(edssi, setHereCheck)}
             />
           )
         }

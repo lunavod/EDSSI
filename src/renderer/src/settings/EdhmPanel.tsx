@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import type { FssOverlayInstallResult, FssOverlayStatus, HudColor } from '../../../shared/edhm';
+import { useEdssi } from '../api/context';
 
 interface EdhmPanelProps {
   hud: HudColor | null | undefined;
@@ -14,16 +15,17 @@ interface EdhmPanelProps {
  * (see `src/main/edhm/fss-overlay.ts`).
  */
 export function EdhmPanel({ hud, matching }: EdhmPanelProps) {
+  const edssi = useEdssi();
   const [status, setStatus] = useState<FssOverlayStatus>();
   const [installing, setInstalling] = useState(false);
   const [result, setResult] = useState<FssOverlayInstallResult>();
   const [problem, setProblem] = useState<string>();
 
   const refresh = useCallback(() => {
-    window.edssi.edhm.getFssOverlay().then(setStatus, (error: unknown) => {
+    edssi.edhm.getFssOverlay().then(setStatus, (error: unknown) => {
       setProblem(error instanceof Error ? error.message : String(error));
     });
-  }, []);
+  }, [edssi]);
 
   useEffect(refresh, [refresh]);
 
@@ -32,7 +34,7 @@ export function EdhmPanel({ hud, matching }: EdhmPanelProps) {
     setProblem(undefined);
     setResult(undefined);
     try {
-      const next = await window.edssi.edhm.installFssOverlay();
+      const next = await edssi.edhm.installFssOverlay();
       setResult(next);
       setStatus(next.status);
     } catch (error) {
@@ -43,7 +45,7 @@ export function EdhmPanel({ hud, matching }: EdhmPanelProps) {
     } finally {
       setInstalling(false);
     }
-  }, [refresh]);
+  }, [edssi, refresh]);
 
   return (
     <div className="settings-panel">

@@ -1,6 +1,7 @@
 import { type DragEvent, useEffect, useRef, useState } from 'react';
 
 import type { ShoppingNeed } from '../../../shared/commodities';
+import { useEdssi, useOpenDialog, useOwnsEvent } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 import { formatNumber } from '../journal/format';
 
@@ -49,6 +50,7 @@ export function ScreenshotImport({
   onImport: (needs: ShoppingNeed[], mode: 'replace' | 'add') => void;
   onClose: () => void;
 }) {
+  const edssi = useEdssi();
   const dialog = useRef<HTMLDialogElement>(null);
   const picker = useRef<HTMLInputElement>(null);
   const [screenshots, setScreenshots] = useState<Screenshot[]>([]);
@@ -73,12 +75,16 @@ export function ScreenshotImport({
     }
   };
 
+  const ownsEvent = useOwnsEvent();
+  const openDialog = useOpenDialog();
   useEffect(() => {
-    if (dialog.current && !dialog.current.open) dialog.current.showModal();
+    if (dialog.current) openDialog(dialog.current);
     // Once, even where effects run twice in development.
     if (initialFiles && !started.current) add(initialFiles);
     started.current = true;
     const onPaste = (event: ClipboardEvent) => {
+      // Embedded in a page (the mock UI), a paste elsewhere on it is the page's.
+      if (!ownsEvent(event)) return;
       const files = [...(event.clipboardData?.files ?? [])];
       if (images(files).length === 0) return;
       event.preventDefault();
@@ -88,7 +94,7 @@ export function ScreenshotImport({
     return () => document.removeEventListener('paste', onPaste);
     // Only the files it opened with; later ones come through `add`.
     // oxlint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [openDialog, ownsEvent]);
 
   const close = () => {
     attempt.current++;
@@ -99,7 +105,7 @@ export function ScreenshotImport({
     const mine = ++attempt.current;
     setReading(true);
     setProblem(undefined);
-    void window.edssi.commodities
+    void edssi.commodities
       .readScreenshots(screenshots.map((shot) => shot.url))
       .then(
         (outcome) => {

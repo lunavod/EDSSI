@@ -6,6 +6,7 @@ import {
   routeLengthLy,
   type RouteSystem,
 } from '../../../shared/nav-routes';
+import { useEdssi } from '../api/context';
 import { CopyButton } from '../hud/CopyButton';
 import {
   displayFields,
@@ -30,6 +31,7 @@ interface EventDetailsProps {
 
 /** Every field of an event, labelled and formatted for reading, plus the route it was part of. */
 export function EventDetails({ event, routes, loss }: EventDetailsProps) {
+  const edssi = useEdssi();
   const hasFields = displayFields(event, true).length > 0;
   const route = routeContext(event, routes);
   return (
@@ -48,7 +50,7 @@ export function EventDetails({ event, routes, loss }: EventDetailsProps) {
           type="button"
           className="link"
           title="The journal line, as the game wrote it"
-          onClick={() => void window.edssi.clipboard.writeText(toJson(event))}
+          onClick={() => void edssi.clipboard.writeText(toJson(event))}
         >
           Copy JSON
         </button>

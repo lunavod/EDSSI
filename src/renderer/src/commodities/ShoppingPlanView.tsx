@@ -8,6 +8,7 @@ import {
   type ShoppingList,
   type ShoppingPlan,
 } from '../../../shared/commodities';
+import { useEdssi } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 import { formatNumber } from '../journal/format';
 import { MarketFields } from './MarketFields';
@@ -28,6 +29,7 @@ export function ShoppingPlanView({
   where: Whereabouts;
   pinned: PinnedPlan | undefined;
 }) {
+  const edssi = useEdssi();
   const [filters, setFilters] = useMarketFilters('edssi.commodities.plan');
   const [result, setResult] = useState<PlanResult>();
   const [problem, setProblem] = useState<string>();
@@ -37,7 +39,7 @@ export function ShoppingPlanView({
   // plan can be followed straight from the results.
   useEffect(
     () =>
-      window.edssi.commodities.onPurchase(({ marketId, names, count }) =>
+      edssi.commodities.onPurchase(({ marketId, names, count }) =>
         setResult((current) =>
           current
             ? {
@@ -49,11 +51,11 @@ export function ShoppingPlanView({
             : current,
         ),
       ),
-    [],
+    [edssi],
   );
 
   const pin = (plan: ShoppingPlan, title: string) =>
-    void window.edssi.commodities.pin({
+    void edssi.commodities.pin({
       plan,
       title,
       reference: result?.reference ?? '',
@@ -66,7 +68,7 @@ export function ShoppingPlanView({
     if (busy || missing.length === 0) return;
     setBusy(true);
     setProblem(undefined);
-    void window.edssi.commodities
+    void edssi.commodities
       .plan(filters)
       .then((outcome) => {
         if ('error' in outcome) {
@@ -105,7 +107,7 @@ export function ShoppingPlanView({
             <button
               type="button"
               className="btn danger"
-              onClick={() => void window.edssi.commodities.cancelPlan()}
+              onClick={() => void edssi.commodities.cancelPlan()}
             >
               <span className="ic-w">
                 <Glyph name="stop" />

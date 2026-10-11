@@ -13,6 +13,7 @@ import * as jsxRuntime from 'react/jsx-runtime';
 import * as zod from 'zod';
 import type { z } from 'zod';
 
+import type { EdssiApi } from '../../shared/api';
 import type { CsvRoute, CsvRouteState } from '../../shared/csv-route';
 import {
   EXTENSION_HOST_GLOBAL,
@@ -82,7 +83,7 @@ for (const extension of RENDERER_EXTENSIONS) {
  * Loads the window side of the extensions installed in `<config dir>/extensions/` (see
  * `src/main/extensions.ts`). One that fails is reported and left out; this never throws.
  */
-export async function loadInstalledExtensions(): Promise<void> {
+export async function loadInstalledExtensions(api: EdssiApi): Promise<void> {
   const shared: Record<(typeof SHARED_RENDERER_MODULES)[number], unknown> = {
     react: React,
     'react/jsx-runtime': jsxRuntime,
@@ -94,7 +95,7 @@ export async function loadInstalledExtensions(): Promise<void> {
   Object.assign(globalThis, { [EXTENSION_HOST_GLOBAL]: shared });
   let installed: InstalledRendererExtension[];
   try {
-    installed = await window.edssi.extensions.installed();
+    installed = await api.extensions.installed();
   } catch (error) {
     console.error('[extensions] could not list the installed extensions', error);
     return;

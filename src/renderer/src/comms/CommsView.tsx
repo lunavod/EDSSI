@@ -6,9 +6,11 @@ import type {
   ToolCallRecord,
   TranscriptEntry,
 } from '../../../shared/assistant';
+import { useEdssi } from '../api/context';
 import { Glyph } from '../hud/Glyph';
+import { scrollNearest } from '../hud/scroll-within';
 import { formatShortTime } from '../journal/format';
-import { openSettings } from '../settings/open';
+import { useSettingsRequests } from '../settings/open';
 import { formatJson, preview } from './json';
 import { PromptBar } from './PromptBar';
 import type { Voice } from './useVoice';
@@ -39,6 +41,7 @@ const PHASES: Record<string, string> = {
  * voice are set in Settings, not on top of the conversation.
  */
 export function CommsView({ snapshot, voice, vr = false }: CommsViewProps) {
+  const edssi = useEdssi();
   const [question, setQuestion] = useState('');
   const entries = snapshot?.transcript ?? [];
   const bottom = useRef<HTMLDivElement>(null);
@@ -47,7 +50,7 @@ export function CommsView({ snapshot, voice, vr = false }: CommsViewProps) {
   const latestText = latest?.text;
 
   useEffect(() => {
-    bottom.current?.scrollIntoView({ block: 'end' });
+    if (bottom.current) scrollNearest(bottom.current, 'end');
     // oxlint-disable-next-line react/exhaustive-effect-dependencies -- these are the cue to scroll
   }, [entries.length, latestText]);
 
@@ -56,7 +59,7 @@ export function CommsView({ snapshot, voice, vr = false }: CommsViewProps) {
     const text = question.trim();
     if (!text) return;
     setQuestion('');
-    void window.edssi.assistant.ask(text);
+    void edssi.assistant.ask(text);
   };
 
   const setup = snapshot?.setup;
@@ -124,7 +127,7 @@ export function CommsView({ snapshot, voice, vr = false }: CommsViewProps) {
               type="button"
               className="link"
               disabled={!busy}
-              onClick={() => void window.edssi.assistant.cancel()}
+              onClick={() => void edssi.assistant.cancel()}
             >
               Stop
             </button>
@@ -132,7 +135,7 @@ export function CommsView({ snapshot, voice, vr = false }: CommsViewProps) {
               type="button"
               className="link"
               title="Start a new conversation"
-              onClick={() => void window.edssi.assistant.reset()}
+              onClick={() => void edssi.assistant.reset()}
             >
               New
             </button>
@@ -337,6 +340,8 @@ function VrHead({
 
 /** Whatever stops the assistant answering, and the button that fixes it; nothing when all is well. */
 function Trouble({ snapshot, problem }: { snapshot?: AssistantSnapshot; problem?: string }) {
+  const edssi = useEdssi();
+  const settingsRequests = useSettingsRequests();
   const setup = snapshot?.setup;
   if (!setup) return null;
   const trouble = problem ?? setup.configProblem ?? setup.problem ?? setup.voiceNote;
@@ -350,15 +355,11 @@ function Trouble({ snapshot, problem }: { snapshot?: AssistantSnapshot; problem?
       </span>
       <span className="grow">{trouble ?? 'Sign in to ChatGPT for the ship to answer.'}</span>
       {needsSignIn && (
-        <button
-          type="button"
-          className="btn sm"
-          onClick={() => void window.edssi.assistant.signIn()}
-        >
+        <button type="button" className="btn sm" onClick={() => void edssi.assistant.signIn()}>
           Sign in with ChatGPT
         </button>
       )}
-      <button type="button" className="link" onClick={() => openSettings('quickstart')}>
+      <button type="button" className="link" onClick={() => settingsRequests.open('quickstart')}>
         Open Quickstart
       </button>
     </div>

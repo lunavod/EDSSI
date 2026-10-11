@@ -9,6 +9,7 @@ import {
   type RecipeKind,
   RECIPES,
 } from '../../../shared/materials';
+import { useEdssi } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 import { formatNumber } from '../journal/format';
 import { join } from '../journal/summaries';
@@ -176,11 +177,8 @@ export function RecipesView({ snapshot }: { snapshot: MaterialsSnapshot | undefi
   );
 }
 
-function setFavourite(line: RecipeLine): void {
-  void window.edssi.materials.setFavourite(line.recipe.id, !line.favourite);
-}
-
 function Star({ line }: { line: RecipeLine }) {
+  const edssi = useEdssi();
   const label = line.favourite ? 'Remove from favourites' : 'Add to favourites';
   return (
     <button
@@ -189,7 +187,7 @@ function Star({ line }: { line: RecipeLine }) {
       aria-pressed={line.favourite}
       aria-label={label}
       title={label}
-      onClick={() => setFavourite(line)}
+      onClick={() => void edssi.materials.setFavourite(line.recipe.id, !line.favourite)}
     >
       <Glyph name={line.favourite ? 'starFilled' : 'star'} />
     </button>

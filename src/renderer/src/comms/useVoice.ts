@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { ListenAction } from '../../../shared/api';
 import type { AssistantSetup } from '../../../shared/assistant';
+import { useEdssi, useLocalDevices } from '../api/context';
 import { VoiceRecorder } from './recorder';
 import { SpeechPlayer } from './speech';
 import { toWav16k } from './to-wav';
@@ -29,18 +30,19 @@ export interface Voice {
  * doing.
  */
 export function useListening(): Voice {
+  const edssi = useEdssi();
   const [listening, setListening] = useState(false);
 
   useEffect(
     () =>
-      window.edssi.assistant.onListen((action: ListenAction) => {
+      edssi.assistant.onListen((action: ListenAction) => {
         setListening((current) => {
           if (action === 'start') return true;
           if (action === 'stop') return false;
           return !current;
         });
       }),
-    [],
+    [edssi],
   );
 
   // Nothing to toggle: there is no pointer in a headset and no recorder here to answer it.
@@ -54,6 +56,8 @@ export function useListening(): Voice {
  * One window only — see `useListening`.
  */
 export function useVoice(setup?: AssistantSetup): Voice {
+  const edssi = useEdssi();
+  const localDevices = useLocalDevices();
   const recorder = useRef<VoiceRecorder>(undefined);
   const player = useRef<SpeechPlayer>(undefined);
   const [listening, setListening] = useState(false);
@@ -75,7 +79,7 @@ export function useVoice(setup?: AssistantSetup): Voice {
   // This window owns the audio, so it is the one that can say when the ship has actually stopped
   // talking — the main process only knows when it finished generating the words.
   player.current ??= new SpeechPlayer({
-    onPlayback: (utterance, playing) => window.edssi.assistant.playback(utterance, playing),
+    onPlayback: (utterance, playing) => edssi.assistant.playback(utterance, playing),
   });
 
   const stopAndSend = useCallback(async () => {
@@ -95,15 +99,19 @@ export function useVoice(setup?: AssistantSetup): Voice {
         return;
       }
     }
-    await window.edssi.assistant.askByVoice(audio);
-  }, []);
+    await edssi.assistant.askByVoice(audio);
+  }, [edssi]);
 
   // Named so the failure message can say which microphone would not open.
   const start = useCallback(() => {
+    if (!localDevices) {
+      setProblem('Voice needs EDSSI itself; type your question instead.');
+      return;
+    }
     if (recorder.current!.recording) return;
     // Talking over the answer stops it: the commander has heard enough.
     player.current!.stop();
-    void window.edssi.assistant.cancel();
+    void edssi.assistant.cancel();
     recorder.current!.start().then(
       () => {
         setProblem(undefined);
@@ -117,7 +125,7 @@ export function useVoice(setup?: AssistantSetup): Voice {
         setProblem(`EDSSI could not open ${named}.`);
       },
     );
-  }, [microphone]);
+  }, [edssi, localDevices, microphone]);
 
   const toggle = useCallback(() => {
     if (recorder.current!.recording) void stopAndSend();
@@ -127,22 +135,22 @@ export function useVoice(setup?: AssistantSetup): Voice {
   // The bindings are watched in the main process, so they work while the game has focus.
   useEffect(
     () =>
-      window.edssi.assistant.onListen((action: ListenAction) => {
+      edssi.assistant.onListen((action: ListenAction) => {
         if (action === 'start') start();
         else if (action === 'stop') void stopAndSend();
         else toggle();
       }),
-    [start, stopAndSend, toggle],
+    [edssi, start, stopAndSend, toggle],
   );
 
-  useEffect(() => window.edssi.assistant.onSpeech((chunk) => player.current!.play(chunk)), []);
+  useEffect(() => edssi.assistant.onSpeech((chunk) => player.current!.play(chunk)), [edssi]);
 
   useEffect(
     () =>
-      window.edssi.ui.onCommand((command) => {
+      edssi.ui.onCommand((command) => {
         if (command.type === 'acknowledge') player.current!.acknowledge();
       }),
-    [],
+    [edssi],
   );
 
   /**
@@ -158,16 +166,16 @@ export function useVoice(setup?: AssistantSetup): Voice {
   useEffect(() => {
     const current = player.current!;
     // Start the audio device now, so the first answer isn't held up waiting for it.
-    current.warmUp();
+    if (localDevices) current.warmUp();
     return () => current.close();
-  }, []);
+  }, [localDevices]);
 
   // The same for the microphone: opened ahead of time, the first word of a question survives.
   useEffect(() => {
     const current = recorder.current!;
     current.configure({ keepOpen: keepMicrophoneOpen, device: microphone });
-    void current.warmUp();
-  }, [keepMicrophoneOpen, microphone]);
+    if (localDevices) void current.warmUp();
+  }, [keepMicrophoneOpen, localDevices, microphone]);
 
   useEffect(() => {
     const current = recorder.current!;

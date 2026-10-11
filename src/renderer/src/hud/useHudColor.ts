@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 
 import type { HudColor } from '../../../shared/edhm';
 import { accentFor, goodFor, warningFor } from '../../../shared/hud-color';
+import { useEdssiInstance } from '../api/context';
 
 /**
  * Draws the window in the EDHM theme's colour, while there is one and matching is on. Only
@@ -9,13 +10,14 @@ import { accentFor, goodFor, warningFor } from '../../../shared/hud-color';
  * `hud.css`, whose own defaults suit Elite's orange.
  */
 export function useHudColor(): HudColor | null | undefined {
+  const { api: edssi, themeRoot } = useEdssiInstance();
   const [hud, setHud] = useState<HudColor | null>();
 
   useEffect(() => {
     let active = true;
     // Subscribe first, so a change between the two isn't missed.
-    const unsubscribe = window.edssi.edhm.onHudColorChange(setHud);
-    window.edssi.edhm.getHudColor().then(
+    const unsubscribe = edssi.edhm.onHudColorChange(setHud);
+    edssi.edhm.getHudColor().then(
       (next) => {
         if (active) setHud((current) => (current === undefined ? next : current));
       },
@@ -25,10 +27,10 @@ export function useHudColor(): HudColor | null | undefined {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [edssi]);
 
   useEffect(() => {
-    const root = document.documentElement.style;
+    const root = themeRoot().style;
     if (hud) {
       const accent = accentFor(hud.color);
       root.setProperty('--accent', accent);
@@ -39,7 +41,7 @@ export function useHudColor(): HudColor | null | undefined {
       root.removeProperty('--warn');
       root.removeProperty('--good');
     }
-  }, [hud]);
+  }, [hud, themeRoot]);
 
   return hud;
 }

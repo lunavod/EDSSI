@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 
+import { useEdssi } from '../api/context';
 import { useInVr } from '../vr/in-vr';
 import { Icon } from './Icon';
 import { ICONS } from './icons';
@@ -25,6 +26,7 @@ export function CopyButton({
   /** Beside a title rather than a line of text. */
   large?: boolean;
 }) {
+  const edssi = useEdssi();
   const [copied, setCopied] = useState(false);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   useEffect(() => () => clearTimeout(timer.current), []);
@@ -39,7 +41,7 @@ export function CopyButton({
       onClick={(event) => {
         // Rows that are themselves clickable (an expandable journal entry) shouldn't also fire.
         event.stopPropagation();
-        void window.edssi.clipboard.writeText(text);
+        void edssi.clipboard.writeText(text);
         setCopied(true);
         clearTimeout(timer.current);
         timer.current = setTimeout(() => setCopied(false), COPIED_MS);

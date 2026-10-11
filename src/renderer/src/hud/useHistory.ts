@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import { type HistorySnapshot, isNewerSnapshot } from '../../../shared/history';
+import { useEdssi } from '../api/context';
 
 /** The ledger and current system survey from the main process, kept up to date. */
 export function useHistory(): HistorySnapshot | undefined {
+  const edssi = useEdssi();
   const [snapshot, setSnapshot] = useState<HistorySnapshot>();
 
   useEffect(() => {
@@ -11,8 +13,8 @@ export function useHistory(): HistorySnapshot | undefined {
     const offer = (next: HistorySnapshot) =>
       setSnapshot((current) => (isNewerSnapshot(current, next) ? next : current));
     // Subscribe first so nothing falls between the two; versions sort out the overlap.
-    const unsubscribe = window.edssi.history.onChange(offer);
-    window.edssi.history.getSnapshot().then(
+    const unsubscribe = edssi.history.onChange(offer);
+    edssi.history.getSnapshot().then(
       (next) => {
         if (active) offer(next);
       },
@@ -22,7 +24,7 @@ export function useHistory(): HistorySnapshot | undefined {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [edssi]);
 
   return snapshot;
 }

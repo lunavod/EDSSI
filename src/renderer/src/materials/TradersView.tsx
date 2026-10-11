@@ -8,6 +8,7 @@ import {
   type TraderSearchRequest,
   type TraderStation,
 } from '../../../shared/crafting';
+import { type WindowStorage, useEdssi, useWindowStorage } from '../api/context';
 import { ageText, lyText } from '../commodities/MarketFields';
 import { NumberField } from '../hud/Controls';
 import { CopyButton } from '../hud/CopyButton';
@@ -36,9 +37,9 @@ export interface TraderAsk {
   seq: number;
 }
 
-function savedFilters(): TraderFilters {
+function savedFilters(storage: WindowStorage): TraderFilters {
   try {
-    const saved = localStorage.getItem(STORAGE_KEY);
+    const saved = storage.getItem(STORAGE_KEY);
     if (saved) {
       // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- written below; merged over the defaults
       const read = JSON.parse(saved) as Partial<TraderFilters>;
@@ -64,7 +65,9 @@ export function TradersView({
   shown: boolean;
   ask: TraderAsk | undefined;
 }) {
-  const [filters, setFilters] = useState(savedFilters);
+  const edssi = useEdssi();
+  const storage = useWindowStorage();
+  const [filters, setFilters] = useState(() => savedFilters(storage));
   const [results, setResults] = useState<Results>();
   const [problem, setProblem] = useState<string>();
   const [busy, setBusy] = useState(false);
@@ -74,7 +77,7 @@ export function TradersView({
     setFilters((current) => {
       const next = { ...current, ...patch };
       try {
-        localStorage.setItem(STORAGE_KEY, JSON.stringify(next));
+        storage.setItem(STORAGE_KEY, JSON.stringify(next));
       } catch {
         // Only a convenience.
       }
@@ -86,7 +89,7 @@ export function TradersView({
     setBusy(true);
     setProblem(undefined);
     try {
-      const outcome = await window.edssi.materials.searchTraders(request);
+      const outcome = await edssi.materials.searchTraders(request);
       if ('error' in outcome) {
         setProblem(outcome.error);
         return;

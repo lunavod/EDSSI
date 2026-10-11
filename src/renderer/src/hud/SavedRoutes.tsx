@@ -6,6 +6,7 @@ import {
   SAVED_ROUTE_NAME_LENGTH,
   type SavedRouteSummary,
 } from '../../../shared/csv-route';
+import { useEdssi } from '../api/context';
 import { Glyph } from './Glyph';
 
 /** What is waiting for the commander's yes. */
@@ -17,6 +18,7 @@ type Confirm = { kind: 'load' | 'delete'; route: SavedRouteSummary };
  * The route loaded is saved as it goes, so its place along it is never lost.
  */
 export function SavedRoutes({ state }: { state: CsvRouteState | undefined }) {
+  const edssi = useEdssi();
   const saved = state?.saved ?? [];
   const route = state?.route;
   const current = saved.find((entry) => entry.id === route?.savedId);
@@ -28,7 +30,7 @@ export function SavedRoutes({ state }: { state: CsvRouteState | undefined }) {
 
   const load = (entry: SavedRouteSummary) => {
     setConfirm(undefined);
-    void window.edssi.csvRoute.loadSaved(entry.id).then(setProblem);
+    void edssi.csvRoute.loadSaved(entry.id).then(setProblem);
   };
   const pick = (entry: SavedRouteSummary) => {
     if (entry.id === current?.id) return;
@@ -109,8 +111,8 @@ export function SavedRoutes({ state }: { state: CsvRouteState | undefined }) {
           renaming={naming === 'rename' ? current : undefined}
           onSubmit={(name) =>
             naming === 'rename' && current
-              ? window.edssi.csvRoute.renameSaved(current.id, name)
-              : window.edssi.csvRoute.save(name)
+              ? edssi.csvRoute.renameSaved(current.id, name)
+              : edssi.csvRoute.save(name)
           }
           onDone={(result) => {
             setProblem(result);
@@ -151,7 +153,7 @@ export function SavedRoutes({ state }: { state: CsvRouteState | undefined }) {
               if (confirm.kind === 'load') load(confirm.route);
               else {
                 setConfirm(undefined);
-                void window.edssi.csvRoute.deleteSaved(confirm.route.id);
+                void edssi.csvRoute.deleteSaved(confirm.route.id);
               }
             }}
           >

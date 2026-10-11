@@ -1,5 +1,6 @@
 import { type FormEvent, Fragment, useId, useState } from 'react';
 
+import type { EdssiApi } from '../../../shared/api';
 import {
   type CommoditySearchRequest,
   type MarketPlace,
@@ -7,6 +8,7 @@ import {
   sameCommodity,
   type ShoppingPlan,
 } from '../../../shared/commodities';
+import { useEdssi } from '../api/context';
 import { NumberInput } from '../hud/Controls';
 import { CopyButton } from '../hud/CopyButton';
 import { Glyph } from '../hud/Glyph';
@@ -81,11 +83,12 @@ const NO_HOLDS: HoldSource[] = [];
 
 /** One page of results from Spansh, for either side, as rows of deals. */
 async function fetchPage(
+  edssi: EdssiApi,
   side: MarketSide,
   request: Request,
 ): Promise<{ error: string } | { result: Omit<Results, 'request'> }> {
   if (side === 'buy') {
-    const outcome = await window.edssi.commodities.search(request);
+    const outcome = await edssi.commodities.search(request);
     if ('error' in outcome) return outcome;
     const { stations, total, reference } = outcome.result;
     return {
@@ -103,7 +106,7 @@ async function fetchPage(
       },
     };
   }
-  const outcome = await window.edssi.commodities.searchSell(request);
+  const outcome = await edssi.commodities.searchSell(request);
   if ('error' in outcome) return outcome;
   const { stations, total, reference } = outcome.result;
   return {
@@ -138,6 +141,7 @@ export function MarketSearchView({
   side: MarketSide;
   holds?: HoldSource[];
 }) {
+  const edssi = useEdssi();
   const text = SIDES[side];
   const names = useCommodityNameList();
   const inputId = useId();
@@ -172,7 +176,7 @@ export function MarketSearchView({
     setBusy(true);
     setProblem(undefined);
     try {
-      const outcome = await fetchPage(side, request);
+      const outcome = await fetchPage(edssi, side, request);
       if ('error' in outcome) {
         setProblem(outcome.error);
         return;
@@ -196,7 +200,7 @@ export function MarketSearchView({
     setView('plan');
     setPlanning(true);
     setProblem(undefined);
-    void window.edssi.commodities
+    void edssi.commodities
       .sellPlan({
         ...filters,
         needs: asked.map((known) => ({ commodity: known.name, quantity: known.tonnes })),
@@ -348,7 +352,7 @@ export function MarketSearchView({
               <button
                 type="button"
                 className="btn danger lg"
-                onClick={() => void window.edssi.commodities.cancelSellPlan()}
+                onClick={() => void edssi.commodities.cancelSellPlan()}
               >
                 <span className="ic-w">
                   <Glyph name="stop" />

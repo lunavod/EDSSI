@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 import { boldRuns, type ReleaseNotes } from '../../../shared/updates';
+import { useEdssi, useOpenDialog } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 
 /** The release notes of a few versions, newest first, over the whole window. */
@@ -12,9 +13,10 @@ export function WhatsNewDialog({
   onClose: () => void;
 }) {
   const dialog = useRef<HTMLDialogElement>(null);
+  const openDialog = useOpenDialog();
   useEffect(() => {
-    if (dialog.current && !dialog.current.open) dialog.current.showModal();
-  }, []);
+    if (dialog.current) openDialog(dialog.current);
+  }, [openDialog]);
 
   return (
     <dialog
@@ -66,17 +68,18 @@ export function WhatsNewDialog({
 
 /** After an update, what it brought, once. */
 export function WhatsNewOnUpdate() {
+  const edssi = useEdssi();
   const [notes, setNotes] = useState<ReleaseNotes[]>([]);
   useEffect(() => {
-    void window.edssi.updates.getWhatsNew().then((whatsNew) => setNotes(whatsNew.unseen));
-  }, []);
+    void edssi.updates.getWhatsNew().then((whatsNew) => setNotes(whatsNew.unseen));
+  }, [edssi]);
   if (notes.length === 0) return null;
   return (
     <WhatsNewDialog
       notes={notes}
       onClose={() => {
         setNotes([]);
-        void window.edssi.updates.markSeen();
+        void edssi.updates.markSeen();
       }}
     />
   );

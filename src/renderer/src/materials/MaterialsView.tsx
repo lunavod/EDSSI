@@ -8,6 +8,7 @@ import {
   todoDone,
 } from '../../../shared/crafting';
 import type { MaterialsSnapshot } from '../../../shared/materials';
+import { useEdssi } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 import { Tabs } from '../hud/Tabs';
 import { BlueprintTodoView } from './BlueprintTodoView';
@@ -43,6 +44,7 @@ export function MaterialsView({
   /** The system the commander is in, for the Traders page. */
   here: string | undefined;
 }) {
+  const edssi = useEdssi();
   const [tab, setTab] = useState<SubTab>('recipes');
   const [ask, setAsk] = useState<TraderAsk>();
   const todos = snapshot?.todos ?? [];
@@ -91,7 +93,7 @@ export function MaterialsView({
               type="button"
               className="btn ghost sm"
               title="Take off the ones with nothing left to make"
-              onClick={() => void window.edssi.materials.clearDoneTodos(listKind)}
+              onClick={() => void edssi.materials.clearDoneTodos(listKind)}
             >
               <span className="ic-w">
                 <Glyph name="check" />

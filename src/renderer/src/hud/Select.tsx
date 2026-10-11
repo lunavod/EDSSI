@@ -10,6 +10,7 @@ import {
 } from 'react';
 
 import { Glyph } from './Glyph';
+import { popupPlace } from './popup-place';
 import { scrollWithin } from './scroll-within';
 
 export interface SelectOption<T extends string | number> {
@@ -70,16 +71,7 @@ export function Select<T extends string | number>({
     const measure = () => {
       const anchor = button.current?.closest('.input') ?? button.current;
       if (!anchor) return;
-      const box = anchor.getBoundingClientRect();
-      const below = window.innerHeight - box.bottom;
-      const up = below < 240 && box.top > below;
-      setPlace({
-        left: box.left,
-        minWidth: Math.max(box.width, 160),
-        ...(up
-          ? { bottom: window.innerHeight - box.top + 2, maxHeight: Math.min(360, box.top - 8) }
-          : { top: box.bottom + 2, maxHeight: Math.min(360, below - 8) }),
-      });
+      setPlace(popupPlace(anchor, { minWidth: 160, room: 240, maxHeight: 360 }));
     };
     measure();
     window.addEventListener('resize', measure);

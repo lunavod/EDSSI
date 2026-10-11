@@ -20,7 +20,7 @@ import { materialInfo, type MaterialsSnapshot, materialName } from '../../../sha
 import type { ViewOptionValue } from '../../../shared/view-options';
 import { Switch } from '../hud/Controls';
 import { Glyph } from '../hud/Glyph';
-import { setViewOptions, useViewOption } from '../hud/useViewOption';
+import { useSetViewOptions, useViewOption } from '../hud/useViewOption';
 import { formatNumber } from '../journal/format';
 
 const NO_INVENTORY: Readonly<Record<string, number>> = {};
@@ -54,6 +54,7 @@ export function MissingView({
   const [planning, setPlanning] = useState(false);
   const [sortKey] = useViewOption('materials.missing_sort');
   const [descending] = useViewOption('materials.missing_descending');
+  const setViewOptions = useSetViewOptions();
   const sort: NeedSort = { by: sortKey, descending };
   const sortBy = (by: NeedSortKey) =>
     setViewOptions({

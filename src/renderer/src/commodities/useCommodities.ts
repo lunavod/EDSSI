@@ -2,20 +2,22 @@ import { createContext, useContext, useEffect, useState } from 'react';
 
 import { DEFAULT_MARKET_FILTERS, type MarketFilters } from '../../../shared/commodities';
 import type { PinnedPlan, ShoppingList } from '../../../shared/commodities';
+import { useEdssi, useWindowStorage } from '../api/context';
 
 /** The shopping list, kept up to date as it is edited and as the game buys. */
 export function useShoppingList(): ShoppingList | undefined {
+  const edssi = useEdssi();
   const [list, setList] = useState<ShoppingList>();
 
   useEffect(() => {
     let active = true;
     let changed = false;
     // Subscribe first; a change that lands before the answer is newer than it.
-    const unsubscribe = window.edssi.commodities.onListChange((next) => {
+    const unsubscribe = edssi.commodities.onListChange((next) => {
       changed = true;
       setList(next);
     });
-    window.edssi.commodities.getList().then(
+    edssi.commodities.getList().then(
       (current) => {
         if (active && !changed) setList(current);
       },
@@ -25,23 +27,24 @@ export function useShoppingList(): ShoppingList | undefined {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [edssi]);
 
   return list;
 }
 
 /** The plan pinned on the Plan page, kept up to date as purchases are counted along it. */
 export function usePinnedPlan(): PinnedPlan | undefined {
+  const edssi = useEdssi();
   const [pinned, setPinned] = useState<PinnedPlan>();
 
   useEffect(() => {
     let active = true;
     let changed = false;
-    const unsubscribe = window.edssi.commodities.onPinnedChange((next) => {
+    const unsubscribe = edssi.commodities.onPinnedChange((next) => {
       changed = true;
       setPinned(next ?? undefined);
     });
-    window.edssi.commodities.getPinned().then(
+    edssi.commodities.getPinned().then(
       (current) => {
         if (active && !changed) setPinned(current ?? undefined);
       },
@@ -51,7 +54,7 @@ export function usePinnedPlan(): PinnedPlan | undefined {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [edssi]);
 
   return pinned;
 }
@@ -66,10 +69,11 @@ export function useCommodityNameList(): readonly string[] {
 
 /** Every commodity name the markets use, for the inputs' suggestions. Fetched once. */
 export function useCommodityNames(): string[] {
+  const edssi = useEdssi();
   const [names, setNames] = useState<string[]>([]);
   useEffect(() => {
     let active = true;
-    window.edssi.commodities.names().then(
+    edssi.commodities.names().then(
       (found) => {
         if (active) setNames(found);
       },
@@ -78,7 +82,7 @@ export function useCommodityNames(): string[] {
     return () => {
       active = false;
     };
-  }, []);
+  }, [edssi]);
   return names;
 }
 
@@ -86,9 +90,10 @@ export function useCommodityNames(): string[] {
 export function useMarketFilters(
   key: string,
 ): [MarketFilters, (patch: Partial<MarketFilters>) => void] {
+  const storage = useWindowStorage();
   const [filters, setFilters] = useState<MarketFilters>(() => {
     try {
-      const saved = localStorage.getItem(key);
+      const saved = storage.getItem(key);
       if (saved) {
         // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- written below; merged over the defaults
         const read = JSON.parse(saved) as Omit<MarketFilters, 'planetary'> & {
@@ -111,7 +116,7 @@ export function useMarketFilters(
     setFilters((current) => {
       const next = { ...current, ...patch };
       try {
-        localStorage.setItem(key, JSON.stringify(next));
+        storage.setItem(key, JSON.stringify(next));
       } catch {
         // Only a convenience.
       }

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 
 import type { TabId } from '../../shared/ui';
+import { useEdssi } from './api/context';
 import { commoditiesLeft, CommoditiesView } from './commodities/CommoditiesView';
 import { useShoppingList } from './commodities/useCommodities';
 import { type CommsPage, CommsTab } from './comms/CommsTab';
@@ -23,7 +24,7 @@ import { MaterialsView } from './materials/MaterialsView';
 import { useMaterials } from './materials/useMaterials';
 import { MissionView } from './mission/MissionView';
 import { useActivity } from './mission/useActivity';
-import { onOpenSettings, openSettings } from './settings/open';
+import { useSettingsRequests } from './settings/open';
 import { SettingsView } from './settings/SettingsView';
 import { useInput, useSettings, useUploads } from './settings/useSettings';
 import { ShipsView } from './ships/ShipsView';
@@ -42,8 +43,10 @@ const TABS = [
   { id: 'ships', label: 'Ships' },
 ] as const;
 
-export function App() {
-  const [tab, setTab] = useState<TabId>('mission');
+/** The window. `initialTab` is the module it opens on: Mission, unless an embedder says. */
+export function App({ initialTab = 'mission' }: { initialTab?: TabId }) {
+  const edssi = useEdssi();
+  const [tab, setTab] = useState<TabId>(initialTab);
   // Unsaved settings hold the Settings tab until they are saved or discarded.
   const settingsDirty = useRef(false);
   const [leavingFor, setLeavingFor] = useState<TabId>();
@@ -51,8 +54,8 @@ export function App() {
   useEffect(() => {
     tabRef.current = tab;
     // The VR cockpit shows its own version of this tab, where it has one.
-    window.edssi.ui.setTab(tab);
-  }, [tab]);
+    edssi.ui.setTab(tab);
+  }, [edssi, tab]);
   // The browser is a page of Comms; the Comms tab brings back whichever page was open last.
   const commsPage = useRef<CommsPage>('comms');
   const selectTab = useCallback((requested: TabId) => {
@@ -66,7 +69,8 @@ export function App() {
     setTab(next);
   }, []);
   // A page of Settings asked for from elsewhere in the window: the tab comes forward with it.
-  useEffect(() => onOpenSettings(() => selectTab('settings')), [selectTab]);
+  const settingsRequests = useSettingsRequests();
+  useEffect(() => settingsRequests.on(() => selectTab('settings')), [settingsRequests, selectTab]);
   const onSettingsDirty = useCallback((dirty: boolean) => {
     settingsDirty.current = dirty;
   }, []);
@@ -100,10 +104,10 @@ export function App() {
   // The assistant can put a module up when it is asked to show something.
   useEffect(
     () =>
-      window.edssi.ui.onCommand((command) => {
+      edssi.ui.onCommand((command) => {
         if (command.type === 'open-tab') selectTab(command.tab);
       }),
-    [selectTab],
+    [edssi, selectTab],
   );
 
   // What the assistant is doing rides on the Comms tab.
@@ -133,7 +137,7 @@ export function App() {
             type="button"
             className="updatebtn"
             title={`EDSSI ${updates.version} installs the next time EDSSI starts, or now from Settings, About`}
-            onClick={() => openSettings('about')}
+            onClick={() => settingsRequests.open('about')}
           >
             Update ready
           </button>

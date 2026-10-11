@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react';
 
 import type { AssistantSnapshot } from '../../../shared/assistant';
+import { useEdssi } from '../api/context';
 
 /** The conversation and the assistant's state, kept up to date from the main process. */
 export function useAssistant(): AssistantSnapshot | undefined {
+  const edssi = useEdssi();
   const [snapshot, setSnapshot] = useState<AssistantSnapshot>();
 
   useEffect(() => {
@@ -11,8 +13,8 @@ export function useAssistant(): AssistantSnapshot | undefined {
     const offer = (next: AssistantSnapshot) =>
       setSnapshot((current) => (current && current.version > next.version ? current : next));
     // Subscribe first so nothing falls between the two; versions sort out the overlap.
-    const unsubscribe = window.edssi.assistant.onChange(offer);
-    window.edssi.assistant.getSnapshot().then(
+    const unsubscribe = edssi.assistant.onChange(offer);
+    edssi.assistant.getSnapshot().then(
       (next) => {
         if (active) offer(next);
       },
@@ -22,7 +24,7 @@ export function useAssistant(): AssistantSnapshot | undefined {
       active = false;
       unsubscribe();
     };
-  }, []);
+  }, [edssi]);
 
   return snapshot;
 }

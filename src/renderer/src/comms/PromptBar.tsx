@@ -1,4 +1,5 @@
 import type { CommanderPrompt, PromptAnswer } from '../../../shared/prompts';
+import { useEdssi } from '../api/context';
 import { Glyph } from '../hud/Glyph';
 
 interface PromptBarProps {
@@ -11,8 +12,9 @@ interface PromptBarProps {
  * the flow, between what came before and what it is about, never over it.
  */
 export function PromptBar({ prompt }: PromptBarProps) {
+  const edssi = useEdssi();
   if (!prompt) return null;
-  const answer = (value: PromptAnswer) => void window.edssi.assistant.answer(prompt.id, value);
+  const answer = (value: PromptAnswer) => void edssi.assistant.answer(prompt.id, value);
 
   return (
     <div

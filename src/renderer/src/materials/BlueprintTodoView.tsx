@@ -26,6 +26,7 @@ import {
   todoNeeds,
 } from '../../../shared/crafting';
 import type { MaterialsSnapshot } from '../../../shared/materials';
+import { useEdssi } from '../api/context';
 import { lyText } from '../commodities/MarketFields';
 import { NumberInput } from '../hud/Controls';
 import { CopyButton } from '../hud/CopyButton';
@@ -137,6 +138,7 @@ function AddBlueprint({
   importButton: ReactNode;
   onClose: () => void;
 }) {
+  const edssi = useEdssi();
   const modules = blueprintModules();
   const [module, setModule] = useState(
     () => modules.find((name) => name === 'Frame Shift Drive') ?? modules[0] ?? '',
@@ -193,7 +195,7 @@ function AddBlueprint({
   const submit = (event: FormEvent) => {
     event.preventDefault();
     if (!blueprint) return;
-    void window.edssi.materials.addTodo({
+    void edssi.materials.addTodo({
       kind: 'blueprint',
       blueprint: blueprint.key,
       from: current,
@@ -458,12 +460,13 @@ function BlueprintCard({
   here: Coords | undefined;
   list: readonly CraftingTodo[];
 }) {
+  const edssi = useEdssi();
   const blueprint = blueprintByKey(todo.blueprint);
   if (!blueprint) return null;
   const lines = ingredientLines(todoNeeds(todo, engineers, list), inventory);
   const done = todoDone(todo, engineers);
   const update = (patch: Partial<BlueprintTodo>) =>
-    void window.edssi.materials.updateTodo({ ...todo, ...patch });
+    void edssi.materials.updateTodo({ ...todo, ...patch });
   const top = maxGrade(blueprint);
   const rank = todoEngineerRank(todo, engineers, list);
   const experimental = experimentalsFor(blueprint.module).find(

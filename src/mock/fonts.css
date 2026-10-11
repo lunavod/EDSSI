@@ -1,0 +1,12 @@
+/*
+ * The app's type, for the page an EDSSI is embedded in: a font declared inside a shadow root
+ * isn't loaded, so these go in the document (in the package, they are what style.css holds).
+ */
+@import '@fontsource/saira/400.css';
+@import '@fontsource/saira/500.css';
+@import '@fontsource/saira-condensed/400.css';
+@import '@fontsource/saira-condensed/500.css';
+@import '@fontsource/saira-condensed/600.css';
+@import '@fontsource/saira-semi-condensed/400.css';
+@import '@fontsource/saira-semi-condensed/500.css';
+@import '@fontsource/saira-semi-condensed/600.css';

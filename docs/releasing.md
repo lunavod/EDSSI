@@ -32,7 +32,16 @@ release that failed to sign uploaded nothing, so sign in and push the tag again
   a file that isn't there yet), and deletes all but the three newest releases;
 - on GitHub's runners, makes a GitHub release with the installer, this version's `CHANGELOG.md`
   section and the commits, and posts `CHANGELOG_USER.md`'s new sections to Discord when
-  `DISCORD_RELEASE_WEBHOOK` is set (`scripts/post-discord-release.ts`).
+  `DISCORD_RELEASE_WEBHOOK` is set (`scripts/post-discord-release.ts`);
+- also on GitHub's runners, once the installer is uploaded, publishes the mock UI
+  (`src/mock/README.md`) to GitHub Packages as `@lunavod/edssi-mock-ui` at the same version: it
+  makes the demo scenario afresh (`npm run mock:scenario`, which fetches EDSY's tables), builds
+  `npm run mock:lib`, and publishes `dist/mock-ui` with the workflow's own `GITHUB_TOKEN`, which
+  needs nothing set up beyond the job's `packages: write`. A rerun skips a version already
+  published. GitHub Packages never takes a version twice: a release whose package went out but
+  needs changing is a new version. The steps are `.github/workflows/mock-ui.yml`, which can also
+  be run by hand (Actions → Mock UI → Run workflow, or `gh workflow run mock-ui.yml`) to publish
+  between releases, with a version of its own such as `1.1.0-mock.1`.
 
 ## The dev channel
 

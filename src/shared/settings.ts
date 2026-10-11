@@ -93,7 +93,12 @@ function number(fallback: number, min: number, max: number) {
     .transform((value) => value ?? fallback);
 }
 
-function choice<T extends readonly [string, ...string[]]>(values: T, fallback: T[number]) {
+// Typed by hand: the type inferred for it declares (`.d.ts`) as one that doesn't compile, which the
+// mock UI's package ships.
+function choice<T extends readonly [string, ...string[]]>(
+  values: T,
+  fallback: T[number],
+): z.ZodType<T[number], T[number] | null | undefined> {
   return z
     .union([z.enum(values), z.null()])
     .optional()

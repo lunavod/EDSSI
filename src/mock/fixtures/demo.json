@@ -1,0 +1,6112 @@
+{
+  "journal": {
+    "seq": 105,
+    "events": [
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "Fileheader",
+        "part": 1,
+        "language": "English/UK",
+        "Odyssey": true,
+        "gameversion": "4.4.1.1",
+        "build": "r332841/r0 "
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "Commander",
+        "FID": "F9000417",
+        "Name": "Vesper Kael"
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "Materials",
+        "Raw": [
+          { "Name": "antimony", "Count": 106 },
+          { "Name": "arsenic", "Count": 75 },
+          { "Name": "boron", "Count": 29 },
+          { "Name": "cadmium", "Count": 136 },
+          { "Name": "carbon", "Count": 123 },
+          { "Name": "chromium", "Count": 200 },
+          { "Name": "germanium", "Count": 174 },
+          { "Name": "iron", "Count": 126 },
+          { "Name": "lead", "Count": 64 },
+          { "Name": "manganese", "Count": 84 },
+          { "Name": "mercury", "Count": 109 },
+          { "Name": "molybdenum", "Count": 144 },
+          { "Name": "nickel", "Count": 181 },
+          { "Name": "niobium", "Count": 97 },
+          { "Name": "phosphorus", "Count": 87 },
+          { "Name": "polonium", "Count": 130 },
+          { "Name": "rhenium", "Count": 262 },
+          { "Name": "ruthenium", "Count": 97 },
+          { "Name": "selenium", "Count": 68 },
+          { "Name": "sulphur", "Count": 233 },
+          { "Name": "technetium", "Count": 95 },
+          { "Name": "tellurium", "Count": 73 },
+          { "Name": "tin", "Count": 36 },
+          { "Name": "tungsten", "Count": 116 },
+          { "Name": "vanadium", "Count": 193 },
+          { "Name": "yttrium", "Count": 86 },
+          { "Name": "zinc", "Count": 200 },
+          { "Name": "zirconium", "Count": 170 }
+        ],
+        "Manufactured": [
+          { "Name": "basicconductors", "Name_Localised": "Basic Conductors", "Count": 56 },
+          { "Name": "biotechconductors", "Name_Localised": "Biotech Conductors", "Count": 35 },
+          { "Name": "chemicaldistillery", "Name_Localised": "Chemical Distillery", "Count": 74 },
+          {
+            "Name": "chemicalmanipulators",
+            "Name_Localised": "Chemical Manipulators",
+            "Count": 83
+          },
+          { "Name": "chemicalprocessors", "Name_Localised": "Chemical Processors", "Count": 139 },
+          {
+            "Name": "chemicalstorageunits",
+            "Name_Localised": "Chemical Storage Units",
+            "Count": 77
+          },
+          { "Name": "compactcomposites", "Name_Localised": "Compact Composites", "Count": 270 },
+          { "Name": "compoundshielding", "Name_Localised": "Compound Shielding", "Count": 15 },
+          { "Name": "conductiveceramics", "Name_Localised": "Conductive Ceramics", "Count": 20 },
+          {
+            "Name": "conductivecomponents",
+            "Name_Localised": "Conductive Components",
+            "Count": 28
+          },
+          { "Name": "conductivepolymers", "Name_Localised": "Conductive Polymers", "Count": 96 },
+          {
+            "Name": "configurablecomponents",
+            "Name_Localised": "Configurable Components",
+            "Count": 121
+          },
+          { "Name": "crystalshards", "Name_Localised": "Crystal Shards", "Count": 79 },
+          {
+            "Name": "electrochemicalarrays",
+            "Name_Localised": "Electrochemical Arrays",
+            "Count": 152
+          },
+          {
+            "Name": "exquisitefocuscrystals",
+            "Name_Localised": "Exquisite Focus Crystals",
+            "Count": 36
+          },
+          {
+            "Name": "fedcorecomposites",
+            "Name_Localised": "Core Dynamics Composites",
+            "Count": 18
+          },
+          {
+            "Name": "fedproprietarycomposites",
+            "Name_Localised": "Proprietary Composites",
+            "Count": 87
+          },
+          { "Name": "filamentcomposites", "Name_Localised": "Filament Composites", "Count": 163 },
+          { "Name": "focuscrystals", "Name_Localised": "Focus Crystals", "Count": 26 },
+          { "Name": "galvanisingalloys", "Name_Localised": "Galvanising Alloys", "Count": 177 },
+          { "Name": "gridresistors", "Name_Localised": "Grid Resistors", "Count": 192 },
+          {
+            "Name": "heatconductionwiring",
+            "Name_Localised": "Heat Conduction Wiring",
+            "Count": 140
+          },
+          {
+            "Name": "heatdispersionplate",
+            "Name_Localised": "Heat Dispersion Plate",
+            "Count": 152
+          },
+          { "Name": "heatexchangers", "Name_Localised": "Heat Exchangers", "Count": 38 },
+          {
+            "Name": "heatresistantceramics",
+            "Name_Localised": "Heat Resistant Ceramics",
+            "Count": 34
+          },
+          { "Name": "heatvanes", "Name_Localised": "Heat Vanes", "Count": 117 },
+          {
+            "Name": "highdensitycomposites",
+            "Name_Localised": "High Density Composites",
+            "Count": 168
+          },
+          { "Name": "hybridcapacitors", "Name_Localised": "Hybrid Capacitors", "Count": 26 },
+          { "Name": "imperialshielding", "Name_Localised": "Imperial Shielding", "Count": 62 },
+          {
+            "Name": "improvisedcomponents",
+            "Name_Localised": "Improvised Components",
+            "Count": 64
+          },
+          {
+            "Name": "mechanicalcomponents",
+            "Name_Localised": "Mechanical Components",
+            "Count": 174
+          },
+          { "Name": "mechanicalequipment", "Name_Localised": "Mechanical Equipment", "Count": 151 },
+          { "Name": "mechanicalscrap", "Name_Localised": "Mechanical Scrap", "Count": 239 },
+          { "Name": "militarygradealloys", "Name_Localised": "Military Grade Alloys", "Count": 33 },
+          {
+            "Name": "militarysupercapacitors",
+            "Name_Localised": "Military Supercapacitors",
+            "Count": 39
+          },
+          {
+            "Name": "pharmaceuticalisolators",
+            "Name_Localised": "Pharmaceutical Isolators",
+            "Count": 46
+          },
+          { "Name": "phasealloys", "Name_Localised": "Phase Alloys", "Count": 59 },
+          { "Name": "polymercapacitors", "Name_Localised": "Polymer Capacitors", "Count": 59 },
+          { "Name": "precipitatedalloys", "Name_Localised": "Precipitated Alloys", "Count": 30 },
+          { "Name": "protoheatradiators", "Name_Localised": "Proto Heat Radiators", "Count": 21 },
+          { "Name": "protolightalloys", "Name_Localised": "Proto Light Alloys", "Count": 47 },
+          { "Name": "protoradiolicalloys", "Name_Localised": "Proto Radiolic Alloys", "Count": 25 },
+          {
+            "Name": "refinedfocuscrystals",
+            "Name_Localised": "Refined Focus Crystals",
+            "Count": 105
+          },
+          { "Name": "salvagedalloys", "Name_Localised": "Salvaged Alloys", "Count": 183 },
+          { "Name": "shieldemitters", "Name_Localised": "Shield Emitters", "Count": 203 },
+          { "Name": "shieldingsensors", "Name_Localised": "Shielding Sensors", "Count": 43 },
+          { "Name": "temperedalloys", "Name_Localised": "Tempered Alloys", "Count": 242 },
+          { "Name": "thermicalloys", "Name_Localised": "Thermic Alloys", "Count": 94 },
+          { "Name": "uncutfocuscrystals", "Name_Localised": "Flawed Focus Crystals", "Count": 130 },
+          { "Name": "unknowncarapace", "Name_Localised": "Thargoid Carapace", "Count": 28 },
+          { "Name": "unknowncorechip", "Name_Localised": "Tactical Core Chip", "Count": 91 },
+          { "Name": "unknownenergycell", "Name_Localised": "Thargoid Energy Cell", "Count": 128 },
+          { "Name": "unknownenergysource", "Name_Localised": "Sensor Fragment", "Count": 44 },
+          {
+            "Name": "unknownorganiccircuitry",
+            "Name_Localised": "Thargoid Organic Circuitry",
+            "Count": 83
+          },
+          {
+            "Name": "unknowntechnologycomponents",
+            "Name_Localised": "Thargoid Technological Components",
+            "Count": 26
+          },
+          { "Name": "wornshieldemitters", "Name_Localised": "Worn Shield Emitters", "Count": 72 }
+        ],
+        "Encoded": [
+          {
+            "Name": "adaptiveencryptors",
+            "Name_Localised": "Adaptive Encryptors Capture",
+            "Count": 50
+          },
+          {
+            "Name": "ancientbiologicaldata",
+            "Name_Localised": "Pattern Alpha Obelisk Data",
+            "Count": 10
+          },
+          {
+            "Name": "ancientculturaldata",
+            "Name_Localised": "Pattern Beta Obelisk Data",
+            "Count": 86
+          },
+          {
+            "Name": "ancienthistoricaldata",
+            "Name_Localised": "Pattern Gamma Obelisk Data",
+            "Count": 51
+          },
+          {
+            "Name": "ancientlanguagedata",
+            "Name_Localised": "Pattern Delta Obelisk Data",
+            "Count": 109
+          },
+          {
+            "Name": "ancienttechnologicaldata",
+            "Name_Localised": "Pattern Epsilon Obelisk Data",
+            "Count": 112
+          },
+          {
+            "Name": "archivedemissiondata",
+            "Name_Localised": "Irregular Emission Data",
+            "Count": 46
+          },
+          { "Name": "bulkscandata", "Name_Localised": "Anomalous Bulk Scan Data", "Count": 23 },
+          {
+            "Name": "classifiedscandata",
+            "Name_Localised": "Classified Scan Fragment",
+            "Count": 80
+          },
+          {
+            "Name": "compactemissionsdata",
+            "Name_Localised": "Abnormal Compact Emissions Data",
+            "Count": 39
+          },
+          {
+            "Name": "consumerfirmware",
+            "Name_Localised": "Modified Consumer Firmware",
+            "Count": 34
+          },
+          { "Name": "dataminedwake", "Name_Localised": "Datamined Wake Exceptions", "Count": 19 },
+          { "Name": "decodedemissiondata", "Name_Localised": "Decoded Emission Data", "Count": 45 },
+          {
+            "Name": "disruptedwakeechoes",
+            "Name_Localised": "Atypical Disrupted Wake Echoes",
+            "Count": 263
+          },
+          {
+            "Name": "embeddedfirmware",
+            "Name_Localised": "Modified Embedded Firmware",
+            "Count": 58
+          },
+          { "Name": "emissiondata", "Name_Localised": "Unexpected Emission Data", "Count": 58 },
+          { "Name": "encodedscandata", "Name_Localised": "Divergent Scan Data", "Count": 44 },
+          { "Name": "encryptedfiles", "Name_Localised": "Unusual Encrypted Files", "Count": 111 },
+          {
+            "Name": "encryptionarchives",
+            "Name_Localised": "Atypical Encryption Archives",
+            "Count": 95
+          },
+          { "Name": "encryptioncodes", "Name_Localised": "Tagged Encryption Codes", "Count": 101 },
+          { "Name": "fsdtelemetry", "Name_Localised": "Anomalous FSD Telemetry", "Count": 30 },
+          {
+            "Name": "hyperspacetrajectories",
+            "Name_Localised": "Eccentric Hyperspace Trajectories",
+            "Count": 114
+          },
+          {
+            "Name": "industrialfirmware",
+            "Name_Localised": "Cracked Industrial Firmware",
+            "Count": 132
+          },
+          {
+            "Name": "legacyfirmware",
+            "Name_Localised": "Specialised Legacy Firmware",
+            "Count": 168
+          },
+          { "Name": "scanarchives", "Name_Localised": "Unidentified Scan Archives", "Count": 48 },
+          { "Name": "scandatabanks", "Name_Localised": "Classified Scan Databanks", "Count": 94 },
+          {
+            "Name": "scrambledemissiondata",
+            "Name_Localised": "Exceptional Scrambled Emission Data",
+            "Count": 230
+          },
+          {
+            "Name": "searchrescuevoucher",
+            "Name_Localised": "Search and Rescue Voucher",
+            "Count": 128
+          },
+          { "Name": "securityfirmware", "Name_Localised": "Security Firmware Patch", "Count": 83 },
+          {
+            "Name": "shieldcyclerecordings",
+            "Name_Localised": "Distorted Shield Cycle Recordings",
+            "Count": 153
+          },
+          {
+            "Name": "shielddensityreports",
+            "Name_Localised": "Untypical Shield Scans",
+            "Count": 54
+          },
+          {
+            "Name": "shieldfrequencydata",
+            "Name_Localised": "Peculiar Shield Frequency Data",
+            "Count": 90
+          },
+          {
+            "Name": "shieldpatternanalysis",
+            "Name_Localised": "Aberrant Shield Pattern Analysis",
+            "Count": 44
+          },
+          {
+            "Name": "shieldsoakanalysis",
+            "Name_Localised": "Inconsistent Shield Soak Analysis",
+            "Count": 45
+          },
+          { "Name": "symmetrickeys", "Name_Localised": "Open Symmetric Keys", "Count": 58 },
+          {
+            "Name": "unknownshipsignature",
+            "Name_Localised": "Thargoid Ship Signature",
+            "Count": 20
+          },
+          { "Name": "unknownwakedata", "Name_Localised": "Thargoid Wake Data", "Count": 83 },
+          { "Name": "wakesolutions", "Name_Localised": "Strange Wake Solutions", "Count": 69 }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "LoadGame",
+        "FID": "F9000417",
+        "Commander": "Vesper Kael",
+        "Horizons": true,
+        "Odyssey": true,
+        "Ship": "mandalay",
+        "ShipID": 12,
+        "ShipName": "Long Quiet",
+        "ShipIdent": "VK-07",
+        "FuelLevel": 32,
+        "FuelCapacity": 32,
+        "GameMode": "Solo",
+        "Credits": 1204877310,
+        "Loan": 0,
+        "language": "English/UK",
+        "gameversion": "4.4.1.1",
+        "build": "r332841/r0 "
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "Rank",
+        "Combat": 3,
+        "Trade": 5,
+        "Explore": 7,
+        "Soldier": 0,
+        "Exobiologist": 6,
+        "Empire": 2,
+        "Federation": 3,
+        "CQC": 0
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "Progress",
+        "Combat": 41,
+        "Trade": 12,
+        "Explore": 63,
+        "Soldier": 0,
+        "Exobiologist": 37,
+        "Empire": 18,
+        "Federation": 54,
+        "CQC": 0
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "Reputation",
+        "Empire": 31.4,
+        "Federation": 52.9,
+        "Independent": 12.2,
+        "Alliance": 8.6
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "EngineerProgress",
+        "Engineers": [
+          {
+            "Engineer": "Felicity Farseer",
+            "EngineerID": 300100,
+            "Progress": "Unlocked",
+            "RankProgress": 0,
+            "Rank": 5
+          },
+          {
+            "Engineer": "Elvira Martuuk",
+            "EngineerID": 300160,
+            "Progress": "Unlocked",
+            "RankProgress": 0,
+            "Rank": 5
+          },
+          {
+            "Engineer": "Professor Palin",
+            "EngineerID": 300220,
+            "Progress": "Unlocked",
+            "RankProgress": 42,
+            "Rank": 4
+          },
+          {
+            "Engineer": "The Dweller",
+            "EngineerID": 300180,
+            "Progress": "Unlocked",
+            "RankProgress": 0,
+            "Rank": 5
+          },
+          {
+            "Engineer": "Marco Qwent",
+            "EngineerID": 300200,
+            "Progress": "Unlocked",
+            "RankProgress": 42,
+            "Rank": 3
+          },
+          {
+            "Engineer": "Lei Cheung",
+            "EngineerID": 300120,
+            "Progress": "Unlocked",
+            "RankProgress": 42,
+            "Rank": 2
+          },
+          { "Engineer": "Selene Jean", "EngineerID": 300210, "Progress": "Invited" },
+          { "Engineer": "Hera Tani", "EngineerID": 300090, "Progress": "Invited" },
+          { "Engineer": "Liz Ryder", "EngineerID": 300080, "Progress": "Known" },
+          { "Engineer": "Juri Ishmaak", "EngineerID": 300250, "Progress": "Known" },
+          { "Engineer": "Tod 'The Blaster' McQuinn", "EngineerID": 300260, "Progress": "Known" },
+          { "Engineer": "Didi Vatermann", "EngineerID": 300000, "Progress": "Known" },
+          { "Engineer": "Ram Tah", "EngineerID": 300110, "Progress": "Known" },
+          { "Engineer": "Mel Brandon", "EngineerID": 300280, "Progress": "Known" },
+          { "Engineer": "Etienne Dorn", "EngineerID": 300290, "Progress": "Known" },
+          { "Engineer": "Petra Olmanova", "EngineerID": 300130, "Progress": "Known" }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "CarrierLocation",
+        "CarrierType": "FleetCarrier",
+        "CarrierID": 3700000417,
+        "StarSystem": "Phroi Pruae DF-B d2-1021",
+        "SystemAddress": 2871300000000,
+        "BodyID": 0
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "Location",
+        "Docked": true,
+        "StationName": "K7V-2TQ",
+        "StationType": "FleetCarrier",
+        "MarketID": 3700000417,
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae DF-B d2-1021",
+        "SystemAddress": 2871300000000,
+        "StarPos": [-2412.5, 38.3125, 9874.21875],
+        "Population": 0,
+        "Body": "Phroi Pruae DF-B d2-1021",
+        "BodyID": 0,
+        "BodyType": "Star"
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "Loadout",
+        "Ship": "mandalay",
+        "ShipID": 12,
+        "ShipName": "Long Quiet",
+        "ShipIdent": "VK-07",
+        "HullValue": 16527690,
+        "ModulesValue": 41995010,
+        "HullHealth": 1,
+        "UnladenMass": 612.4,
+        "CargoCapacity": 0,
+        "MaxJumpRange": 71.36,
+        "FuelCapacity": { "Main": 32, "Reserve": 0.79 },
+        "Rebuy": 2926135,
+        "Modules": [
+          {
+            "Slot": "Armour",
+            "Item": "mandalay_armour_grade1",
+            "On": true,
+            "Priority": 1,
+            "Health": 1,
+            "Value": 0
+          },
+          {
+            "Slot": "PowerPlant",
+            "Item": "int_powerplant_size5_class1",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 53380
+          },
+          {
+            "Slot": "MainEngines",
+            "Item": "int_engine_size5_class1",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 63010
+          },
+          {
+            "Slot": "FrameShiftDrive",
+            "Item": "int_hyperdrive_overcharge_size5_class5",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 6124740,
+            "Engineering": {
+              "Engineer": "Felicity Farseer",
+              "EngineerID": 300100,
+              "BlueprintID": 128673694,
+              "BlueprintName": "FSD_LongRange",
+              "Level": 5,
+              "Quality": 1,
+              "ExperimentalEffect": "special_fsd_heavy",
+              "ExperimentalEffect_Localised": "Mass Manager",
+              "Modifiers": [
+                { "Label": "Mass", "Value": 26, "OriginalValue": 20, "LessIsGood": 1 },
+                {
+                  "Label": "FSDOptimalMass",
+                  "Value": 2390.4,
+                  "OriginalValue": 1440,
+                  "LessIsGood": 0
+                }
+              ]
+            }
+          },
+          {
+            "Slot": "LifeSupport",
+            "Item": "int_lifesupport_size4_class1",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 11350
+          },
+          {
+            "Slot": "PowerDistributor",
+            "Item": "int_powerdistributor_size5_class1",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 31780
+          },
+          {
+            "Slot": "Radar",
+            "Item": "int_sensors_size5_class1",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 31780
+          },
+          {
+            "Slot": "FuelTank",
+            "Item": "int_fueltank_size5_class3",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 97750
+          },
+          {
+            "Slot": "Slot01_Size6",
+            "Item": "int_fuelscoop_size6_class5",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 28763610
+          },
+          {
+            "Slot": "Slot02_Size5",
+            "Item": "int_shieldgenerator_size5_class2",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 189040
+          },
+          {
+            "Slot": "Slot03_Size4",
+            "Item": "int_repairer_size4_class5",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 4723920
+          },
+          {
+            "Slot": "Slot10_Size1",
+            "Item": "int_supercruiseassist",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 9120
+          },
+          {
+            "Slot": "TinyHardpoint1",
+            "Item": "hpt_heatsinklauncher_turret_tiny",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 3500
+          },
+          {
+            "Slot": "Slot04_Size4",
+            "Item": "int_buggybay_size2_class2",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 21600
+          },
+          {
+            "Slot": "Slot05_Size3",
+            "Item": "int_guardianfsdbooster_size3",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 1620430
+          },
+          {
+            "Slot": "Slot06_Size3",
+            "Item": "int_detailedsurfacescanner_tiny",
+            "On": true,
+            "Priority": 0,
+            "Health": 1,
+            "Value": 250000
+          }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "Missions",
+        "Active": [],
+        "Failed": [],
+        "Complete": []
+      },
+      {
+        "timestamp": "2026-10-11T20:18:26Z",
+        "event": "Statistics",
+        "Bank_Account": {
+          "Current_Wealth": 2904118230,
+          "Spent_On_Ships": 612004100,
+          "Spent_On_Outfitting": 804221900,
+          "Spent_On_Repairs": 4120400,
+          "Spent_On_Fuel": 182300,
+          "Spent_On_Ammo_Consumables": 201800,
+          "Insurance_Claims": 6,
+          "Spent_On_Insurance": 31402200,
+          "Owned_Ship_Count": 4
+        },
+        "Combat": {
+          "Bounties_Claimed": 212,
+          "Bounty_Hunting_Profit": 48210400,
+          "Combat_Bonds": 96,
+          "Combat_Bond_Profits": 9810200,
+          "Assassinations": 11,
+          "Assassination_Profits": 3412000,
+          "Highest_Single_Reward": 610000,
+          "Skimmers_Killed": 4
+        },
+        "Crime": {
+          "Notoriety": 0,
+          "Fines": 9,
+          "Total_Fines": 21400,
+          "Bounties_Received": 3,
+          "Total_Bounties": 1200,
+          "Highest_Bounty": 600
+        },
+        "Trading": {
+          "Markets_Traded_With": 41,
+          "Market_Profits": 182400100,
+          "Resources_Traded": 61204,
+          "Average_Profit": 412800,
+          "Highest_Single_Transaction": 21400000
+        },
+        "Mining": {
+          "Mining_Profits": 61210400,
+          "Quantity_Mined": 1820,
+          "Materials_Collected": 7412
+        },
+        "Exploration": {
+          "Systems_Visited": 4118,
+          "Exploration_Profits": 912400300,
+          "Planets_Scanned_To_Level_2": 8204,
+          "Planets_Scanned_To_Level_3": 8204,
+          "Efficient_Scans": 2411,
+          "Highest_Payout": 41200400,
+          "Total_Hyperspace_Distance": 391204,
+          "Total_Hyperspace_Jumps": 9812,
+          "Greatest_Distance_From_Start": 24118.4,
+          "Time_Played": 3412800
+        },
+        "Exobiology": {
+          "Organic_Genus_Encountered": 21,
+          "Organic_Species_Encountered": 88,
+          "Organic_Variant_Encountered": 214,
+          "Organic_Data_Profits": 1812400100,
+          "Organic_Data": 612,
+          "First_Logged_Profits": 1204000000,
+          "First_Logged": 188,
+          "Organic_Systems": 301,
+          "Organic_Planets": 412,
+          "Organic_Genus": 21,
+          "Organic_Species": 88
+        }
+      },
+      {
+        "timestamp": "2026-10-11T20:18:51Z",
+        "event": "CarrierStats",
+        "CarrierID": 3700000417,
+        "CarrierType": "FleetCarrier",
+        "Callsign": "K7V-2TQ",
+        "Name": "HOLLOW LANTERN",
+        "DockingAccess": "squadronfriends",
+        "AllowNotorious": false,
+        "FuelLevel": 842,
+        "JumpRangeCurr": 500,
+        "JumpRangeMax": 500,
+        "PendingDecommission": false,
+        "SpaceUsage": {
+          "TotalCapacity": 25000,
+          "Crew": 1170,
+          "Cargo": 6412,
+          "CargoSpaceReserved": 0,
+          "ShipPacks": 0,
+          "ModulePacks": 0,
+          "FreeSpace": 17418
+        },
+        "Finance": {
+          "CarrierBalance": 2418966120,
+          "ReserveBalance": 0,
+          "AvailableBalance": 2418966120,
+          "ReservePercent": 0,
+          "TaxRate_rearm": 0,
+          "TaxRate_refuel": 0,
+          "TaxRate_repair": 0
+        },
+        "Crew": [
+          { "CrewRole": "Captain", "Activated": true, "Enabled": true, "CrewName": "Ines Okafor" },
+          { "CrewRole": "Refuel", "Activated": true, "Enabled": true, "CrewName": "Tomas Reyes" },
+          { "CrewRole": "Repair", "Activated": true, "Enabled": true, "CrewName": "Mira Holt" },
+          { "CrewRole": "Rearm", "Activated": true, "Enabled": true, "CrewName": "Dev Anand" },
+          {
+            "CrewRole": "Commodities",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Saul Brennan"
+          },
+          {
+            "CrewRole": "Exploration",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Wren Calder"
+          },
+          {
+            "CrewRole": "CarrierFuel",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Ada Kowalczyk"
+          },
+          {
+            "CrewRole": "VistaGenomics",
+            "Activated": true,
+            "Enabled": true,
+            "CrewName": "Lio Marchetti"
+          },
+          { "CrewRole": "BlackMarket", "Activated": false },
+          { "CrewRole": "Shipyard", "Activated": false },
+          { "CrewRole": "Outfitting", "Activated": false },
+          { "CrewRole": "Bartender", "Activated": false },
+          { "CrewRole": "PioneerSupplies", "Activated": false },
+          { "CrewRole": "VoucherRedemption", "Activated": false }
+        ],
+        "ShipPacks": [],
+        "ModulePacks": []
+      },
+      {
+        "timestamp": "2026-10-11T20:19:14Z",
+        "event": "Undocked",
+        "StationName": "K7V-2TQ",
+        "StationType": "FleetCarrier",
+        "MarketID": 3700000417,
+        "Taxi": false,
+        "Multicrew": false
+      },
+      { "timestamp": "2026-10-11T20:19:46Z", "event": "NavRoute" },
+      {
+        "timestamp": "2026-10-11T20:19:46Z",
+        "event": "FSDTarget",
+        "Name": "Phroi Pruae LR-G d3-1058",
+        "SystemAddress": 2871305570419,
+        "StarClass": "G",
+        "RemainingJumpsInRoute": 14
+      },
+      {
+        "timestamp": "2026-10-11T20:20:10Z",
+        "event": "StartJump",
+        "JumpType": "Hyperspace",
+        "Taxi": false,
+        "StarSystem": "Phroi Pruae LR-G d3-1058",
+        "SystemAddress": 2871305570419,
+        "StarClass": "G"
+      },
+      {
+        "timestamp": "2026-10-11T20:20:27Z",
+        "event": "FSDJump",
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae LR-G d3-1058",
+        "SystemAddress": 2871305570419,
+        "StarPos": [-2447.56576, 41.19297, 9919.76047],
+        "SystemAllegiance": "",
+        "SystemEconomy": "$economy_None;",
+        "SystemEconomy_Localised": "None",
+        "SystemSecondEconomy": "$economy_None;",
+        "SystemSecondEconomy_Localised": "None",
+        "SystemGovernment": "$government_None;",
+        "SystemGovernment_Localised": "None",
+        "SystemSecurity": "$GAlAXY_MAP_INFO_state_anarchy;",
+        "SystemSecurity_Localised": "Anarchy",
+        "Population": 0,
+        "Body": "Phroi Pruae LR-G d3-1058",
+        "BodyID": 0,
+        "BodyType": "Star",
+        "JumpDist": 57.55,
+        "FuelUsed": 3.888514,
+        "FuelLevel": 28.111486
+      },
+      {
+        "timestamp": "2026-10-11T20:20:33Z",
+        "event": "Scan",
+        "ScanType": "AutoScan",
+        "BodyName": "Phroi Pruae LR-G d3-1058",
+        "BodyID": 0,
+        "StarSystem": "Phroi Pruae LR-G d3-1058",
+        "SystemAddress": 2871305570419,
+        "DistanceFromArrivalLS": 0,
+        "StarType": "G",
+        "Subclass": 6,
+        "StellarMass": 0.93,
+        "Radius": 660915000,
+        "AbsoluteMagnitude": 5.1,
+        "Age_MY": 8420,
+        "SurfaceTemperature": 5410,
+        "Luminosity": "V",
+        "RotationPeriod": 312000,
+        "AxialTilt": 0,
+        "WasDiscovered": false,
+        "WasMapped": false
+      },
+      {
+        "timestamp": "2026-10-11T20:20:42Z",
+        "event": "FuelScoop",
+        "Scooped": 3.888514,
+        "Total": 32
+      },
+      {
+        "timestamp": "2026-10-11T20:20:42Z",
+        "event": "FSDTarget",
+        "Name": "Phroi Pruae SC-M d4-1095",
+        "SystemAddress": 2871311140838,
+        "StarClass": "K",
+        "RemainingJumpsInRoute": 13
+      },
+      {
+        "timestamp": "2026-10-11T20:21:05Z",
+        "event": "StartJump",
+        "JumpType": "Hyperspace",
+        "Taxi": false,
+        "StarSystem": "Phroi Pruae SC-M d4-1095",
+        "SystemAddress": 2871311140838,
+        "StarClass": "K"
+      },
+      {
+        "timestamp": "2026-10-11T20:21:23Z",
+        "event": "FSDJump",
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae SC-M d4-1095",
+        "SystemAddress": 2871311140838,
+        "StarPos": [-2494.79651, 39.86965, 9959.95407],
+        "SystemAllegiance": "",
+        "SystemEconomy": "$economy_None;",
+        "SystemEconomy_Localised": "None",
+        "SystemSecondEconomy": "$economy_None;",
+        "SystemSecondEconomy_Localised": "None",
+        "SystemGovernment": "$government_None;",
+        "SystemGovernment_Localised": "None",
+        "SystemSecurity": "$GAlAXY_MAP_INFO_state_anarchy;",
+        "SystemSecurity_Localised": "Anarchy",
+        "Population": 0,
+        "Body": "Phroi Pruae SC-M d4-1095",
+        "BodyID": 0,
+        "BodyType": "Star",
+        "JumpDist": 62.032,
+        "FuelUsed": 4.191351,
+        "FuelLevel": 27.808649
+      },
+      {
+        "timestamp": "2026-10-11T20:21:29Z",
+        "event": "Scan",
+        "ScanType": "AutoScan",
+        "BodyName": "Phroi Pruae SC-M d4-1095",
+        "BodyID": 0,
+        "StarSystem": "Phroi Pruae SC-M d4-1095",
+        "SystemAddress": 2871311140838,
+        "DistanceFromArrivalLS": 0,
+        "StarType": "K",
+        "Subclass": 3,
+        "StellarMass": 0.71,
+        "Radius": 542646000,
+        "AbsoluteMagnitude": 6.6,
+        "Age_MY": 8420,
+        "SurfaceTemperature": 4520,
+        "Luminosity": "Va",
+        "RotationPeriod": 312000,
+        "AxialTilt": 0,
+        "WasDiscovered": false,
+        "WasMapped": false
+      },
+      {
+        "timestamp": "2026-10-11T20:21:38Z",
+        "event": "FuelScoop",
+        "Scooped": 4.191351,
+        "Total": 32
+      },
+      {
+        "timestamp": "2026-10-11T20:21:38Z",
+        "event": "FSDTarget",
+        "Name": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "StarClass": "M",
+        "RemainingJumpsInRoute": 12
+      },
+      {
+        "timestamp": "2026-10-11T20:22:05Z",
+        "event": "StartJump",
+        "JumpType": "Hyperspace",
+        "Taxi": false,
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "StarClass": "M"
+      },
+      {
+        "timestamp": "2026-10-11T20:22:22Z",
+        "event": "FSDJump",
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "StarPos": [-2526.42415, 39.94542, 10008.80791],
+        "SystemAllegiance": "",
+        "SystemEconomy": "$economy_None;",
+        "SystemEconomy_Localised": "None",
+        "SystemSecondEconomy": "$economy_None;",
+        "SystemSecondEconomy_Localised": "None",
+        "SystemGovernment": "$government_None;",
+        "SystemGovernment_Localised": "None",
+        "SystemSecurity": "$GAlAXY_MAP_INFO_state_anarchy;",
+        "SystemSecurity_Localised": "Anarchy",
+        "Population": 0,
+        "Body": "Phroi Pruae ZO-R c5-1132",
+        "BodyID": 0,
+        "BodyType": "Star",
+        "JumpDist": 58.198,
+        "FuelUsed": 3.932297,
+        "FuelLevel": 28.067703
+      },
+      {
+        "timestamp": "2026-10-11T20:22:28Z",
+        "event": "Scan",
+        "ScanType": "AutoScan",
+        "BodyName": "Phroi Pruae ZO-R c5-1132",
+        "BodyID": 0,
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "DistanceFromArrivalLS": 0,
+        "StarType": "M",
+        "Subclass": 2,
+        "StellarMass": 0.42,
+        "Radius": 333936000,
+        "AbsoluteMagnitude": 9.4,
+        "Age_MY": 8420,
+        "SurfaceTemperature": 3420,
+        "Luminosity": "Va",
+        "RotationPeriod": 312000,
+        "AxialTilt": 0,
+        "WasDiscovered": false,
+        "WasMapped": false
+      },
+      {
+        "timestamp": "2026-10-11T20:22:36Z",
+        "event": "FuelScoop",
+        "Scooped": 3.932297,
+        "Total": 32
+      },
+      {
+        "timestamp": "2026-10-11T20:22:50Z",
+        "event": "FSSDiscoveryScan",
+        "Progress": 1,
+        "BodyCount": 3,
+        "NonBodyCount": 3,
+        "SystemName": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257
+      },
+      {
+        "timestamp": "2026-10-11T20:23:04Z",
+        "event": "Scan",
+        "ScanType": "Detailed",
+        "BodyName": "Phroi Pruae ZO-R c5-1132 A 2",
+        "BodyID": 4,
+        "Parents": [{ "Star": 0 }],
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "DistanceFromArrivalLS": 812.4,
+        "TidalLock": true,
+        "TerraformState": "",
+        "PlanetClass": "Rocky body",
+        "Atmosphere": "thin carbon dioxide atmosphere",
+        "AtmosphereType": "CarbonDioxide",
+        "AtmosphereComposition": [
+          { "Name": "CarbonDioxide", "Percent": 99.01 },
+          { "Name": "SulphurDioxide", "Percent": 0.99 }
+        ],
+        "Volcanism": "",
+        "MassEM": 0.0442,
+        "Radius": 2104000,
+        "SurfaceGravity": 1.587237,
+        "SurfaceTemperature": 171.3,
+        "SurfacePressure": 2459.9292,
+        "Landable": true,
+        "Materials": [
+          { "Name": "iron", "Percent": 22.820338 },
+          { "Name": "sulphur", "Percent": 18.754577 },
+          { "Name": "carbon", "Percent": 16.996102 },
+          { "Name": "nickel", "Percent": 13.879406 },
+          { "Name": "phosphorus", "Percent": 13.254949 },
+          { "Name": "chromium", "Percent": 10.210668 },
+          { "Name": "manganese", "Percent": 8.344231 },
+          { "Name": "zinc", "Percent": 5.65676 },
+          { "Name": "germanium", "Percent": 3.580156 },
+          { "Name": "cadmium", "Percent": 0.4 },
+          { "Name": "polonium", "Percent": 0.4 }
+        ],
+        "Composition": { "Ice": 0, "Rock": 0.67, "Metal": 0.33 },
+        "SemiMajorAxis": 243551392879.19998,
+        "Eccentricity": 0.0021,
+        "OrbitalInclination": 0.84,
+        "Periapsis": 211.6,
+        "OrbitalPeriod": 7636560,
+        "AscendingNode": 47.2,
+        "MeanAnomaly": 131.5,
+        "RotationPeriod": 7636560,
+        "AxialTilt": 0.21,
+        "WasDiscovered": false,
+        "WasMapped": false,
+        "WasFootfalled": false
+      },
+      {
+        "timestamp": "2026-10-11T20:23:04Z",
+        "event": "FSSBodySignals",
+        "BodyName": "Phroi Pruae ZO-R c5-1132 A 2",
+        "BodyID": 4,
+        "SystemAddress": 2871316711257,
+        "Signals": [
+          { "Type": "$SAA_SignalType_Biological;", "Type_Localised": "Biological", "Count": 2 }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T20:23:19Z",
+        "event": "Scan",
+        "ScanType": "Detailed",
+        "BodyName": "Phroi Pruae ZO-R c5-1132 A 4",
+        "BodyID": 6,
+        "Parents": [{ "Star": 0 }],
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "DistanceFromArrivalLS": 1210.8,
+        "TidalLock": true,
+        "TerraformState": "",
+        "PlanetClass": "High metal content body",
+        "Atmosphere": "thin carbon dioxide atmosphere",
+        "AtmosphereType": "CarbonDioxide",
+        "AtmosphereComposition": [
+          { "Name": "CarbonDioxide", "Percent": 99.01 },
+          { "Name": "SulphurDioxide", "Percent": 0.99 }
+        ],
+        "Volcanism": "",
+        "MassEM": 0.0611,
+        "Radius": 2334000,
+        "SurfaceGravity": 2.067327,
+        "SurfaceTemperature": 178.9,
+        "SurfacePressure": 3927.7883,
+        "Landable": true,
+        "Materials": [
+          { "Name": "iron", "Percent": 22.457429 },
+          { "Name": "nickel", "Percent": 18.677146 },
+          { "Name": "sulphur", "Percent": 17.222361 },
+          { "Name": "carbon", "Percent": 15.038925 },
+          { "Name": "chromium", "Percent": 12.224765 },
+          { "Name": "phosphorus", "Percent": 10.488966 },
+          { "Name": "vanadium", "Percent": 8.017229 },
+          { "Name": "germanium", "Percent": 5.097669 },
+          { "Name": "tungsten", "Percent": 2.244355 },
+          { "Name": "mercury", "Percent": 0.412641 },
+          { "Name": "ruthenium", "Percent": 0.4 }
+        ],
+        "Composition": { "Ice": 0, "Rock": 0.67, "Metal": 0.33 },
+        "SemiMajorAxis": 362988708146.39996,
+        "Eccentricity": 0.0021,
+        "OrbitalInclination": 0.84,
+        "Periapsis": 211.6,
+        "OrbitalPeriod": 11381520,
+        "AscendingNode": 47.2,
+        "MeanAnomaly": 131.5,
+        "RotationPeriod": 11381520,
+        "AxialTilt": 0.21,
+        "WasDiscovered": false,
+        "WasMapped": false,
+        "WasFootfalled": false
+      },
+      {
+        "timestamp": "2026-10-11T20:23:19Z",
+        "event": "FSSBodySignals",
+        "BodyName": "Phroi Pruae ZO-R c5-1132 A 4",
+        "BodyID": 6,
+        "SystemAddress": 2871316711257,
+        "Signals": [
+          { "Type": "$SAA_SignalType_Biological;", "Type_Localised": "Biological", "Count": 2 }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T20:23:27Z",
+        "event": "FSSAllBodiesFound",
+        "SystemName": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "Count": 3
+      },
+      {
+        "timestamp": "2026-10-11T20:25:02Z",
+        "event": "SAAScanComplete",
+        "BodyName": "Phroi Pruae ZO-R c5-1132 A 2",
+        "SystemAddress": 2871316711257,
+        "BodyID": 4,
+        "ProbesUsed": 5,
+        "EfficiencyTarget": 6
+      },
+      {
+        "timestamp": "2026-10-11T20:25:02Z",
+        "event": "SAASignalsFound",
+        "BodyName": "Phroi Pruae ZO-R c5-1132 A 2",
+        "SystemAddress": 2871316711257,
+        "BodyID": 4,
+        "Signals": [
+          { "Type": "$SAA_SignalType_Biological;", "Type_Localised": "Biological", "Count": 2 },
+          { "Type": "$SAA_SignalType_Geological;", "Type_Localised": "Geological", "Count": 2 }
+        ],
+        "Genuses": [
+          { "Genus": "$Codex_Ent_Stratum_Genus_Name;", "Genus_Localised": "Stratum" },
+          { "Genus": "$Codex_Ent_Bacterial_Genus_Name;", "Genus_Localised": "Bacterium" }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T20:26:11Z",
+        "event": "ApproachBody",
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "Body": "Phroi Pruae ZO-R c5-1132 A 2",
+        "BodyID": 4
+      },
+      {
+        "timestamp": "2026-10-11T20:26:48Z",
+        "event": "Touchdown",
+        "PlayerControlled": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "Body": "Phroi Pruae ZO-R c5-1132 A 2",
+        "BodyID": 4,
+        "OnStation": false,
+        "OnPlanet": true,
+        "Latitude": -12.4,
+        "Longitude": 77.1
+      },
+      {
+        "timestamp": "2026-10-11T20:26:48Z",
+        "event": "Disembark",
+        "SRV": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "ID": 13,
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "Body": "Phroi Pruae ZO-R c5-1132 A 2",
+        "BodyID": 4,
+        "OnStation": false,
+        "OnPlanet": true
+      },
+      {
+        "timestamp": "2026-10-11T20:30:02Z",
+        "event": "ScanOrganic",
+        "ScanType": "Log",
+        "Genus": "$Codex_Ent_Stratum_Genus_Name;",
+        "Genus_Localised": "Stratum",
+        "Species": "$Codex_Ent_Stratum_02_Name;",
+        "Species_Localised": "Stratum Paleas",
+        "Variant": "$Codex_Ent_Stratum_02_Green_Name;",
+        "Variant_Localised": "Stratum Paleas - Green",
+        "WasLogged": false,
+        "SystemAddress": 2871316711257,
+        "Body": 4
+      },
+      {
+        "timestamp": "2026-10-11T20:32:30Z",
+        "event": "ScanOrganic",
+        "ScanType": "Sample",
+        "Genus": "$Codex_Ent_Stratum_Genus_Name;",
+        "Genus_Localised": "Stratum",
+        "Species": "$Codex_Ent_Stratum_02_Name;",
+        "Species_Localised": "Stratum Paleas",
+        "Variant": "$Codex_Ent_Stratum_02_Green_Name;",
+        "Variant_Localised": "Stratum Paleas - Green",
+        "WasLogged": false,
+        "SystemAddress": 2871316711257,
+        "Body": 4
+      },
+      {
+        "timestamp": "2026-10-11T20:35:24Z",
+        "event": "ScanOrganic",
+        "ScanType": "Analyse",
+        "Genus": "$Codex_Ent_Stratum_Genus_Name;",
+        "Genus_Localised": "Stratum",
+        "Species": "$Codex_Ent_Stratum_02_Name;",
+        "Species_Localised": "Stratum Paleas",
+        "Variant": "$Codex_Ent_Stratum_02_Green_Name;",
+        "Variant_Localised": "Stratum Paleas - Green",
+        "WasLogged": false,
+        "SystemAddress": 2871316711257,
+        "Body": 4
+      },
+      {
+        "timestamp": "2026-10-11T20:38:36Z",
+        "event": "ScanOrganic",
+        "ScanType": "Log",
+        "Genus": "$Codex_Ent_Bacterial_Genus_Name;",
+        "Genus_Localised": "Bacterium",
+        "Species": "$Codex_Ent_Bacterial_01_Name;",
+        "Species_Localised": "Bacterium Aurasus",
+        "Variant": "$Codex_Ent_Bacterial_01_Teal_Name;",
+        "Variant_Localised": "Bacterium Aurasus - Teal",
+        "WasLogged": false,
+        "SystemAddress": 2871316711257,
+        "Body": 4
+      },
+      {
+        "timestamp": "2026-10-11T20:41:42Z",
+        "event": "ScanOrganic",
+        "ScanType": "Sample",
+        "Genus": "$Codex_Ent_Bacterial_Genus_Name;",
+        "Genus_Localised": "Bacterium",
+        "Species": "$Codex_Ent_Bacterial_01_Name;",
+        "Species_Localised": "Bacterium Aurasus",
+        "Variant": "$Codex_Ent_Bacterial_01_Teal_Name;",
+        "Variant_Localised": "Bacterium Aurasus - Teal",
+        "WasLogged": false,
+        "SystemAddress": 2871316711257,
+        "Body": 4
+      },
+      {
+        "timestamp": "2026-10-11T20:44:30Z",
+        "event": "ScanOrganic",
+        "ScanType": "Analyse",
+        "Genus": "$Codex_Ent_Bacterial_Genus_Name;",
+        "Genus_Localised": "Bacterium",
+        "Species": "$Codex_Ent_Bacterial_01_Name;",
+        "Species_Localised": "Bacterium Aurasus",
+        "Variant": "$Codex_Ent_Bacterial_01_Teal_Name;",
+        "Variant_Localised": "Bacterium Aurasus - Teal",
+        "WasLogged": false,
+        "SystemAddress": 2871316711257,
+        "Body": 4
+      },
+      {
+        "timestamp": "2026-10-11T20:45:38Z",
+        "event": "Embark",
+        "SRV": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "ID": 13,
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "Body": "Phroi Pruae ZO-R c5-1132 A 2",
+        "BodyID": 4,
+        "OnStation": false,
+        "OnPlanet": true
+      },
+      {
+        "timestamp": "2026-10-11T20:45:38Z",
+        "event": "Liftoff",
+        "PlayerControlled": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "Body": "Phroi Pruae ZO-R c5-1132 A 2",
+        "BodyID": 4,
+        "OnStation": false,
+        "OnPlanet": true,
+        "Latitude": -12.4,
+        "Longitude": 77.1
+      },
+      {
+        "timestamp": "2026-10-11T20:46:20Z",
+        "event": "LeaveBody",
+        "StarSystem": "Phroi Pruae ZO-R c5-1132",
+        "SystemAddress": 2871316711257,
+        "Body": "Phroi Pruae ZO-R c5-1132 A 2",
+        "BodyID": 4
+      },
+      {
+        "timestamp": "2026-10-11T20:48:07Z",
+        "event": "SAAScanComplete",
+        "BodyName": "Phroi Pruae ZO-R c5-1132 A 4",
+        "SystemAddress": 2871316711257,
+        "BodyID": 6,
+        "ProbesUsed": 5,
+        "EfficiencyTarget": 6
+      },
+      {
+        "timestamp": "2026-10-11T20:48:07Z",
+        "event": "SAASignalsFound",
+        "BodyName": "Phroi Pruae ZO-R c5-1132 A 4",
+        "SystemAddress": 2871316711257,
+        "BodyID": 6,
+        "Signals": [
+          { "Type": "$SAA_SignalType_Biological;", "Type_Localised": "Biological", "Count": 2 },
+          { "Type": "$SAA_SignalType_Geological;", "Type_Localised": "Geological", "Count": 2 }
+        ],
+        "Genuses": [
+          { "Genus": "$Codex_Ent_Stratum_Genus_Name;", "Genus_Localised": "Stratum" },
+          { "Genus": "$Codex_Ent_Aleoids_Genus_Name;", "Genus_Localised": "Aleoida" }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T20:48:07Z",
+        "event": "FSDTarget",
+        "Name": "Phroi Pruae GZ-W d6-1169",
+        "SystemAddress": 2871322281676,
+        "StarClass": "F",
+        "RemainingJumpsInRoute": 11
+      },
+      {
+        "timestamp": "2026-10-11T20:48:34Z",
+        "event": "StartJump",
+        "JumpType": "Hyperspace",
+        "Taxi": false,
+        "StarSystem": "Phroi Pruae GZ-W d6-1169",
+        "SystemAddress": 2871322281676,
+        "StarClass": "F"
+      },
+      {
+        "timestamp": "2026-10-11T20:48:54Z",
+        "event": "FSDJump",
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae GZ-W d6-1169",
+        "SystemAddress": 2871322281676,
+        "StarPos": [-2566.07326, 40.83986, 10049.48916],
+        "SystemAllegiance": "",
+        "SystemEconomy": "$economy_None;",
+        "SystemEconomy_Localised": "None",
+        "SystemSecondEconomy": "$economy_None;",
+        "SystemSecondEconomy_Localised": "None",
+        "SystemGovernment": "$government_None;",
+        "SystemGovernment_Localised": "None",
+        "SystemSecurity": "$GAlAXY_MAP_INFO_state_anarchy;",
+        "SystemSecurity_Localised": "Anarchy",
+        "Population": 0,
+        "Body": "Phroi Pruae GZ-W d6-1169",
+        "BodyID": 0,
+        "BodyType": "Star",
+        "JumpDist": 56.814,
+        "FuelUsed": 3.838784,
+        "FuelLevel": 28.161216
+      },
+      {
+        "timestamp": "2026-10-11T20:48:59Z",
+        "event": "Scan",
+        "ScanType": "AutoScan",
+        "BodyName": "Phroi Pruae GZ-W d6-1169",
+        "BodyID": 0,
+        "StarSystem": "Phroi Pruae GZ-W d6-1169",
+        "SystemAddress": 2871322281676,
+        "DistanceFromArrivalLS": 0,
+        "StarType": "F",
+        "Subclass": 8,
+        "StellarMass": 1.18,
+        "Radius": 779184000.0000001,
+        "AbsoluteMagnitude": 3.9,
+        "Age_MY": 8420,
+        "SurfaceTemperature": 6230,
+        "Luminosity": "V",
+        "RotationPeriod": 312000,
+        "AxialTilt": 0,
+        "WasDiscovered": false,
+        "WasMapped": false
+      },
+      {
+        "timestamp": "2026-10-11T20:49:08Z",
+        "event": "FuelScoop",
+        "Scooped": 3.838784,
+        "Total": 32
+      },
+      {
+        "timestamp": "2026-10-11T20:49:08Z",
+        "event": "FSDTarget",
+        "Name": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "StarClass": "K",
+        "RemainingJumpsInRoute": 10
+      },
+      {
+        "timestamp": "2026-10-11T20:49:34Z",
+        "event": "StartJump",
+        "JumpType": "Hyperspace",
+        "Taxi": false,
+        "StarSystem": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "StarClass": "K"
+      },
+      {
+        "timestamp": "2026-10-11T20:49:51Z",
+        "event": "FSDJump",
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "StarPos": [-2612.58951, 46.78503, 10091.16041],
+        "SystemAllegiance": "",
+        "SystemEconomy": "$economy_None;",
+        "SystemEconomy_Localised": "None",
+        "SystemSecondEconomy": "$economy_None;",
+        "SystemSecondEconomy_Localised": "None",
+        "SystemGovernment": "$government_None;",
+        "SystemGovernment_Localised": "None",
+        "SystemSecurity": "$GAlAXY_MAP_INFO_state_anarchy;",
+        "SystemSecurity_Localised": "Anarchy",
+        "Population": 0,
+        "Body": "Phroi Pruae OL-B d7-1206",
+        "BodyID": 0,
+        "BodyType": "Star",
+        "JumpDist": 62.734,
+        "FuelUsed": 4.238784,
+        "FuelLevel": 27.761216
+      },
+      {
+        "timestamp": "2026-10-11T20:49:56Z",
+        "event": "Scan",
+        "ScanType": "AutoScan",
+        "BodyName": "Phroi Pruae OL-B d7-1206",
+        "BodyID": 0,
+        "StarSystem": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "DistanceFromArrivalLS": 0,
+        "StarType": "K",
+        "Subclass": 3,
+        "StellarMass": 0.71,
+        "Radius": 542646000,
+        "AbsoluteMagnitude": 6.6,
+        "Age_MY": 8420,
+        "SurfaceTemperature": 4520,
+        "Luminosity": "Va",
+        "RotationPeriod": 312000,
+        "AxialTilt": 0,
+        "WasDiscovered": false,
+        "WasMapped": false
+      },
+      {
+        "timestamp": "2026-10-11T20:50:06Z",
+        "event": "FuelScoop",
+        "Scooped": 4.238784,
+        "Total": 32
+      },
+      {
+        "timestamp": "2026-10-11T20:50:19Z",
+        "event": "FSSDiscoveryScan",
+        "Progress": 1,
+        "BodyCount": 2,
+        "NonBodyCount": 3,
+        "SystemName": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095
+      },
+      {
+        "timestamp": "2026-10-11T20:50:34Z",
+        "event": "Scan",
+        "ScanType": "Detailed",
+        "BodyName": "Phroi Pruae OL-B d7-1206 3 b",
+        "BodyID": 9,
+        "Parents": [{ "Star": 0 }],
+        "StarSystem": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "DistanceFromArrivalLS": 488.1,
+        "TidalLock": true,
+        "TerraformState": "",
+        "PlanetClass": "Rocky body",
+        "Atmosphere": "thin ammonia atmosphere",
+        "AtmosphereType": "Ammonia",
+        "AtmosphereComposition": [{ "Name": "Ammonia", "Percent": 100 }],
+        "Volcanism": "",
+        "MassEM": 0.0129,
+        "Radius": 1406000,
+        "SurfaceGravity": 0.852405,
+        "SurfaceTemperature": 168.4,
+        "SurfacePressure": 921.2081,
+        "Landable": true,
+        "Materials": [
+          { "Name": "iron", "Percent": 21.14922 },
+          { "Name": "sulphur", "Percent": 20.177246 },
+          { "Name": "carbon", "Percent": 16.783884 },
+          { "Name": "nickel", "Percent": 14.167419 },
+          { "Name": "phosphorus", "Percent": 11.90554 },
+          { "Name": "chromium", "Percent": 9.972636 },
+          { "Name": "manganese", "Percent": 8.342457 },
+          { "Name": "zinc", "Percent": 5.642027 },
+          { "Name": "germanium", "Percent": 3.502937 },
+          { "Name": "cadmium", "Percent": 1.393693 },
+          { "Name": "polonium", "Percent": 0.4 }
+        ],
+        "Composition": { "Ice": 0, "Rock": 0.67, "Metal": 0.33 },
+        "SemiMajorAxis": 146328698749.80002,
+        "Eccentricity": 0.0021,
+        "OrbitalInclination": 0.84,
+        "Periapsis": 211.6,
+        "OrbitalPeriod": 4588140,
+        "AscendingNode": 47.2,
+        "MeanAnomaly": 131.5,
+        "RotationPeriod": 4588140,
+        "AxialTilt": 0.21,
+        "WasDiscovered": false,
+        "WasMapped": false,
+        "WasFootfalled": false
+      },
+      {
+        "timestamp": "2026-10-11T20:50:34Z",
+        "event": "FSSBodySignals",
+        "BodyName": "Phroi Pruae OL-B d7-1206 3 b",
+        "BodyID": 9,
+        "SystemAddress": 2871327852095,
+        "Signals": [
+          { "Type": "$SAA_SignalType_Biological;", "Type_Localised": "Biological", "Count": 1 }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T20:50:44Z",
+        "event": "FSSAllBodiesFound",
+        "SystemName": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "Count": 2
+      },
+      {
+        "timestamp": "2026-10-11T20:52:33Z",
+        "event": "SAAScanComplete",
+        "BodyName": "Phroi Pruae OL-B d7-1206 3 b",
+        "SystemAddress": 2871327852095,
+        "BodyID": 9,
+        "ProbesUsed": 5,
+        "EfficiencyTarget": 6
+      },
+      {
+        "timestamp": "2026-10-11T20:52:33Z",
+        "event": "SAASignalsFound",
+        "BodyName": "Phroi Pruae OL-B d7-1206 3 b",
+        "SystemAddress": 2871327852095,
+        "BodyID": 9,
+        "Signals": [
+          { "Type": "$SAA_SignalType_Biological;", "Type_Localised": "Biological", "Count": 1 },
+          { "Type": "$SAA_SignalType_Geological;", "Type_Localised": "Geological", "Count": 2 }
+        ],
+        "Genuses": [{ "Genus": "$Codex_Ent_Conchas_Genus_Name;", "Genus_Localised": "Concha" }]
+      },
+      {
+        "timestamp": "2026-10-11T20:53:53Z",
+        "event": "ApproachBody",
+        "StarSystem": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "Body": "Phroi Pruae OL-B d7-1206 3 b",
+        "BodyID": 9
+      },
+      {
+        "timestamp": "2026-10-11T20:54:38Z",
+        "event": "Touchdown",
+        "PlayerControlled": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "Body": "Phroi Pruae OL-B d7-1206 3 b",
+        "BodyID": 9,
+        "OnStation": false,
+        "OnPlanet": true,
+        "Latitude": -12.4,
+        "Longitude": 77.1
+      },
+      {
+        "timestamp": "2026-10-11T20:54:38Z",
+        "event": "Disembark",
+        "SRV": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "ID": 13,
+        "StarSystem": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "Body": "Phroi Pruae OL-B d7-1206 3 b",
+        "BodyID": 9,
+        "OnStation": false,
+        "OnPlanet": true
+      },
+      {
+        "timestamp": "2026-10-11T20:57:04Z",
+        "event": "ScanOrganic",
+        "ScanType": "Log",
+        "Genus": "$Codex_Ent_Conchas_Genus_Name;",
+        "Genus_Localised": "Concha",
+        "Species": "$Codex_Ent_Conchas_02_Name;",
+        "Species_Localised": "Concha Aureolas",
+        "Variant": "$Codex_Ent_Conchas_02_Red_Name;",
+        "Variant_Localised": "Concha Aureolas - Red",
+        "WasLogged": false,
+        "SystemAddress": 2871327852095,
+        "Body": 9
+      },
+      {
+        "timestamp": "2026-10-11T20:59:40Z",
+        "event": "ScanOrganic",
+        "ScanType": "Sample",
+        "Genus": "$Codex_Ent_Conchas_Genus_Name;",
+        "Genus_Localised": "Concha",
+        "Species": "$Codex_Ent_Conchas_02_Name;",
+        "Species_Localised": "Concha Aureolas",
+        "Variant": "$Codex_Ent_Conchas_02_Red_Name;",
+        "Variant_Localised": "Concha Aureolas - Red",
+        "WasLogged": false,
+        "SystemAddress": 2871327852095,
+        "Body": 9
+      },
+      {
+        "timestamp": "2026-10-11T21:02:39Z",
+        "event": "ScanOrganic",
+        "ScanType": "Analyse",
+        "Genus": "$Codex_Ent_Conchas_Genus_Name;",
+        "Genus_Localised": "Concha",
+        "Species": "$Codex_Ent_Conchas_02_Name;",
+        "Species_Localised": "Concha Aureolas",
+        "Variant": "$Codex_Ent_Conchas_02_Red_Name;",
+        "Variant_Localised": "Concha Aureolas - Red",
+        "WasLogged": false,
+        "SystemAddress": 2871327852095,
+        "Body": 9
+      },
+      {
+        "timestamp": "2026-10-11T21:03:43Z",
+        "event": "Embark",
+        "SRV": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "ID": 13,
+        "StarSystem": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "Body": "Phroi Pruae OL-B d7-1206 3 b",
+        "BodyID": 9,
+        "OnStation": false,
+        "OnPlanet": true
+      },
+      {
+        "timestamp": "2026-10-11T21:03:43Z",
+        "event": "Liftoff",
+        "PlayerControlled": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "Body": "Phroi Pruae OL-B d7-1206 3 b",
+        "BodyID": 9,
+        "OnStation": false,
+        "OnPlanet": true,
+        "Latitude": -12.4,
+        "Longitude": 77.1
+      },
+      {
+        "timestamp": "2026-10-11T21:04:21Z",
+        "event": "LeaveBody",
+        "StarSystem": "Phroi Pruae OL-B d7-1206",
+        "SystemAddress": 2871327852095,
+        "Body": "Phroi Pruae OL-B d7-1206 3 b",
+        "BodyID": 9
+      },
+      {
+        "timestamp": "2026-10-11T21:04:21Z",
+        "event": "FSDTarget",
+        "Name": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "StarClass": "G",
+        "RemainingJumpsInRoute": 9
+      },
+      {
+        "timestamp": "2026-10-11T21:04:46Z",
+        "event": "StartJump",
+        "JumpType": "Hyperspace",
+        "Taxi": false,
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "StarClass": "G"
+      },
+      {
+        "timestamp": "2026-10-11T21:05:06Z",
+        "event": "FSDJump",
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "StarPos": [-2645.44605, 42.01496, 10137.95045],
+        "SystemAllegiance": "",
+        "SystemEconomy": "$economy_None;",
+        "SystemEconomy_Localised": "None",
+        "SystemSecondEconomy": "$economy_None;",
+        "SystemSecondEconomy_Localised": "None",
+        "SystemGovernment": "$government_None;",
+        "SystemGovernment_Localised": "None",
+        "SystemSecurity": "$GAlAXY_MAP_INFO_state_anarchy;",
+        "SystemSecurity_Localised": "Anarchy",
+        "Population": 0,
+        "Body": "Phroi Pruae VW-G d8-1243",
+        "BodyID": 0,
+        "BodyType": "Star",
+        "JumpDist": 57.373,
+        "FuelUsed": 3.876554,
+        "FuelLevel": 28.123446
+      },
+      {
+        "timestamp": "2026-10-11T21:05:11Z",
+        "event": "Scan",
+        "ScanType": "AutoScan",
+        "BodyName": "Phroi Pruae VW-G d8-1243",
+        "BodyID": 0,
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "DistanceFromArrivalLS": 0,
+        "StarType": "G",
+        "Subclass": 6,
+        "StellarMass": 0.93,
+        "Radius": 660915000,
+        "AbsoluteMagnitude": 5.1,
+        "Age_MY": 8420,
+        "SurfaceTemperature": 5410,
+        "Luminosity": "V",
+        "RotationPeriod": 312000,
+        "AxialTilt": 0,
+        "WasDiscovered": false,
+        "WasMapped": false
+      },
+      {
+        "timestamp": "2026-10-11T21:05:20Z",
+        "event": "FuelScoop",
+        "Scooped": 3.876554,
+        "Total": 32
+      },
+      {
+        "timestamp": "2026-10-11T21:05:33Z",
+        "event": "FSSDiscoveryScan",
+        "Progress": 1,
+        "BodyCount": 6,
+        "NonBodyCount": 3,
+        "SystemName": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514
+      },
+      {
+        "timestamp": "2026-10-11T21:05:48Z",
+        "event": "Scan",
+        "ScanType": "Detailed",
+        "BodyName": "Phroi Pruae VW-G d8-1243 2",
+        "BodyID": 2,
+        "Parents": [{ "Star": 0 }],
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "DistanceFromArrivalLS": 341.6,
+        "TidalLock": false,
+        "TerraformState": "Terraformable",
+        "PlanetClass": "Water world",
+        "Atmosphere": "carbon dioxide atmosphere",
+        "AtmosphereType": "CarbonDioxide",
+        "AtmosphereComposition": [
+          { "Name": "CarbonDioxide", "Percent": 96.5 },
+          { "Name": "Nitrogen", "Percent": 3.5 }
+        ],
+        "Volcanism": "",
+        "MassEM": 0.84,
+        "Radius": 6210000,
+        "SurfaceGravity": 9.993714,
+        "SurfaceTemperature": 288.7,
+        "SurfacePressure": 243968.2916,
+        "Landable": false,
+        "Composition": { "Ice": 0, "Rock": 0.67, "Metal": 0.33 },
+        "SemiMajorAxis": 102409103652.8,
+        "Eccentricity": 0.0021,
+        "OrbitalInclination": 0.84,
+        "Periapsis": 211.6,
+        "OrbitalPeriod": 3211040,
+        "AscendingNode": 47.2,
+        "MeanAnomaly": 131.5,
+        "RotationPeriod": 3211040,
+        "AxialTilt": 0.21,
+        "WasDiscovered": false,
+        "WasMapped": false,
+        "WasFootfalled": false
+      },
+      {
+        "timestamp": "2026-10-11T21:06:02Z",
+        "event": "Scan",
+        "ScanType": "Detailed",
+        "BodyName": "Phroi Pruae VW-G d8-1243 3",
+        "BodyID": 3,
+        "Parents": [{ "Star": 0 }],
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "DistanceFromArrivalLS": 512.9,
+        "TidalLock": false,
+        "TerraformState": "Terraformable",
+        "PlanetClass": "High metal content body",
+        "Atmosphere": "thick carbon dioxide atmosphere",
+        "AtmosphereType": "CarbonDioxide",
+        "AtmosphereComposition": [{ "Name": "CarbonDioxide", "Percent": 99 }],
+        "Volcanism": "",
+        "MassEM": 0.58,
+        "Radius": 5102000,
+        "SurfaceGravity": 6.956409,
+        "SurfaceTemperature": 301.2,
+        "SurfacePressure": 415049.7906,
+        "Landable": false,
+        "Composition": { "Ice": 0, "Rock": 0.67, "Metal": 0.33 },
+        "SemiMajorAxis": 153763551708.19998,
+        "Eccentricity": 0.0021,
+        "OrbitalInclination": 0.84,
+        "Periapsis": 211.6,
+        "OrbitalPeriod": 4821260,
+        "AscendingNode": 47.2,
+        "MeanAnomaly": 131.5,
+        "RotationPeriod": 4821260,
+        "AxialTilt": 0.21,
+        "WasDiscovered": false,
+        "WasMapped": false,
+        "WasFootfalled": false
+      },
+      {
+        "timestamp": "2026-10-11T21:06:15Z",
+        "event": "Scan",
+        "ScanType": "Detailed",
+        "BodyName": "Phroi Pruae VW-G d8-1243 4 a",
+        "BodyID": 5,
+        "Parents": [{ "Star": 0 }],
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "DistanceFromArrivalLS": 1044.2,
+        "TidalLock": true,
+        "TerraformState": "",
+        "PlanetClass": "Rocky body",
+        "Atmosphere": "thin carbon dioxide atmosphere",
+        "AtmosphereType": "CarbonDioxide",
+        "AtmosphereComposition": [
+          { "Name": "CarbonDioxide", "Percent": 99.01 },
+          { "Name": "SulphurDioxide", "Percent": 0.99 }
+        ],
+        "Volcanism": "",
+        "MassEM": 0.0538,
+        "Radius": 2201000,
+        "SurfaceGravity": 1.79299,
+        "SurfaceTemperature": 176.1,
+        "SurfacePressure": 3158.4277,
+        "Landable": true,
+        "Materials": [
+          { "Name": "iron", "Percent": 22.96388 },
+          { "Name": "sulphur", "Percent": 20.060079 },
+          { "Name": "carbon", "Percent": 16.709972 },
+          { "Name": "nickel", "Percent": 15.500199 },
+          { "Name": "phosphorus", "Percent": 11.797888 },
+          { "Name": "chromium", "Percent": 9.401074 },
+          { "Name": "manganese", "Percent": 7.226418 },
+          { "Name": "zinc", "Percent": 4.872212 },
+          { "Name": "germanium", "Percent": 2.816054 },
+          { "Name": "cadmium", "Percent": 0.4 },
+          { "Name": "polonium", "Percent": 0.4 }
+        ],
+        "Composition": { "Ice": 0, "Rock": 0.67, "Metal": 0.33 },
+        "SemiMajorAxis": 313043284643.60004,
+        "Eccentricity": 0.0021,
+        "OrbitalInclination": 0.84,
+        "Periapsis": 211.6,
+        "OrbitalPeriod": 9815480,
+        "AscendingNode": 47.2,
+        "MeanAnomaly": 131.5,
+        "RotationPeriod": 9815480,
+        "AxialTilt": 0.21,
+        "WasDiscovered": false,
+        "WasMapped": false,
+        "WasFootfalled": false
+      },
+      {
+        "timestamp": "2026-10-11T21:06:15Z",
+        "event": "FSSBodySignals",
+        "BodyName": "Phroi Pruae VW-G d8-1243 4 a",
+        "BodyID": 5,
+        "SystemAddress": 2871333422514,
+        "Signals": [
+          { "Type": "$SAA_SignalType_Biological;", "Type_Localised": "Biological", "Count": 3 }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T21:06:29Z",
+        "event": "Scan",
+        "ScanType": "Detailed",
+        "BodyName": "Phroi Pruae VW-G d8-1243 5",
+        "BodyID": 7,
+        "Parents": [{ "Star": 0 }],
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "DistanceFromArrivalLS": 1580.4,
+        "TidalLock": true,
+        "TerraformState": "",
+        "PlanetClass": "High metal content body",
+        "Atmosphere": "thin argon atmosphere",
+        "AtmosphereType": "Argon",
+        "AtmosphereComposition": [{ "Name": "Argon", "Percent": 100 }],
+        "Volcanism": "",
+        "MassEM": 0.0247,
+        "Radius": 1722000,
+        "SurfaceGravity": 1.214922,
+        "SurfaceTemperature": 182.6,
+        "SurfacePressure": 425.173,
+        "Landable": true,
+        "Materials": [
+          { "Name": "iron", "Percent": 22.892127 },
+          { "Name": "nickel", "Percent": 19.262461 },
+          { "Name": "sulphur", "Percent": 16.613073 },
+          { "Name": "carbon", "Percent": 14.005395 },
+          { "Name": "chromium", "Percent": 11.582012 },
+          { "Name": "phosphorus", "Percent": 9.769796 },
+          { "Name": "vanadium", "Percent": 8.277127 },
+          { "Name": "germanium", "Percent": 6.100007 },
+          { "Name": "tungsten", "Percent": 2.594065 },
+          { "Name": "mercury", "Percent": 0.4 },
+          { "Name": "ruthenium", "Percent": 0.4 }
+        ],
+        "Composition": { "Ice": 0, "Rock": 0.67, "Metal": 0.33 },
+        "SemiMajorAxis": 473792000623.2,
+        "Eccentricity": 0.0021,
+        "OrbitalInclination": 0.84,
+        "Periapsis": 211.6,
+        "OrbitalPeriod": 14855760,
+        "AscendingNode": 47.2,
+        "MeanAnomaly": 131.5,
+        "RotationPeriod": 14855760,
+        "AxialTilt": 0.21,
+        "WasDiscovered": false,
+        "WasMapped": false,
+        "WasFootfalled": false
+      },
+      {
+        "timestamp": "2026-10-11T21:06:29Z",
+        "event": "FSSBodySignals",
+        "BodyName": "Phroi Pruae VW-G d8-1243 5",
+        "BodyID": 7,
+        "SystemAddress": 2871333422514,
+        "Signals": [
+          { "Type": "$SAA_SignalType_Biological;", "Type_Localised": "Biological", "Count": 2 }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T21:06:44Z",
+        "event": "Scan",
+        "ScanType": "Detailed",
+        "BodyName": "Phroi Pruae VW-G d8-1243 6",
+        "BodyID": 8,
+        "Parents": [{ "Star": 0 }],
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "DistanceFromArrivalLS": 2388.5,
+        "TidalLock": false,
+        "TerraformState": "",
+        "PlanetClass": "Sudarsky class II gas giant",
+        "Atmosphere": "",
+        "AtmosphereType": "None",
+        "Volcanism": "",
+        "MassEM": 412.2,
+        "Radius": 71200000,
+        "SurfaceGravity": 30.373053,
+        "SurfaceTemperature": 155,
+        "SurfacePressure": 0,
+        "Landable": false,
+        "Composition": { "Ice": 0, "Rock": 0.67, "Metal": 0.33 },
+        "SemiMajorAxis": 716054285933,
+        "Eccentricity": 0.0021,
+        "OrbitalInclination": 0.84,
+        "Periapsis": 211.6,
+        "OrbitalPeriod": 22451900,
+        "AscendingNode": 47.2,
+        "MeanAnomaly": 131.5,
+        "RotationPeriod": 22451900,
+        "AxialTilt": 0.21,
+        "WasDiscovered": false,
+        "WasMapped": false,
+        "WasFootfalled": false
+      },
+      {
+        "timestamp": "2026-10-11T21:06:54Z",
+        "event": "FSSAllBodiesFound",
+        "SystemName": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "Count": 6
+      },
+      {
+        "timestamp": "2026-10-11T21:08:24Z",
+        "event": "SAAScanComplete",
+        "BodyName": "Phroi Pruae VW-G d8-1243 4 a",
+        "SystemAddress": 2871333422514,
+        "BodyID": 5,
+        "ProbesUsed": 5,
+        "EfficiencyTarget": 6
+      },
+      {
+        "timestamp": "2026-10-11T21:08:24Z",
+        "event": "SAASignalsFound",
+        "BodyName": "Phroi Pruae VW-G d8-1243 4 a",
+        "SystemAddress": 2871333422514,
+        "BodyID": 5,
+        "Signals": [
+          { "Type": "$SAA_SignalType_Biological;", "Type_Localised": "Biological", "Count": 3 },
+          { "Type": "$SAA_SignalType_Geological;", "Type_Localised": "Geological", "Count": 2 }
+        ],
+        "Genuses": [
+          { "Genus": "$Codex_Ent_Conchas_Genus_Name;", "Genus_Localised": "Concha" },
+          { "Genus": "$Codex_Ent_Bacterial_Genus_Name;", "Genus_Localised": "Bacterium" },
+          { "Genus": "$Codex_Ent_Tussocks_Genus_Name;", "Genus_Localised": "Tussock" }
+        ]
+      },
+      {
+        "timestamp": "2026-10-11T21:09:41Z",
+        "event": "ApproachBody",
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "Body": "Phroi Pruae VW-G d8-1243 4 a",
+        "BodyID": 5
+      },
+      {
+        "timestamp": "2026-10-11T21:10:20Z",
+        "event": "Touchdown",
+        "PlayerControlled": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "Body": "Phroi Pruae VW-G d8-1243 4 a",
+        "BodyID": 5,
+        "OnStation": false,
+        "OnPlanet": true,
+        "Latitude": -12.4,
+        "Longitude": 77.1
+      },
+      {
+        "timestamp": "2026-10-11T21:10:20Z",
+        "event": "Disembark",
+        "SRV": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "ID": 13,
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "Body": "Phroi Pruae VW-G d8-1243 4 a",
+        "BodyID": 5,
+        "OnStation": false,
+        "OnPlanet": true
+      },
+      {
+        "timestamp": "2026-10-11T21:12:30Z",
+        "event": "ScanOrganic",
+        "ScanType": "Log",
+        "Genus": "$Codex_Ent_Conchas_Genus_Name;",
+        "Genus_Localised": "Concha",
+        "Species": "$Codex_Ent_Conchas_03_Name;",
+        "Species_Localised": "Concha Labiata",
+        "Variant": "$Codex_Ent_Conchas_03_Turquoise_Name;",
+        "Variant_Localised": "Concha Labiata - Turquoise",
+        "WasLogged": false,
+        "SystemAddress": 2871333422514,
+        "Body": 5
+      },
+      {
+        "timestamp": "2026-10-11T21:13:24Z",
+        "event": "Embark",
+        "SRV": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "ID": 13,
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "Body": "Phroi Pruae VW-G d8-1243 4 a",
+        "BodyID": 5,
+        "OnStation": false,
+        "OnPlanet": true
+      },
+      {
+        "timestamp": "2026-10-11T21:13:24Z",
+        "event": "Liftoff",
+        "PlayerControlled": true,
+        "Taxi": false,
+        "Multicrew": false,
+        "StarSystem": "Phroi Pruae VW-G d8-1243",
+        "SystemAddress": 2871333422514,
+        "Body": "Phroi Pruae VW-G d8-1243 4 a",
+        "BodyID": 5,
+        "OnStation": false,
+        "OnPlanet": true,
+        "Latitude": -12.4,
+        "Longitude": 77.1
+      },
+      {
+        "timestamp": "2026-10-11T21:13:24Z",
+        "event": "FSDTarget",
+        "Name": "Phroi Pruae CH-M d9-1280",
+        "SystemAddress": 2871338992933,
+        "StarClass": "K",
+        "RemainingJumpsInRoute": 8
+      }
+    ],
+    "companions": {
+      "Status": {
+        "timestamp": "2026-10-11T21:13:24Z",
+        "event": "Status",
+        "Flags": 555745288,
+        "Flags2": 0,
+        "Pips": [4, 8, 0],
+        "FireGroup": 0,
+        "GuiFocus": 0,
+        "Fuel": { "FuelMain": 32, "FuelReservoir": 0.61 },
+        "Cargo": 0,
+        "LegalState": "Clean",
+        "Latitude": -12.418,
+        "Longitude": 77.106,
+        "Heading": 214,
+        "Altitude": 1820,
+        "BodyName": "Phroi Pruae VW-G d8-1243 4 a",
+        "PlanetRadius": 2201000,
+        "Balance": 1204877310,
+        "Destination": {
+          "System": 2871333422514,
+          "Body": 5,
+          "Name": "Phroi Pruae VW-G d8-1243 4 a"
+        }
+      },
+      "Cargo": {
+        "timestamp": "2026-10-11T21:13:24Z",
+        "event": "Cargo",
+        "Vessel": "Ship",
+        "Count": 0,
+        "Inventory": []
+      },
+      "NavRoute": {
+        "timestamp": "2026-10-11T20:19:46Z",
+        "event": "NavRoute",
+        "Route": [
+          {
+            "StarSystem": "Phroi Pruae DF-B d2-1021",
+            "SystemAddress": 2871300000000,
+            "StarPos": [-2412.5, 38.3125, 9874.21875],
+            "StarClass": "K"
+          },
+          {
+            "StarSystem": "Phroi Pruae LR-G d3-1058",
+            "SystemAddress": 2871305570419,
+            "StarPos": [-2447.56576, 41.19297, 9919.76047],
+            "StarClass": "G"
+          },
+          {
+            "StarSystem": "Phroi Pruae SC-M d4-1095",
+            "SystemAddress": 2871311140838,
+            "StarPos": [-2494.79651, 39.86965, 9959.95407],
+            "StarClass": "K"
+          },
+          {
+            "StarSystem": "Phroi Pruae ZO-R c5-1132",
+            "SystemAddress": 2871316711257,
+            "StarPos": [-2526.42415, 39.94542, 10008.80791],
+            "StarClass": "M"
+          },
+          {
+            "StarSystem": "Phroi Pruae GZ-W d6-1169",
+            "SystemAddress": 2871322281676,
+            "StarPos": [-2566.07326, 40.83986, 10049.48916],
+            "StarClass": "F"
+          },
+          {
+            "StarSystem": "Phroi Pruae OL-B d7-1206",
+            "SystemAddress": 2871327852095,
+            "StarPos": [-2612.58951, 46.78503, 10091.16041],
+            "StarClass": "K"
+          },
+          {
+            "StarSystem": "Phroi Pruae VW-G d8-1243",
+            "SystemAddress": 2871333422514,
+            "StarPos": [-2645.44605, 42.01496, 10137.95045],
+            "StarClass": "G"
+          },
+          {
+            "StarSystem": "Phroi Pruae CH-M d9-1280",
+            "SystemAddress": 2871338992933,
+            "StarPos": [-2679.70919, 39.15351, 10183.84963],
+            "StarClass": "K"
+          },
+          {
+            "StarSystem": "Phroi Pruae KT-R c10-1317",
+            "SystemAddress": 2871344563352,
+            "StarPos": [-2718.27065, 37.07987, 10241.22086],
+            "StarClass": "L"
+          },
+          {
+            "StarSystem": "Phroi Pruae RE-W c2-1354",
+            "SystemAddress": 2871350133771,
+            "StarPos": [-2764.30932, 36.45751, 10293.94025],
+            "StarClass": "M"
+          },
+          {
+            "StarSystem": "Phroi Pruae YQ-B d3-1391",
+            "SystemAddress": 2871355704190,
+            "StarPos": [-2801.71698, 32.0915, 10341.06237],
+            "StarClass": "K"
+          },
+          {
+            "StarSystem": "Phroi Pruae FB-G d4-1428",
+            "SystemAddress": 2871361274609,
+            "StarPos": [-2845.82229, 32.22191, 10387.42391],
+            "StarClass": "G"
+          },
+          {
+            "StarSystem": "Phroi Pruae NN-M d5-1465",
+            "SystemAddress": 2871366845028,
+            "StarPos": [-2877.20046, 29.10838, 10437.36133],
+            "StarClass": "F"
+          },
+          {
+            "StarSystem": "Phroi Pruae UY-R d6-1502",
+            "SystemAddress": 2871372415447,
+            "StarPos": [-2908.0407, 28.00197, 10483.87204],
+            "StarClass": "K"
+          },
+          {
+            "StarSystem": "Phroi Pruae BK-W d7-1539",
+            "SystemAddress": 2871377985866,
+            "StarPos": [-2941.87998, 23.0142, 10533.4935],
+            "StarClass": "A"
+          }
+        ]
+      }
+    },
+    "overview": {
+      "commander": "Vesper Kael",
+      "ship": "mandalay",
+      "shipName": "Long Quiet",
+      "shipIdent": "VK-07",
+      "fuelCapacity": 32,
+      "credits": 1204877310,
+      "system": "Phroi Pruae VW-G d8-1243",
+      "systemAddress": 2871333422514,
+      "systemDetails": {
+        "economy": "None",
+        "government": "None",
+        "security": "Anarchy",
+        "population": 0
+      },
+      "starClass": "G",
+      "maxJumpRange": 71.36,
+      "cargoCapacity": 0,
+      "drive": {
+        "fuel_power": 2.45,
+        "fuel_multiplier": 0.013,
+        "optimal_mass": 2390.4,
+        "base_mass": 613.1899999999999,
+        "max_fuel_per_jump": 5.2,
+        "range_boost": 7.75,
+        "supercharge_multiplier": 4
+      }
+    }
+  },
+  "navRoutes": [
+    {
+      "id": 1,
+      "plottedAt": "2026-10-11T20:19:46Z",
+      "systems": [
+        {
+          "StarSystem": "Phroi Pruae DF-B d2-1021",
+          "SystemAddress": 2871300000000,
+          "StarPos": [-2412.5, 38.3125, 9874.21875],
+          "StarClass": "K"
+        },
+        {
+          "StarSystem": "Phroi Pruae LR-G d3-1058",
+          "SystemAddress": 2871305570419,
+          "StarPos": [-2447.56576, 41.19297, 9919.76047],
+          "StarClass": "G"
+        },
+        {
+          "StarSystem": "Phroi Pruae SC-M d4-1095",
+          "SystemAddress": 2871311140838,
+          "StarPos": [-2494.79651, 39.86965, 9959.95407],
+          "StarClass": "K"
+        },
+        {
+          "StarSystem": "Phroi Pruae ZO-R c5-1132",
+          "SystemAddress": 2871316711257,
+          "StarPos": [-2526.42415, 39.94542, 10008.80791],
+          "StarClass": "M"
+        },
+        {
+          "StarSystem": "Phroi Pruae GZ-W d6-1169",
+          "SystemAddress": 2871322281676,
+          "StarPos": [-2566.07326, 40.83986, 10049.48916],
+          "StarClass": "F"
+        },
+        {
+          "StarSystem": "Phroi Pruae OL-B d7-1206",
+          "SystemAddress": 2871327852095,
+          "StarPos": [-2612.58951, 46.78503, 10091.16041],
+          "StarClass": "K"
+        },
+        {
+          "StarSystem": "Phroi Pruae VW-G d8-1243",
+          "SystemAddress": 2871333422514,
+          "StarPos": [-2645.44605, 42.01496, 10137.95045],
+          "StarClass": "G"
+        },
+        {
+          "StarSystem": "Phroi Pruae CH-M d9-1280",
+          "SystemAddress": 2871338992933,
+          "StarPos": [-2679.70919, 39.15351, 10183.84963],
+          "StarClass": "K"
+        },
+        {
+          "StarSystem": "Phroi Pruae KT-R c10-1317",
+          "SystemAddress": 2871344563352,
+          "StarPos": [-2718.27065, 37.07987, 10241.22086],
+          "StarClass": "L"
+        },
+        {
+          "StarSystem": "Phroi Pruae RE-W c2-1354",
+          "SystemAddress": 2871350133771,
+          "StarPos": [-2764.30932, 36.45751, 10293.94025],
+          "StarClass": "M"
+        },
+        {
+          "StarSystem": "Phroi Pruae YQ-B d3-1391",
+          "SystemAddress": 2871355704190,
+          "StarPos": [-2801.71698, 32.0915, 10341.06237],
+          "StarClass": "K"
+        },
+        {
+          "StarSystem": "Phroi Pruae FB-G d4-1428",
+          "SystemAddress": 2871361274609,
+          "StarPos": [-2845.82229, 32.22191, 10387.42391],
+          "StarClass": "G"
+        },
+        {
+          "StarSystem": "Phroi Pruae NN-M d5-1465",
+          "SystemAddress": 2871366845028,
+          "StarPos": [-2877.20046, 29.10838, 10437.36133],
+          "StarClass": "F"
+        },
+        {
+          "StarSystem": "Phroi Pruae UY-R d6-1502",
+          "SystemAddress": 2871372415447,
+          "StarPos": [-2908.0407, 28.00197, 10483.87204],
+          "StarClass": "K"
+        },
+        {
+          "StarSystem": "Phroi Pruae BK-W d7-1539",
+          "SystemAddress": 2871377985866,
+          "StarPos": [-2941.87998, 23.0142, 10533.4935],
+          "StarClass": "A"
+        }
+      ]
+    }
+  ],
+  "csvRoute": {
+    "route": {
+      "fileName": "spansh-galaxy-plot-phroi-pruae.csv",
+      "loadedAt": "2026-10-11T22:59:26.655Z",
+      "columns": ["Distance", "Distance Remaining", "X", "Y", "Z", "Star Type", "Refuel"],
+      "systems": [
+        {
+          "name": "Phroi Pruae DF-B d2-1021",
+          "values": ["0.00", "1102.50", "-2412.5", "38.3125", "9874.21875", "K", "Yes"],
+          "coords": [-2412.5, 38.3125, 9874.21875]
+        },
+        {
+          "name": "Phroi Pruae LR-G d3-1058",
+          "values": ["57.55", "1058.40", "-2447.56576", "41.19297", "9919.76047", "G", "Yes"],
+          "coords": [-2447.56576, 41.19297, 9919.76047]
+        },
+        {
+          "name": "Phroi Pruae SC-M d4-1095",
+          "values": ["62.03", "1014.30", "-2494.79651", "39.86965", "9959.95407", "K", "Yes"],
+          "coords": [-2494.79651, 39.86965, 9959.95407]
+        },
+        {
+          "name": "Phroi Pruae ZO-R c5-1132",
+          "values": ["58.20", "970.20", "-2526.42415", "39.94542", "10008.80791", "M", "Yes"],
+          "coords": [-2526.42415, 39.94542, 10008.80791]
+        },
+        {
+          "name": "Phroi Pruae GZ-W d6-1169",
+          "values": ["56.81", "926.10", "-2566.07326", "40.83986", "10049.48916", "F", "Yes"],
+          "coords": [-2566.07326, 40.83986, 10049.48916]
+        },
+        {
+          "name": "Phroi Pruae OL-B d7-1206",
+          "values": ["62.73", "882.00", "-2612.58951", "46.78503", "10091.16041", "K", "Yes"],
+          "coords": [-2612.58951, 46.78503, 10091.16041]
+        },
+        {
+          "name": "Phroi Pruae VW-G d8-1243",
+          "values": ["57.37", "837.90", "-2645.44605", "42.01496", "10137.95045", "G", "Yes"],
+          "coords": [-2645.44605, 42.01496, 10137.95045]
+        },
+        {
+          "name": "Phroi Pruae CH-M d9-1280",
+          "values": ["57.35", "793.80", "-2679.70919", "39.15351", "10183.84963", "K", "Yes"],
+          "coords": [-2679.70919, 39.15351, 10183.84963]
+        },
+        {
+          "name": "Phroi Pruae KT-R c10-1317",
+          "values": ["69.16", "749.70", "-2718.27065", "37.07987", "10241.22086", "L", "No"],
+          "coords": [-2718.27065, 37.07987, 10241.22086]
+        },
+        {
+          "name": "Phroi Pruae RE-W c2-1354",
+          "values": ["69.99", "705.60", "-2764.30932", "36.45751", "10293.94025", "M", "Yes"],
+          "coords": [-2764.30932, 36.45751, 10293.94025]
+        },
+        {
+          "name": "Phroi Pruae YQ-B d3-1391",
+          "values": ["60.32", "661.50", "-2801.71698", "32.0915", "10341.06237", "K", "Yes"],
+          "coords": [-2801.71698, 32.0915, 10341.06237]
+        },
+        {
+          "name": "Phroi Pruae FB-G d4-1428",
+          "values": ["63.99", "617.40", "-2845.82229", "32.22191", "10387.42391", "G", "Yes"],
+          "coords": [-2845.82229, 32.22191, 10387.42391]
+        },
+        {
+          "name": "Phroi Pruae NN-M d5-1465",
+          "values": ["59.06", "573.30", "-2877.20046", "29.10838", "10437.36133", "F", "Yes"],
+          "coords": [-2877.20046, 29.10838, 10437.36133]
+        },
+        {
+          "name": "Phroi Pruae UY-R d6-1502",
+          "values": ["55.82", "529.20", "-2908.0407", "28.00197", "10483.87204", "K", "Yes"],
+          "coords": [-2908.0407, 28.00197, 10483.87204]
+        },
+        {
+          "name": "Phroi Pruae BK-W d7-1539",
+          "values": ["60.27", "485.10", "-2941.87998", "23.0142", "10533.4935", "A", "Yes"],
+          "coords": [-2941.87998, 23.0142, 10533.4935]
+        },
+        {
+          "name": "Phroi Pruae JV-B d8-1576",
+          "values": ["63.06", "441.00", "-2978.69269", "26.52106", "10584.57423", "G", "Yes"],
+          "coords": [-2978.69269, 26.52106, 10584.57423]
+        },
+        {
+          "name": "Phroi Pruae QG-G d9-1613",
+          "values": ["57.31", "396.90", "-3018.42658", "22.53267", "10625.68245", "K", "Yes"],
+          "coords": [-3018.42658, 22.53267, 10625.68245]
+        },
+        {
+          "name": "Phroi Pruae XS-M c10-1650",
+          "values": ["60.68", "352.80", "-3054.23469", "23.18694", "10674.66251", "M", "Yes"],
+          "coords": [-3054.23469, 23.18694, 10674.66251]
+        },
+        {
+          "name": "Phroi Pruae ED-R d2-1687",
+          "values": ["59.03", "308.70", "-3095.03149", "21.39567", "10717.29328", "K", "Yes"],
+          "coords": [-3095.03149, 21.39567, 10717.29328]
+        },
+        {
+          "name": "Phroi Pruae MP-W d3-1724",
+          "values": ["57.95", "264.60", "-3130.36594", "24.00692", "10763.15229", "G", "Yes"],
+          "coords": [-3130.36594, 24.00692, 10763.15229]
+        },
+        {
+          "name": "Phroi Pruae TA-B d4-1761",
+          "values": ["70.10", "220.50", "-3171.57233", "22.13523", "10819.829", "K", "Yes"],
+          "coords": [-3171.57233, 22.13523, 10819.829]
+        },
+        {
+          "name": "Phroi Pruae AM-G d5-1798",
+          "values": ["68.65", "176.40", "-3215.04778", "24.16538", "10872.92187", "F", "Yes"],
+          "coords": [-3215.04778, 24.16538, 10872.92187]
+        },
+        {
+          "name": "Phroi Pruae HX-M d6-1835",
+          "values": ["58.42", "132.30", "-3250.75", "26.34566", "10919.10923", "K", "Yes"],
+          "coords": [-3250.75, 26.34566, 10919.10923]
+        },
+        {
+          "name": "Phroi Pruae PJ-R d7-1872",
+          "values": ["67.97", "88.20", "-3292.76995", "24.49818", "10972.50648", "G", "Yes"],
+          "coords": [-3292.76995, 24.49818, 10972.50648]
+        },
+        {
+          "name": "Phroi Pruae WU-W c8-1909",
+          "values": ["69.99", "44.10", "-3339.61463", "24.21307", "11024.51383", "M", "Yes"],
+          "coords": [-3339.61463, 24.21307, 11024.51383]
+        },
+        {
+          "name": "Phroi Pruae DF-B d9-1946",
+          "values": ["71.02", "0.00", "-3384.82699", "21.12623", "11079.19062", "K", "Yes"],
+          "coords": [-3384.82699, 21.12623, 11079.19062]
+        }
+      ],
+      "savedId": 1
+    },
+    "position": 6,
+    "here": true,
+    "copied": "Phroi Pruae CH-M d9-1280",
+    "saved": [
+      {
+        "id": 1,
+        "name": "Phroi Pruae bio run",
+        "fileName": "spansh-galaxy-plot-phroi-pruae.csv",
+        "systems": 26,
+        "position": 6,
+        "savedAt": "2026-10-11T22:59:26.656Z"
+      }
+    ]
+  },
+  "history": {
+    "version": 94,
+    "ready": true,
+    "ledger": {
+      "commander": "Vesper Kael",
+      "fines": 0,
+      "bounties": 0,
+      "combatBonds": 0,
+      "cartographics": { "value": 1510356, "sessionValue": 1507203, "bodies": 15, "systems": 7 },
+      "exobiology": { "value": 50683500, "sessionValue": 50683500, "species": 3 }
+    },
+    "survey": {
+      "systemAddress": 2871333422514,
+      "systemName": "Phroi Pruae VW-G d8-1243",
+      "bodyCount": 6,
+      "nonBodyCount": 3,
+      "progress": 1,
+      "allFound": true,
+      "bodies": [
+        {
+          "bodyId": 0,
+          "name": "Phroi Pruae VW-G d8-1243",
+          "kind": "star",
+          "type": "G",
+          "distanceLs": 0,
+          "landable": false,
+          "terraformable": false,
+          "firstDiscovery": true,
+          "mapped": false,
+          "mappedEfficiently": false,
+          "value": 3163,
+          "status": "pending",
+          "bioSignals": 0,
+          "signals": [],
+          "genuses": [],
+          "organics": []
+        },
+        {
+          "bodyId": 2,
+          "name": "Phroi Pruae VW-G d8-1243 2",
+          "kind": "planet",
+          "type": "Water world",
+          "distanceLs": 341.6,
+          "gravity": 9.993714,
+          "landable": false,
+          "terraformable": true,
+          "firstDiscovery": true,
+          "mapped": false,
+          "mappedEfficiently": false,
+          "firstFootfall": true,
+          "value": 728301,
+          "mappingValue": 3650162,
+          "status": "pending",
+          "bioSignals": 0,
+          "signals": [],
+          "genuses": [],
+          "organics": [],
+          "records": [
+            "Largest water world",
+            "Smallest water world",
+            "Most massive water world",
+            "Least massive water world",
+            "Slowest orbiting water world",
+            "Fastest orbiting water world",
+            "Hottest water world",
+            "Coldest water world",
+            "Highest gravity water world",
+            "Most eccentric water world"
+          ]
+        },
+        {
+          "bodyId": 3,
+          "name": "Phroi Pruae VW-G d8-1243 3",
+          "kind": "planet",
+          "type": "High metal content body",
+          "distanceLs": 512.9,
+          "gravity": 6.956409,
+          "landable": false,
+          "terraformable": true,
+          "firstDiscovery": true,
+          "mapped": false,
+          "mappedEfficiently": false,
+          "firstFootfall": true,
+          "value": 432443,
+          "mappingValue": 2167358,
+          "status": "pending",
+          "bioSignals": 0,
+          "signals": [],
+          "genuses": [],
+          "organics": [],
+          "records": [
+            "Largest high metal content world",
+            "Most massive high metal content world",
+            "Fastest orbiting high metal content world",
+            "Hottest high metal content world",
+            "Highest gravity high metal content world"
+          ]
+        },
+        {
+          "bodyId": 5,
+          "name": "Phroi Pruae VW-G d8-1243 4 a",
+          "kind": "planet",
+          "type": "Rocky body",
+          "distanceLs": 1044.2,
+          "gravity": 1.79299,
+          "landable": true,
+          "terraformable": false,
+          "firstDiscovery": true,
+          "mapped": true,
+          "mappedEfficiently": true,
+          "firstFootfall": true,
+          "value": 7815,
+          "status": "pending",
+          "bioSignals": 3,
+          "signals": [
+            { "type": "Biological", "count": 3 },
+            { "type": "Geological", "count": 2 }
+          ],
+          "genuses": [
+            {
+              "code": "$Codex_Ent_Conchas_Genus_Name;",
+              "name": "Concha",
+              "minValue": 11762000,
+              "maxValue": 11762000,
+              "newGenus": false,
+              "colonyDistance": 150,
+              "candidates": [
+                {
+                  "species": "$Codex_Ent_Conchas_03_Name;",
+                  "name": "Concha Labiata",
+                  "value": 11762000,
+                  "colours": ["Turquoise"],
+                  "newSpecies": true
+                }
+              ]
+            },
+            {
+              "code": "$Codex_Ent_Bacterial_Genus_Name;",
+              "name": "Bacterium",
+              "minValue": 5000000,
+              "maxValue": 5000000,
+              "newGenus": false,
+              "colonyDistance": 500,
+              "candidates": [
+                {
+                  "species": "$Codex_Ent_Bacterial_01_Name;",
+                  "name": "Bacterium Aurasus",
+                  "value": 5000000,
+                  "colours": ["Emerald"],
+                  "newSpecies": false
+                }
+              ]
+            },
+            {
+              "code": "$Codex_Ent_Tussocks_Genus_Name;",
+              "name": "Tussock",
+              "minValue": 5000000,
+              "maxValue": 5000000,
+              "newGenus": true,
+              "colonyDistance": 200,
+              "candidates": [
+                {
+                  "species": "$Codex_Ent_Tussocks_09_Name;",
+                  "name": "Tussock Propagito",
+                  "value": 5000000,
+                  "colours": ["Lime"],
+                  "newSpecies": true
+                }
+              ]
+            }
+          ],
+          "possibleGenuses": [
+            {
+              "code": "$Codex_Ent_Bacterial_Genus_Name;",
+              "name": "Bacterium",
+              "colonyDistance": 500,
+              "minValue": 5000000,
+              "maxValue": 5000000,
+              "newGenus": false,
+              "species": [
+                {
+                  "species": "$Codex_Ent_Bacterial_01_Name;",
+                  "name": "Bacterium Aurasus",
+                  "value": 5000000,
+                  "colours": ["Emerald"],
+                  "newSpecies": false
+                }
+              ]
+            },
+            {
+              "code": "$Codex_Ent_Conchas_Genus_Name;",
+              "name": "Concha",
+              "colonyDistance": 150,
+              "minValue": 11762000,
+              "maxValue": 11762000,
+              "newGenus": false,
+              "species": [
+                {
+                  "species": "$Codex_Ent_Conchas_03_Name;",
+                  "name": "Concha Labiata",
+                  "value": 11762000,
+                  "colours": ["Turquoise"],
+                  "newSpecies": true
+                }
+              ]
+            },
+            {
+              "code": "$Codex_Ent_Tussocks_Genus_Name;",
+              "name": "Tussock",
+              "colonyDistance": 200,
+              "minValue": 5000000,
+              "maxValue": 5000000,
+              "newGenus": true,
+              "species": [
+                {
+                  "species": "$Codex_Ent_Tussocks_09_Name;",
+                  "name": "Tussock Propagito",
+                  "value": 5000000,
+                  "colours": ["Lime"],
+                  "newSpecies": true
+                }
+              ]
+            }
+          ],
+          "organics": [
+            {
+              "status": "pending",
+              "species": "$Codex_Ent_Conchas_03_Name;",
+              "name": "Concha Labiata",
+              "genus": "Concha",
+              "genusCode": "$Codex_Ent_Conchas_Genus_Name;",
+              "colonyDistance": 150,
+              "variant": "Concha Labiata - Turquoise",
+              "samples": 1,
+              "value": 11762000,
+              "newSpecies": true
+            }
+          ],
+          "records": [
+            "Largest rocky body",
+            "Most massive rocky body",
+            "Slowest orbiting rocky body",
+            "Hottest rocky body",
+            "Highest gravity rocky body"
+          ]
+        },
+        {
+          "bodyId": 7,
+          "name": "Phroi Pruae VW-G d8-1243 5",
+          "kind": "planet",
+          "type": "High metal content body",
+          "distanceLs": 1580.4,
+          "gravity": 1.214922,
+          "landable": true,
+          "terraformable": false,
+          "firstDiscovery": true,
+          "mapped": false,
+          "mappedEfficiently": false,
+          "firstFootfall": true,
+          "value": 31876,
+          "mappingValue": 159761,
+          "status": "pending",
+          "bioSignals": 2,
+          "signals": [{ "type": "Biological", "count": 2 }],
+          "genuses": [],
+          "possibleGenuses": [
+            {
+              "code": "$Codex_Ent_Bacterial_Genus_Name;",
+              "name": "Bacterium",
+              "colonyDistance": 500,
+              "minValue": 5000000,
+              "maxValue": 5000000,
+              "newGenus": false,
+              "species": [
+                {
+                  "species": "$Codex_Ent_Bacterial_05_Name;",
+                  "name": "Bacterium Vesicula",
+                  "value": 5000000,
+                  "colours": ["Mulberry"],
+                  "newSpecies": true
+                }
+              ]
+            }
+          ],
+          "organics": [],
+          "records": [
+            "Smallest high metal content world",
+            "Least massive high metal content world",
+            "Slowest orbiting high metal content world"
+          ]
+        },
+        {
+          "bodyId": 8,
+          "name": "Phroi Pruae VW-G d8-1243 6",
+          "kind": "planet",
+          "type": "Sudarsky class II gas giant",
+          "distanceLs": 2388.5,
+          "gravity": 30.373053,
+          "landable": false,
+          "terraformable": false,
+          "firstDiscovery": true,
+          "mapped": false,
+          "mappedEfficiently": false,
+          "firstFootfall": true,
+          "value": 72465,
+          "mappingValue": 363187,
+          "status": "pending",
+          "bioSignals": 0,
+          "signals": [],
+          "genuses": [],
+          "organics": [],
+          "records": [
+            "Largest class II gas giant",
+            "Smallest class II gas giant",
+            "Most massive class II gas giant",
+            "Least massive class II gas giant",
+            "Slowest orbiting class II gas giant",
+            "Fastest orbiting class II gas giant",
+            "Hottest class II gas giant",
+            "Coldest class II gas giant",
+            "Highest gravity class II gas giant",
+            "Most eccentric class II gas giant"
+          ]
+        }
+      ]
+    },
+    "exobiology": {
+      "lastSale": { "timestamp": "2026-10-10T21:41:42Z", "value": 71176000, "species": 3 },
+      "jumps": 12,
+      "entries": [
+        {
+          "timestamp": "2026-10-11T20:35:24Z",
+          "systemAddress": 2871316711257,
+          "systemName": "Phroi Pruae ZO-R c5-1132",
+          "bodyName": "Phroi Pruae ZO-R c5-1132 A 2",
+          "species": "$Codex_Ent_Stratum_02_Name;",
+          "name": "Stratum Paleas",
+          "genus": "Stratum",
+          "variant": "Stratum Paleas - Green",
+          "value": 6810000,
+          "status": "pending",
+          "newSpecies": false,
+          "jump": 9,
+          "thisSession": true
+        },
+        {
+          "timestamp": "2026-10-11T20:44:30Z",
+          "systemAddress": 2871316711257,
+          "systemName": "Phroi Pruae ZO-R c5-1132",
+          "bodyName": "Phroi Pruae ZO-R c5-1132 A 2",
+          "species": "$Codex_Ent_Bacterial_01_Name;",
+          "name": "Bacterium Aurasus",
+          "genus": "Bacterium",
+          "variant": "Bacterium Aurasus - Teal",
+          "value": 5000000,
+          "status": "pending",
+          "newSpecies": false,
+          "jump": 9,
+          "thisSession": true
+        },
+        {
+          "timestamp": "2026-10-11T21:02:39Z",
+          "systemAddress": 2871327852095,
+          "systemName": "Phroi Pruae OL-B d7-1206",
+          "bodyName": "Phroi Pruae OL-B d7-1206 3 b",
+          "species": "$Codex_Ent_Conchas_02_Name;",
+          "name": "Concha Aureolas",
+          "genus": "Concha",
+          "variant": "Concha Aureolas - Red",
+          "value": 38873500,
+          "status": "pending",
+          "newSpecies": true,
+          "jump": 11,
+          "thisSession": true
+        }
+      ]
+    },
+    "losses": []
+  },
+  "activity": {
+    "version": 190,
+    "ready": true,
+    "today": {
+      "from": 1791687600000,
+      "to": 1791759566658,
+      "minutesPlayed": 55,
+      "jumps": 6,
+      "distanceLy": 354.70099999999996,
+      "earned": 52190703,
+      "lost": 0,
+      "bySource": {
+        "exobiology": 50683500,
+        "cartographics": 1507203,
+        "bounties": 0,
+        "trade": 0,
+        "missions": 0,
+        "other": 0
+      },
+      "perHour": 56935312
+    },
+    "session": {
+      "from": 1791749906000,
+      "to": 1791759566658,
+      "minutesPlayed": 55,
+      "jumps": 6,
+      "distanceLy": 354.70099999999996,
+      "earned": 52190703,
+      "lost": 0,
+      "bySource": {
+        "exobiology": 50683500,
+        "cartographics": 1507203,
+        "bounties": 0,
+        "trade": 0,
+        "missions": 0,
+        "other": 0
+      },
+      "perHour": 56935312
+    },
+    "trip": {
+      "from": 1791668518000,
+      "to": 1791759566658,
+      "minutesPlayed": 56,
+      "jumps": 6,
+      "distanceLy": 354.70099999999996,
+      "earned": 52190703,
+      "lost": 0,
+      "bySource": {
+        "exobiology": 50683500,
+        "cartographics": 1507203,
+        "bounties": 0,
+        "trade": 0,
+        "missions": 0,
+        "other": 0
+      },
+      "perHour": 55918610,
+      "sinceSale": true
+    }
+  },
+  "materials": {
+    "version": 17,
+    "ready": true,
+    "commander": "Vesper Kael",
+    "inventory": {
+      "antimony": 106,
+      "arsenic": 75,
+      "boron": 29,
+      "cadmium": 136,
+      "carbon": 123,
+      "chromium": 200,
+      "germanium": 174,
+      "iron": 126,
+      "lead": 64,
+      "manganese": 84,
+      "mercury": 109,
+      "molybdenum": 144,
+      "nickel": 181,
+      "niobium": 97,
+      "phosphorus": 87,
+      "polonium": 130,
+      "rhenium": 262,
+      "ruthenium": 97,
+      "selenium": 68,
+      "sulphur": 233,
+      "technetium": 95,
+      "tellurium": 73,
+      "tin": 36,
+      "tungsten": 116,
+      "vanadium": 193,
+      "yttrium": 86,
+      "zinc": 200,
+      "zirconium": 170,
+      "basicconductors": 56,
+      "biotechconductors": 35,
+      "chemicaldistillery": 74,
+      "chemicalmanipulators": 83,
+      "chemicalprocessors": 139,
+      "chemicalstorageunits": 77,
+      "compactcomposites": 270,
+      "compoundshielding": 15,
+      "conductiveceramics": 20,
+      "conductivecomponents": 28,
+      "conductivepolymers": 96,
+      "configurablecomponents": 121,
+      "crystalshards": 79,
+      "electrochemicalarrays": 152,
+      "exquisitefocuscrystals": 36,
+      "fedcorecomposites": 18,
+      "fedproprietarycomposites": 87,
+      "filamentcomposites": 163,
+      "focuscrystals": 26,
+      "galvanisingalloys": 177,
+      "gridresistors": 192,
+      "heatconductionwiring": 140,
+      "heatdispersionplate": 152,
+      "heatexchangers": 38,
+      "heatresistantceramics": 34,
+      "heatvanes": 117,
+      "highdensitycomposites": 168,
+      "hybridcapacitors": 26,
+      "imperialshielding": 62,
+      "improvisedcomponents": 64,
+      "mechanicalcomponents": 174,
+      "mechanicalequipment": 151,
+      "mechanicalscrap": 239,
+      "militarygradealloys": 33,
+      "militarysupercapacitors": 39,
+      "pharmaceuticalisolators": 46,
+      "phasealloys": 59,
+      "polymercapacitors": 59,
+      "precipitatedalloys": 30,
+      "protoheatradiators": 21,
+      "protolightalloys": 47,
+      "protoradiolicalloys": 25,
+      "refinedfocuscrystals": 105,
+      "salvagedalloys": 183,
+      "shieldemitters": 203,
+      "shieldingsensors": 43,
+      "temperedalloys": 242,
+      "thermicalloys": 94,
+      "uncutfocuscrystals": 130,
+      "unknowncarapace": 28,
+      "unknowncorechip": 91,
+      "unknownenergycell": 128,
+      "unknownenergysource": 44,
+      "unknownorganiccircuitry": 83,
+      "unknowntechnologycomponents": 26,
+      "wornshieldemitters": 72,
+      "adaptiveencryptors": 50,
+      "ancientbiologicaldata": 10,
+      "ancientculturaldata": 86,
+      "ancienthistoricaldata": 51,
+      "ancientlanguagedata": 109,
+      "ancienttechnologicaldata": 112,
+      "archivedemissiondata": 46,
+      "bulkscandata": 23,
+      "classifiedscandata": 80,
+      "compactemissionsdata": 39,
+      "consumerfirmware": 34,
+      "dataminedwake": 19,
+      "decodedemissiondata": 45,
+      "disruptedwakeechoes": 263,
+      "embeddedfirmware": 58,
+      "emissiondata": 58,
+      "encodedscandata": 44,
+      "encryptedfiles": 111,
+      "encryptionarchives": 95,
+      "encryptioncodes": 101,
+      "fsdtelemetry": 30,
+      "hyperspacetrajectories": 114,
+      "industrialfirmware": 132,
+      "legacyfirmware": 168,
+      "scanarchives": 48,
+      "scandatabanks": 94,
+      "scrambledemissiondata": 230,
+      "searchrescuevoucher": 128,
+      "securityfirmware": 83,
+      "shieldcyclerecordings": 153,
+      "shielddensityreports": 54,
+      "shieldfrequencydata": 90,
+      "shieldpatternanalysis": 44,
+      "shieldsoakanalysis": 45,
+      "symmetrickeys": 58,
+      "unknownshipsignature": 20,
+      "unknownwakedata": 83,
+      "wakesolutions": 69
+    },
+    "history": [
+      {
+        "timestamp": "2026-10-05T23:02:34Z",
+        "kind": "synthesis",
+        "recipe": "synthesis:fsd:3",
+        "name": "FSD",
+        "grade": 3,
+        "count": 1,
+        "ingredients": [
+          ["carbon", 1],
+          ["germanium", 1],
+          ["niobium", 1],
+          ["arsenic", 1],
+          ["polonium", 1],
+          ["yttrium", 1]
+        ]
+      }
+    ],
+    "favourites": [
+      "synthesis:afm-refill:1",
+      "synthesis:afm-refill:2",
+      "synthesis:afm-refill:3",
+      "synthesis:life-support:1",
+      "synthesis:limpets:1",
+      "synthesis:fsd:3",
+      "synthesis:fsd:2"
+    ],
+    "todos": [
+      {
+        "kind": "blueprint",
+        "blueprint": "engineering:engine_dirty:thrusters",
+        "from": 0,
+        "to": 5,
+        "engineer": "Professor Palin",
+        "id": "a90d19e2-2542-4f1b-bc9a-4216ab1c2066"
+      },
+      {
+        "kind": "blueprint",
+        "blueprint": "engineering:shieldgenerator_thermic:shield-generator",
+        "from": 2,
+        "to": 5,
+        "id": "3f5f2012-39d0-434b-bbaa-0b41be1f5394"
+      },
+      {
+        "kind": "blueprint",
+        "blueprint": "engineering:powerplant_boosted:power-plant",
+        "from": 0,
+        "to": 3,
+        "id": "9a6635b7-b60d-4ca6-940a-d22342837bb0"
+      },
+      {
+        "kind": "synthesis",
+        "synthesis": "FSD",
+        "counts": [0, 2, 6],
+        "id": "70fed67f-7ee3-4338-91c4-04c0dbbeeece"
+      },
+      {
+        "kind": "synthesis",
+        "synthesis": "AFM Refill",
+        "counts": [0, 1, 0],
+        "id": "329cbb91-f5bd-47d6-a2bf-6ddb1792bf7c"
+      }
+    ],
+    "engineers": [
+      { "name": "Felicity Farseer", "progress": "Unlocked", "rank": 5 },
+      { "name": "Elvira Martuuk", "progress": "Unlocked", "rank": 5 },
+      { "name": "Professor Palin", "progress": "Unlocked", "rank": 4 },
+      { "name": "The Dweller", "progress": "Unlocked", "rank": 5 },
+      { "name": "Marco Qwent", "progress": "Unlocked", "rank": 3 },
+      { "name": "Lei Cheung", "progress": "Unlocked", "rank": 2 },
+      { "name": "Selene Jean", "progress": "Invited" },
+      { "name": "Hera Tani", "progress": "Invited" },
+      { "name": "Liz Ryder", "progress": "Known" },
+      { "name": "Juri Ishmaak", "progress": "Known" },
+      { "name": "Tod McQuinn", "progress": "Known" },
+      { "name": "Didi Vatermann", "progress": "Known" },
+      { "name": "Ram Tah", "progress": "Known" },
+      { "name": "Mel Brandon", "progress": "Known" },
+      { "name": "Etienne Dorn", "progress": "Known" },
+      { "name": "Petra Olmanova", "progress": "Known" }
+    ],
+    "position": {
+      "system": "Phroi Pruae VW-G d8-1243",
+      "coords": { "x": -2645.44605, "y": 42.01496, "z": 10137.95045 }
+    }
+  },
+  "ships": {
+    "version": 12,
+    "ready": true,
+    "commander": "Vesper Kael",
+    "ships": [
+      {
+        "shipId": 12,
+        "ship": "mandalay",
+        "type": "Mandalay",
+        "name": "Long Quiet",
+        "ident": "VK-07",
+        "current": true,
+        "seenAt": "2026-10-11T20:18:26Z",
+        "layout": "edsy",
+        "slots": [
+          { "slot": "MediumHardpoint1", "group": "hardpoint", "size": 2 },
+          { "slot": "MediumHardpoint2", "group": "hardpoint", "size": 2 },
+          { "slot": "MediumHardpoint3", "group": "hardpoint", "size": 2 },
+          { "slot": "MediumHardpoint4", "group": "hardpoint", "size": 2 },
+          { "slot": "SmallHardpoint1", "group": "hardpoint", "size": 1 },
+          { "slot": "SmallHardpoint2", "group": "hardpoint", "size": 1 },
+          {
+            "slot": "TinyHardpoint1",
+            "group": "utility",
+            "size": 0,
+            "module": {
+              "item": "hpt_heatsinklauncher_turret_tiny",
+              "name": "Heat Sink Launcher",
+              "grade": "0I",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 3500
+            }
+          },
+          { "slot": "TinyHardpoint2", "group": "utility", "size": 0 },
+          { "slot": "TinyHardpoint3", "group": "utility", "size": 0 },
+          { "slot": "TinyHardpoint4", "group": "utility", "size": 0 },
+          {
+            "slot": "Armour",
+            "group": "core",
+            "size": 1,
+            "module": {
+              "item": "mandalay_armour_grade1",
+              "name": "Lightweight Alloy",
+              "on": true,
+              "priority": 1,
+              "health": 1,
+              "value": 0
+            },
+            "stock": true
+          },
+          {
+            "slot": "PowerPlant",
+            "group": "core",
+            "size": 5,
+            "module": {
+              "item": "int_powerplant_size5_class1",
+              "name": "Power Plant",
+              "grade": "5E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 53380
+            },
+            "stock": true
+          },
+          {
+            "slot": "MainEngines",
+            "group": "core",
+            "size": 5,
+            "module": {
+              "item": "int_engine_size5_class1",
+              "name": "Thrusters",
+              "grade": "5E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 63010
+            },
+            "stock": true
+          },
+          {
+            "slot": "FrameShiftDrive",
+            "group": "core",
+            "size": 5,
+            "module": {
+              "item": "int_hyperdrive_overcharge_size5_class5",
+              "name": "Frame Shift Drive (SCO)",
+              "grade": "5A",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 6124740,
+              "engineering": {
+                "blueprint": "Increased Range",
+                "level": 5,
+                "quality": 1,
+                "engineer": "Felicity Farseer",
+                "experimental": "Mass Manager"
+              }
+            }
+          },
+          {
+            "slot": "LifeSupport",
+            "group": "core",
+            "size": 4,
+            "module": {
+              "item": "int_lifesupport_size4_class1",
+              "name": "Life Support",
+              "grade": "4E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 11350
+            },
+            "stock": true
+          },
+          {
+            "slot": "PowerDistributor",
+            "group": "core",
+            "size": 5,
+            "module": {
+              "item": "int_powerdistributor_size5_class1",
+              "name": "Power Distributor",
+              "grade": "5E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 31780
+            },
+            "stock": true
+          },
+          {
+            "slot": "Radar",
+            "group": "core",
+            "size": 5,
+            "module": {
+              "item": "int_sensors_size5_class1",
+              "name": "Sensors",
+              "grade": "5E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 31780
+            },
+            "stock": true
+          },
+          {
+            "slot": "FuelTank",
+            "group": "core",
+            "size": 5,
+            "module": {
+              "item": "int_fueltank_size5_class3",
+              "name": "Fuel Tank (Cap: 32)",
+              "grade": "5C",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 97750
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot01_Size6",
+            "group": "internal",
+            "size": 6,
+            "module": {
+              "item": "int_fuelscoop_size6_class5",
+              "name": "Fuel Scoop",
+              "grade": "6A",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 28763610
+            }
+          },
+          {
+            "slot": "Slot02_Size5",
+            "group": "internal",
+            "size": 5,
+            "module": {
+              "item": "int_shieldgenerator_size5_class2",
+              "name": "Shield Generator",
+              "grade": "5D",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 189040
+            }
+          },
+          {
+            "slot": "Slot03_Size4",
+            "group": "internal",
+            "size": 4,
+            "module": {
+              "item": "int_repairer_size4_class5",
+              "name": "Auto Field-Maintenance Unit",
+              "grade": "4A",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 4723920
+            }
+          },
+          {
+            "slot": "Slot04_Size4",
+            "group": "internal",
+            "size": 4,
+            "module": {
+              "item": "int_buggybay_size2_class2",
+              "name": "Planetary Vehicle Hangar",
+              "grade": "2G",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 21600
+            }
+          },
+          {
+            "slot": "Slot05_Size3",
+            "group": "internal",
+            "size": 3,
+            "module": {
+              "item": "int_guardianfsdbooster_size3",
+              "name": "Guardian Frame Shift Drive Booster",
+              "grade": "3H",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 1620430
+            }
+          },
+          {
+            "slot": "Slot06_Size3",
+            "group": "internal",
+            "size": 3,
+            "module": {
+              "item": "int_detailedsurfacescanner_tiny",
+              "name": "Detailed Surface Scanner",
+              "grade": "1I",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 250000
+            }
+          },
+          { "slot": "Slot07_Size2", "group": "internal", "size": 2 },
+          { "slot": "Slot08_Size1", "group": "internal", "size": 1 },
+          { "slot": "Slot09_Size1", "group": "internal", "size": 1 },
+          {
+            "slot": "Slot10_Size1",
+            "group": "internal",
+            "size": 1,
+            "module": {
+              "item": "int_supercruiseassist",
+              "name": "Supercruise Assist",
+              "grade": "1E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 9120
+            },
+            "stock": true
+          }
+        ],
+        "prices": { "hull": 16527690, "retail": 17639220 },
+        "stats": {
+          "maxJumpRange": 71.36,
+          "cargoCapacity": 0,
+          "fuelMain": 32,
+          "fuelReserve": 0.79,
+          "unladenMass": 612.4,
+          "rebuy": 2926135,
+          "hullValue": 16527690,
+          "modulesValue": 41995010,
+          "hullHealth": 1
+        }
+      },
+      {
+        "shipId": 4,
+        "ship": "krait_mkii",
+        "type": "Krait Mk II",
+        "name": "Spanner",
+        "ident": "VK-04",
+        "current": false,
+        "where": "Jameson Memorial, Shinrarta Dezhra",
+        "seenAt": "2026-10-05T22:59:26Z",
+        "layout": "edsy",
+        "slots": [
+          { "slot": "LargeHardpoint1", "group": "hardpoint", "size": 3 },
+          { "slot": "LargeHardpoint2", "group": "hardpoint", "size": 3 },
+          { "slot": "LargeHardpoint3", "group": "hardpoint", "size": 3 },
+          {
+            "slot": "MediumHardpoint1",
+            "group": "hardpoint",
+            "size": 2,
+            "module": {
+              "item": "hpt_pulselaser_fixed_small",
+              "name": "Pulse Laser",
+              "grade": "1F",
+              "mount": "Fixed",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 2200
+            },
+            "stock": true
+          },
+          {
+            "slot": "MediumHardpoint2",
+            "group": "hardpoint",
+            "size": 2,
+            "module": {
+              "item": "hpt_pulselaser_fixed_small",
+              "name": "Pulse Laser",
+              "grade": "1F",
+              "mount": "Fixed",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 2200
+            },
+            "stock": true
+          },
+          { "slot": "TinyHardpoint1", "group": "utility", "size": 0 },
+          { "slot": "TinyHardpoint2", "group": "utility", "size": 0 },
+          { "slot": "TinyHardpoint3", "group": "utility", "size": 0 },
+          { "slot": "TinyHardpoint4", "group": "utility", "size": 0 },
+          {
+            "slot": "Armour",
+            "group": "core",
+            "size": 1,
+            "module": {
+              "item": "krait_mkii_armour_grade1",
+              "name": "Lightweight Alloy",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 0
+            },
+            "stock": true
+          },
+          {
+            "slot": "PowerPlant",
+            "group": "core",
+            "size": 7,
+            "module": {
+              "item": "int_powerplant_size7_class1",
+              "name": "Power Plant",
+              "grade": "7E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 480410
+            },
+            "stock": true
+          },
+          {
+            "slot": "MainEngines",
+            "group": "core",
+            "size": 6,
+            "module": {
+              "item": "int_engine_size6_class1",
+              "name": "Thrusters",
+              "grade": "6E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 199750
+            },
+            "stock": true
+          },
+          {
+            "slot": "FrameShiftDrive",
+            "group": "core",
+            "size": 5,
+            "module": {
+              "item": "int_hyperdrive_size5_class1",
+              "name": "Frame Shift Drive",
+              "grade": "5E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 63010
+            },
+            "stock": true
+          },
+          {
+            "slot": "LifeSupport",
+            "group": "core",
+            "size": 4,
+            "module": {
+              "item": "int_lifesupport_size4_class1",
+              "name": "Life Support",
+              "grade": "4E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 11350
+            },
+            "stock": true
+          },
+          {
+            "slot": "PowerDistributor",
+            "group": "core",
+            "size": 7,
+            "module": {
+              "item": "int_powerdistributor_size7_class1",
+              "name": "Power Distributor",
+              "grade": "7E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 249140
+            },
+            "stock": true
+          },
+          {
+            "slot": "Radar",
+            "group": "core",
+            "size": 6,
+            "module": {
+              "item": "int_sensors_size6_class1",
+              "name": "Sensors",
+              "grade": "6E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 88980
+            },
+            "stock": true
+          },
+          {
+            "slot": "FuelTank",
+            "group": "core",
+            "size": 5,
+            "module": {
+              "item": "int_fueltank_size5_class3",
+              "name": "Fuel Tank (Cap: 32)",
+              "grade": "5C",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 97750
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot01_Size6",
+            "group": "internal",
+            "size": 6,
+            "module": {
+              "item": "int_shieldgenerator_size6_class1",
+              "name": "Shield Generator",
+              "grade": "6E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 199750
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot02_Size6",
+            "group": "internal",
+            "size": 6,
+            "module": {
+              "item": "int_cargorack_size5_class1",
+              "name": "Cargo Rack (Cap: 32)",
+              "grade": "5E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 111570
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot03_Size5",
+            "group": "internal",
+            "size": 5,
+            "module": {
+              "item": "int_cargorack_size5_class1",
+              "name": "Cargo Rack (Cap: 32)",
+              "grade": "5E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 111570
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot04_Size5",
+            "group": "internal",
+            "size": 5,
+            "module": {
+              "item": "int_cargorack_size4_class1",
+              "name": "Cargo Rack (Cap: 16)",
+              "grade": "4E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 34330
+            },
+            "stock": true
+          },
+          { "slot": "Slot05_Size4", "group": "internal", "size": 4 },
+          { "slot": "Slot06_Size3", "group": "internal", "size": 3 },
+          { "slot": "Slot07_Size3", "group": "internal", "size": 3 },
+          {
+            "slot": "Slot08_Size2",
+            "group": "internal",
+            "size": 2,
+            "module": {
+              "item": "int_cargorack_size1_class1",
+              "name": "Cargo Rack (Cap: 2)",
+              "grade": "1E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 1000
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot09_Size1",
+            "group": "internal",
+            "size": 1,
+            "module": {
+              "item": "int_supercruiseassist",
+              "name": "Supercruise Assist",
+              "grade": "1E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 9120
+            },
+            "stock": true
+          }
+        ],
+        "prices": { "hull": 44152080, "retail": 45814210 },
+        "stats": {
+          "maxJumpRange": 24.88,
+          "cargoCapacity": 0,
+          "fuelMain": 32,
+          "fuelReserve": 0.79,
+          "unladenMass": 612.4,
+          "rebuy": 2290711,
+          "hullValue": 44152080,
+          "modulesValue": 1662130,
+          "hullHealth": 1
+        }
+      },
+      {
+        "shipId": 7,
+        "ship": "type9",
+        "type": "Type-9 Heavy",
+        "name": "Slow Boat",
+        "current": false,
+        "where": "Deciat",
+        "layout": "stock",
+        "slots": [
+          {
+            "slot": "MediumHardpoint1",
+            "group": "hardpoint",
+            "size": 2,
+            "module": {
+              "item": "hpt_pulselaser_fixed_small",
+              "name": "Pulse Laser",
+              "grade": "1F",
+              "mount": "Fixed",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 2200
+            },
+            "stock": true
+          },
+          {
+            "slot": "MediumHardpoint2",
+            "group": "hardpoint",
+            "size": 2,
+            "module": {
+              "item": "hpt_pulselaser_fixed_small",
+              "name": "Pulse Laser",
+              "grade": "1F",
+              "mount": "Fixed",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 2200
+            },
+            "stock": true
+          },
+          { "slot": "MediumHardpoint3", "group": "hardpoint", "size": 2 },
+          { "slot": "SmallHardpoint1", "group": "hardpoint", "size": 1 },
+          { "slot": "SmallHardpoint2", "group": "hardpoint", "size": 1 },
+          { "slot": "TinyHardpoint1", "group": "utility", "size": 0 },
+          { "slot": "TinyHardpoint2", "group": "utility", "size": 0 },
+          { "slot": "TinyHardpoint3", "group": "utility", "size": 0 },
+          { "slot": "TinyHardpoint4", "group": "utility", "size": 0 },
+          {
+            "slot": "Armour",
+            "group": "core",
+            "size": 1,
+            "module": {
+              "item": "type9_armour_grade1",
+              "name": "Lightweight Alloy",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 0
+            },
+            "stock": true
+          },
+          {
+            "slot": "PowerPlant",
+            "group": "core",
+            "size": 6,
+            "module": {
+              "item": "int_powerplant_size6_class1",
+              "name": "Power Plant",
+              "grade": "6E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 160140
+            },
+            "stock": true
+          },
+          {
+            "slot": "MainEngines",
+            "group": "core",
+            "size": 7,
+            "module": {
+              "item": "int_engine_size7_class1",
+              "name": "Thrusters",
+              "grade": "7E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 633200
+            },
+            "stock": true
+          },
+          {
+            "slot": "FrameShiftDrive",
+            "group": "core",
+            "size": 6,
+            "module": {
+              "item": "int_hyperdrive_size6_class1",
+              "name": "Frame Shift Drive",
+              "grade": "6E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 199750
+            },
+            "stock": true
+          },
+          {
+            "slot": "LifeSupport",
+            "group": "core",
+            "size": 5,
+            "module": {
+              "item": "int_lifesupport_size5_class1",
+              "name": "Life Support",
+              "grade": "5E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 31780
+            },
+            "stock": true
+          },
+          {
+            "slot": "PowerDistributor",
+            "group": "core",
+            "size": 6,
+            "module": {
+              "item": "int_powerdistributor_size6_class1",
+              "name": "Power Distributor",
+              "grade": "6E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 88980
+            },
+            "stock": true
+          },
+          {
+            "slot": "Radar",
+            "group": "core",
+            "size": 4,
+            "module": {
+              "item": "int_sensors_size4_class1",
+              "name": "Sensors",
+              "grade": "4E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 11350
+            },
+            "stock": true
+          },
+          {
+            "slot": "FuelTank",
+            "group": "core",
+            "size": 6,
+            "module": {
+              "item": "int_fueltank_size6_class3",
+              "name": "Fuel Tank (Cap: 64)",
+              "grade": "6C",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 341580
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot00_Size8",
+            "group": "internal",
+            "size": 8,
+            "module": {
+              "item": "int_cargorack_size7_class1",
+              "name": "Cargo Rack (Cap: 128)",
+              "grade": "7E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 1178420
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot01_Size8",
+            "group": "internal",
+            "size": 8,
+            "module": {
+              "item": "int_cargorack_size7_class1",
+              "name": "Cargo Rack (Cap: 128)",
+              "grade": "7E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 1178420
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot02_Size7",
+            "group": "internal",
+            "size": 7,
+            "module": {
+              "item": "int_cargorack_size6_class1",
+              "name": "Cargo Rack (Cap: 64)",
+              "grade": "6E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 362590
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot03_Size6",
+            "group": "internal",
+            "size": 6,
+            "module": {
+              "item": "int_shieldgenerator_size6_class1",
+              "name": "Shield Generator",
+              "grade": "6E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 199750
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot04_Size5",
+            "group": "internal",
+            "size": 5,
+            "module": {
+              "item": "int_cargorack_size4_class1",
+              "name": "Cargo Rack (Cap: 16)",
+              "grade": "4E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 34330
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot05_Size4",
+            "group": "internal",
+            "size": 4,
+            "module": {
+              "item": "int_cargorack_size3_class1",
+              "name": "Cargo Rack (Cap: 8)",
+              "grade": "3E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 10560
+            },
+            "stock": true
+          },
+          { "slot": "Slot06_Size4", "group": "internal", "size": 4 },
+          {
+            "slot": "Slot07_Size3",
+            "group": "internal",
+            "size": 3,
+            "module": {
+              "item": "int_cargorack_size2_class1",
+              "name": "Cargo Rack (Cap: 4)",
+              "grade": "2E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 3250
+            },
+            "stock": true
+          },
+          { "slot": "Slot08_Size3", "group": "internal", "size": 3 },
+          { "slot": "Slot11_Size2", "group": "internal", "size": 2 },
+          {
+            "slot": "Slot12_Size1",
+            "group": "internal",
+            "size": 1,
+            "module": {
+              "item": "int_supercruiseassist",
+              "name": "Supercruise Assist",
+              "grade": "1E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 9120
+            },
+            "stock": true
+          }
+        ],
+        "prices": { "hull": 72108220, "retail": 76555840 }
+      },
+      {
+        "shipId": 2,
+        "ship": "sidewinder",
+        "type": "Sidewinder",
+        "name": "Pebble",
+        "current": false,
+        "where": "LHS 20",
+        "layout": "stock",
+        "slots": [
+          {
+            "slot": "SmallHardpoint1",
+            "group": "hardpoint",
+            "size": 1,
+            "module": {
+              "item": "hpt_pulselaser_gimbal_small",
+              "name": "Pulse Laser",
+              "grade": "1G",
+              "mount": "Gimballed",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 6600
+            },
+            "stock": true
+          },
+          {
+            "slot": "SmallHardpoint2",
+            "group": "hardpoint",
+            "size": 1,
+            "module": {
+              "item": "hpt_pulselaser_gimbal_small",
+              "name": "Pulse Laser",
+              "grade": "1G",
+              "mount": "Gimballed",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 6600
+            },
+            "stock": true
+          },
+          { "slot": "TinyHardpoint1", "group": "utility", "size": 0 },
+          { "slot": "TinyHardpoint2", "group": "utility", "size": 0 },
+          {
+            "slot": "Armour",
+            "group": "core",
+            "size": 1,
+            "module": {
+              "item": "sidewinder_armour_grade1",
+              "name": "Lightweight Alloy",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 0
+            },
+            "stock": true
+          },
+          {
+            "slot": "PowerPlant",
+            "group": "core",
+            "size": 2,
+            "module": {
+              "item": "int_powerplant_size2_class1",
+              "name": "Power Plant",
+              "grade": "2E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 1980
+            },
+            "stock": true
+          },
+          {
+            "slot": "MainEngines",
+            "group": "core",
+            "size": 2,
+            "module": {
+              "item": "int_engine_size2_class1",
+              "name": "Thrusters",
+              "grade": "2E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 1980
+            },
+            "stock": true
+          },
+          {
+            "slot": "FrameShiftDrive",
+            "group": "core",
+            "size": 2,
+            "module": {
+              "item": "int_hyperdrive_size2_class1",
+              "name": "Frame Shift Drive",
+              "grade": "2E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 1980
+            },
+            "stock": true
+          },
+          {
+            "slot": "LifeSupport",
+            "group": "core",
+            "size": 1,
+            "module": {
+              "item": "int_lifesupport_size1_class1",
+              "name": "Life Support",
+              "grade": "1E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 520
+            },
+            "stock": true
+          },
+          {
+            "slot": "PowerDistributor",
+            "group": "core",
+            "size": 1,
+            "module": {
+              "item": "int_powerdistributor_size1_class1",
+              "name": "Power Distributor",
+              "grade": "1E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 520
+            },
+            "stock": true
+          },
+          {
+            "slot": "Radar",
+            "group": "core",
+            "size": 1,
+            "module": {
+              "item": "int_sensors_size1_class1",
+              "name": "Sensors",
+              "grade": "1E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 520
+            },
+            "stock": true
+          },
+          {
+            "slot": "FuelTank",
+            "group": "core",
+            "size": 1,
+            "module": {
+              "item": "int_fueltank_size1_class3",
+              "name": "Fuel Tank (Cap: 2)",
+              "grade": "1C",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 1000
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot01_Size2",
+            "group": "internal",
+            "size": 2,
+            "module": {
+              "item": "int_shieldgenerator_size2_class1",
+              "name": "Shield Generator",
+              "grade": "2E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 1980
+            },
+            "stock": true
+          },
+          {
+            "slot": "Slot02_Size2",
+            "group": "internal",
+            "size": 2,
+            "module": {
+              "item": "int_cargorack_size2_class1",
+              "name": "Cargo Rack (Cap: 4)",
+              "grade": "2E",
+              "on": true,
+              "priority": 0,
+              "health": 1,
+              "value": 3250
+            },
+            "stock": true
+          },
+          { "slot": "Slot03_Size1", "group": "internal", "size": 1 },
+          { "slot": "Slot04_Size1", "group": "internal", "size": 1 },
+          { "slot": "Slot05_Size1", "group": "internal", "size": 1 },
+          { "slot": "Slot06_Size1", "group": "internal", "size": 1 }
+        ],
+        "prices": { "hull": 5070, "retail": 32000 }
+      }
+    ],
+    "hulls": [
+      { "ship": "adder", "type": "Adder" },
+      { "ship": "typex_3", "type": "Alliance Challenger" },
+      { "ship": "typex", "type": "Alliance Chieftain" },
+      { "ship": "typex_2", "type": "Alliance Crusader" },
+      { "ship": "anaconda", "type": "Anaconda" },
+      { "ship": "asp", "type": "Asp Explorer" },
+      { "ship": "asp_scout", "type": "Asp Scout" },
+      { "ship": "belugaliner", "type": "Beluga Liner" },
+      { "ship": "explorer_nx", "type": "Caspian Explorer" },
+      { "ship": "cobramkiii", "type": "Cobra Mk III" },
+      { "ship": "cobramkiv", "type": "Cobra Mk IV" },
+      { "ship": "cobramkv", "type": "Cobra Mk V" },
+      { "ship": "corsair", "type": "Corsair" },
+      { "ship": "diamondbackxl", "type": "Diamondback Explorer" },
+      { "ship": "diamondback", "type": "Diamondback Scout" },
+      { "ship": "dolphin", "type": "Dolphin" },
+      { "ship": "eagle", "type": "Eagle" },
+      { "ship": "federation_dropship_mkii", "type": "Federal Assault Ship" },
+      { "ship": "federation_corvette", "type": "Federal Corvette" },
+      { "ship": "federation_dropship", "type": "Federal Dropship" },
+      { "ship": "federation_gunship", "type": "Federal Gunship" },
+      { "ship": "ferdelance", "type": "Fer-de-Lance" },
+      { "ship": "hauler", "type": "Hauler" },
+      { "ship": "empire_trader", "type": "Imperial Clipper" },
+      { "ship": "empire_courier", "type": "Imperial Courier" },
+      { "ship": "cutter", "type": "Imperial Cutter" },
+      { "ship": "empire_eagle", "type": "Imperial Eagle" },
+      { "ship": "independant_trader", "type": "Keelback" },
+      { "ship": "smallcombat01_nx", "type": "Kestrel Mk II" },
+      { "ship": "krait_mkii", "type": "Krait Mk II" },
+      { "ship": "krait_light", "type": "Krait Phantom" },
+      { "ship": "mediumtransport01", "type": "Lynx Highliner" },
+      { "ship": "mamba", "type": "Mamba" },
+      { "ship": "mandalay", "type": "Mandalay" },
+      { "ship": "orca", "type": "Orca" },
+      { "ship": "panthermkii", "type": "Panther Clipper Mk II" },
+      { "ship": "python", "type": "Python" },
+      { "ship": "python_nx", "type": "Python Mk II" },
+      { "ship": "sidewinder", "type": "Sidewinder" },
+      { "ship": "type9_military", "type": "Type-10 Defender" },
+      { "ship": "lakonminer", "type": "Type-11 Prospector" },
+      { "ship": "type6", "type": "Type-6 Transporter" },
+      { "ship": "type7", "type": "Type-7 Transporter" },
+      { "ship": "type8", "type": "Type-8 Transporter" },
+      { "ship": "type9", "type": "Type-9 Heavy" },
+      { "ship": "viper", "type": "Viper Mk III" },
+      { "ship": "viper_mkiv", "type": "Viper Mk IV" },
+      { "ship": "vulture", "type": "Vulture" }
+    ],
+    "catalog": {
+      "state": "ready",
+      "fetchedAt": "2026-10-11T22:59:26.626Z",
+      "modified": "2026-09-23"
+    }
+  },
+  "stockFits": {
+    "mandalay": {
+      "ship": "mandalay",
+      "type": "Mandalay",
+      "slots": [
+        { "slot": "MediumHardpoint1", "group": "hardpoint", "size": 2 },
+        { "slot": "MediumHardpoint2", "group": "hardpoint", "size": 2 },
+        { "slot": "MediumHardpoint3", "group": "hardpoint", "size": 2 },
+        { "slot": "MediumHardpoint4", "group": "hardpoint", "size": 2 },
+        {
+          "slot": "SmallHardpoint1",
+          "group": "hardpoint",
+          "size": 1,
+          "module": {
+            "item": "hpt_pulselaser_fixed_small",
+            "name": "Pulse Laser",
+            "grade": "1F",
+            "mount": "Fixed",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 2200
+          },
+          "stock": true
+        },
+        {
+          "slot": "SmallHardpoint2",
+          "group": "hardpoint",
+          "size": 1,
+          "module": {
+            "item": "hpt_pulselaser_fixed_small",
+            "name": "Pulse Laser",
+            "grade": "1F",
+            "mount": "Fixed",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 2200
+          },
+          "stock": true
+        },
+        { "slot": "TinyHardpoint1", "group": "utility", "size": 0 },
+        { "slot": "TinyHardpoint2", "group": "utility", "size": 0 },
+        { "slot": "TinyHardpoint3", "group": "utility", "size": 0 },
+        { "slot": "TinyHardpoint4", "group": "utility", "size": 0 },
+        {
+          "slot": "Armour",
+          "group": "core",
+          "size": 1,
+          "module": {
+            "item": "mandalay_armour_grade1",
+            "name": "Lightweight Alloy",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 0
+          },
+          "stock": true
+        },
+        {
+          "slot": "PowerPlant",
+          "group": "core",
+          "size": 5,
+          "module": {
+            "item": "int_powerplant_size5_class1",
+            "name": "Power Plant",
+            "grade": "5E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 53380
+          },
+          "stock": true
+        },
+        {
+          "slot": "MainEngines",
+          "group": "core",
+          "size": 5,
+          "module": {
+            "item": "int_engine_size5_class1",
+            "name": "Thrusters",
+            "grade": "5E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 63010
+          },
+          "stock": true
+        },
+        {
+          "slot": "FrameShiftDrive",
+          "group": "core",
+          "size": 5,
+          "module": {
+            "item": "int_hyperdrive_overcharge_size5_class3",
+            "name": "Frame Shift Drive (SCO)",
+            "grade": "5C",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 2041580
+          },
+          "stock": true
+        },
+        {
+          "slot": "LifeSupport",
+          "group": "core",
+          "size": 4,
+          "module": {
+            "item": "int_lifesupport_size4_class1",
+            "name": "Life Support",
+            "grade": "4E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 11350
+          },
+          "stock": true
+        },
+        {
+          "slot": "PowerDistributor",
+          "group": "core",
+          "size": 5,
+          "module": {
+            "item": "int_powerdistributor_size5_class1",
+            "name": "Power Distributor",
+            "grade": "5E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 31780
+          },
+          "stock": true
+        },
+        {
+          "slot": "Radar",
+          "group": "core",
+          "size": 5,
+          "module": {
+            "item": "int_sensors_size5_class1",
+            "name": "Sensors",
+            "grade": "5E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 31780
+          },
+          "stock": true
+        },
+        {
+          "slot": "FuelTank",
+          "group": "core",
+          "size": 5,
+          "module": {
+            "item": "int_fueltank_size5_class3",
+            "name": "Fuel Tank (Cap: 32)",
+            "grade": "5C",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 97750
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot01_Size6",
+          "group": "internal",
+          "size": 6,
+          "module": {
+            "item": "int_cargorack_size5_class1",
+            "name": "Cargo Rack (Cap: 32)",
+            "grade": "5E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 111570
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot02_Size5",
+          "group": "internal",
+          "size": 5,
+          "module": {
+            "item": "int_shieldgenerator_size5_class1",
+            "name": "Shield Generator",
+            "grade": "5E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 63010
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot03_Size4",
+          "group": "internal",
+          "size": 4,
+          "module": {
+            "item": "int_cargorack_size3_class1",
+            "name": "Cargo Rack (Cap: 8)",
+            "grade": "3E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 10560
+          },
+          "stock": true
+        },
+        { "slot": "Slot04_Size4", "group": "internal", "size": 4 },
+        { "slot": "Slot05_Size3", "group": "internal", "size": 3 },
+        { "slot": "Slot06_Size3", "group": "internal", "size": 3 },
+        { "slot": "Slot07_Size2", "group": "internal", "size": 2 },
+        { "slot": "Slot08_Size1", "group": "internal", "size": 1 },
+        { "slot": "Slot09_Size1", "group": "internal", "size": 1 },
+        {
+          "slot": "Slot10_Size1",
+          "group": "internal",
+          "size": 1,
+          "module": {
+            "item": "int_supercruiseassist",
+            "name": "Supercruise Assist",
+            "grade": "1E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 9120
+          },
+          "stock": true
+        }
+      ],
+      "prices": { "hull": 16527690, "retail": 17639220 }
+    },
+    "krait_mkii": {
+      "ship": "krait_mkii",
+      "type": "Krait Mk II",
+      "slots": [
+        { "slot": "LargeHardpoint1", "group": "hardpoint", "size": 3 },
+        { "slot": "LargeHardpoint2", "group": "hardpoint", "size": 3 },
+        { "slot": "LargeHardpoint3", "group": "hardpoint", "size": 3 },
+        {
+          "slot": "MediumHardpoint1",
+          "group": "hardpoint",
+          "size": 2,
+          "module": {
+            "item": "hpt_pulselaser_fixed_small",
+            "name": "Pulse Laser",
+            "grade": "1F",
+            "mount": "Fixed",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 2200
+          },
+          "stock": true
+        },
+        {
+          "slot": "MediumHardpoint2",
+          "group": "hardpoint",
+          "size": 2,
+          "module": {
+            "item": "hpt_pulselaser_fixed_small",
+            "name": "Pulse Laser",
+            "grade": "1F",
+            "mount": "Fixed",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 2200
+          },
+          "stock": true
+        },
+        { "slot": "TinyHardpoint1", "group": "utility", "size": 0 },
+        { "slot": "TinyHardpoint2", "group": "utility", "size": 0 },
+        { "slot": "TinyHardpoint3", "group": "utility", "size": 0 },
+        { "slot": "TinyHardpoint4", "group": "utility", "size": 0 },
+        {
+          "slot": "Armour",
+          "group": "core",
+          "size": 1,
+          "module": {
+            "item": "krait_mkii_armour_grade1",
+            "name": "Lightweight Alloy",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 0
+          },
+          "stock": true
+        },
+        {
+          "slot": "PowerPlant",
+          "group": "core",
+          "size": 7,
+          "module": {
+            "item": "int_powerplant_size7_class1",
+            "name": "Power Plant",
+            "grade": "7E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 480410
+          },
+          "stock": true
+        },
+        {
+          "slot": "MainEngines",
+          "group": "core",
+          "size": 6,
+          "module": {
+            "item": "int_engine_size6_class1",
+            "name": "Thrusters",
+            "grade": "6E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 199750
+          },
+          "stock": true
+        },
+        {
+          "slot": "FrameShiftDrive",
+          "group": "core",
+          "size": 5,
+          "module": {
+            "item": "int_hyperdrive_size5_class1",
+            "name": "Frame Shift Drive",
+            "grade": "5E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 63010
+          },
+          "stock": true
+        },
+        {
+          "slot": "LifeSupport",
+          "group": "core",
+          "size": 4,
+          "module": {
+            "item": "int_lifesupport_size4_class1",
+            "name": "Life Support",
+            "grade": "4E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 11350
+          },
+          "stock": true
+        },
+        {
+          "slot": "PowerDistributor",
+          "group": "core",
+          "size": 7,
+          "module": {
+            "item": "int_powerdistributor_size7_class1",
+            "name": "Power Distributor",
+            "grade": "7E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 249140
+          },
+          "stock": true
+        },
+        {
+          "slot": "Radar",
+          "group": "core",
+          "size": 6,
+          "module": {
+            "item": "int_sensors_size6_class1",
+            "name": "Sensors",
+            "grade": "6E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 88980
+          },
+          "stock": true
+        },
+        {
+          "slot": "FuelTank",
+          "group": "core",
+          "size": 5,
+          "module": {
+            "item": "int_fueltank_size5_class3",
+            "name": "Fuel Tank (Cap: 32)",
+            "grade": "5C",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 97750
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot01_Size6",
+          "group": "internal",
+          "size": 6,
+          "module": {
+            "item": "int_shieldgenerator_size6_class1",
+            "name": "Shield Generator",
+            "grade": "6E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 199750
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot02_Size6",
+          "group": "internal",
+          "size": 6,
+          "module": {
+            "item": "int_cargorack_size5_class1",
+            "name": "Cargo Rack (Cap: 32)",
+            "grade": "5E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 111570
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot03_Size5",
+          "group": "internal",
+          "size": 5,
+          "module": {
+            "item": "int_cargorack_size5_class1",
+            "name": "Cargo Rack (Cap: 32)",
+            "grade": "5E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 111570
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot04_Size5",
+          "group": "internal",
+          "size": 5,
+          "module": {
+            "item": "int_cargorack_size4_class1",
+            "name": "Cargo Rack (Cap: 16)",
+            "grade": "4E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 34330
+          },
+          "stock": true
+        },
+        { "slot": "Slot05_Size4", "group": "internal", "size": 4 },
+        { "slot": "Slot06_Size3", "group": "internal", "size": 3 },
+        { "slot": "Slot07_Size3", "group": "internal", "size": 3 },
+        {
+          "slot": "Slot08_Size2",
+          "group": "internal",
+          "size": 2,
+          "module": {
+            "item": "int_cargorack_size1_class1",
+            "name": "Cargo Rack (Cap: 2)",
+            "grade": "1E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 1000
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot09_Size1",
+          "group": "internal",
+          "size": 1,
+          "module": {
+            "item": "int_supercruiseassist",
+            "name": "Supercruise Assist",
+            "grade": "1E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 9120
+          },
+          "stock": true
+        }
+      ],
+      "prices": { "hull": 44152080, "retail": 45814210 }
+    },
+    "type9": {
+      "ship": "type9",
+      "type": "Type-9 Heavy",
+      "slots": [
+        {
+          "slot": "MediumHardpoint1",
+          "group": "hardpoint",
+          "size": 2,
+          "module": {
+            "item": "hpt_pulselaser_fixed_small",
+            "name": "Pulse Laser",
+            "grade": "1F",
+            "mount": "Fixed",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 2200
+          },
+          "stock": true
+        },
+        {
+          "slot": "MediumHardpoint2",
+          "group": "hardpoint",
+          "size": 2,
+          "module": {
+            "item": "hpt_pulselaser_fixed_small",
+            "name": "Pulse Laser",
+            "grade": "1F",
+            "mount": "Fixed",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 2200
+          },
+          "stock": true
+        },
+        { "slot": "MediumHardpoint3", "group": "hardpoint", "size": 2 },
+        { "slot": "SmallHardpoint1", "group": "hardpoint", "size": 1 },
+        { "slot": "SmallHardpoint2", "group": "hardpoint", "size": 1 },
+        { "slot": "TinyHardpoint1", "group": "utility", "size": 0 },
+        { "slot": "TinyHardpoint2", "group": "utility", "size": 0 },
+        { "slot": "TinyHardpoint3", "group": "utility", "size": 0 },
+        { "slot": "TinyHardpoint4", "group": "utility", "size": 0 },
+        {
+          "slot": "Armour",
+          "group": "core",
+          "size": 1,
+          "module": {
+            "item": "type9_armour_grade1",
+            "name": "Lightweight Alloy",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 0
+          },
+          "stock": true
+        },
+        {
+          "slot": "PowerPlant",
+          "group": "core",
+          "size": 6,
+          "module": {
+            "item": "int_powerplant_size6_class1",
+            "name": "Power Plant",
+            "grade": "6E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 160140
+          },
+          "stock": true
+        },
+        {
+          "slot": "MainEngines",
+          "group": "core",
+          "size": 7,
+          "module": {
+            "item": "int_engine_size7_class1",
+            "name": "Thrusters",
+            "grade": "7E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 633200
+          },
+          "stock": true
+        },
+        {
+          "slot": "FrameShiftDrive",
+          "group": "core",
+          "size": 6,
+          "module": {
+            "item": "int_hyperdrive_size6_class1",
+            "name": "Frame Shift Drive",
+            "grade": "6E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 199750
+          },
+          "stock": true
+        },
+        {
+          "slot": "LifeSupport",
+          "group": "core",
+          "size": 5,
+          "module": {
+            "item": "int_lifesupport_size5_class1",
+            "name": "Life Support",
+            "grade": "5E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 31780
+          },
+          "stock": true
+        },
+        {
+          "slot": "PowerDistributor",
+          "group": "core",
+          "size": 6,
+          "module": {
+            "item": "int_powerdistributor_size6_class1",
+            "name": "Power Distributor",
+            "grade": "6E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 88980
+          },
+          "stock": true
+        },
+        {
+          "slot": "Radar",
+          "group": "core",
+          "size": 4,
+          "module": {
+            "item": "int_sensors_size4_class1",
+            "name": "Sensors",
+            "grade": "4E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 11350
+          },
+          "stock": true
+        },
+        {
+          "slot": "FuelTank",
+          "group": "core",
+          "size": 6,
+          "module": {
+            "item": "int_fueltank_size6_class3",
+            "name": "Fuel Tank (Cap: 64)",
+            "grade": "6C",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 341580
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot00_Size8",
+          "group": "internal",
+          "size": 8,
+          "module": {
+            "item": "int_cargorack_size7_class1",
+            "name": "Cargo Rack (Cap: 128)",
+            "grade": "7E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 1178420
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot01_Size8",
+          "group": "internal",
+          "size": 8,
+          "module": {
+            "item": "int_cargorack_size7_class1",
+            "name": "Cargo Rack (Cap: 128)",
+            "grade": "7E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 1178420
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot02_Size7",
+          "group": "internal",
+          "size": 7,
+          "module": {
+            "item": "int_cargorack_size6_class1",
+            "name": "Cargo Rack (Cap: 64)",
+            "grade": "6E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 362590
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot03_Size6",
+          "group": "internal",
+          "size": 6,
+          "module": {
+            "item": "int_shieldgenerator_size6_class1",
+            "name": "Shield Generator",
+            "grade": "6E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 199750
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot04_Size5",
+          "group": "internal",
+          "size": 5,
+          "module": {
+            "item": "int_cargorack_size4_class1",
+            "name": "Cargo Rack (Cap: 16)",
+            "grade": "4E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 34330
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot05_Size4",
+          "group": "internal",
+          "size": 4,
+          "module": {
+            "item": "int_cargorack_size3_class1",
+            "name": "Cargo Rack (Cap: 8)",
+            "grade": "3E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 10560
+          },
+          "stock": true
+        },
+        { "slot": "Slot06_Size4", "group": "internal", "size": 4 },
+        {
+          "slot": "Slot07_Size3",
+          "group": "internal",
+          "size": 3,
+          "module": {
+            "item": "int_cargorack_size2_class1",
+            "name": "Cargo Rack (Cap: 4)",
+            "grade": "2E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 3250
+          },
+          "stock": true
+        },
+        { "slot": "Slot08_Size3", "group": "internal", "size": 3 },
+        { "slot": "Slot11_Size2", "group": "internal", "size": 2 },
+        {
+          "slot": "Slot12_Size1",
+          "group": "internal",
+          "size": 1,
+          "module": {
+            "item": "int_supercruiseassist",
+            "name": "Supercruise Assist",
+            "grade": "1E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 9120
+          },
+          "stock": true
+        }
+      ],
+      "prices": { "hull": 72108220, "retail": 76555840 }
+    },
+    "sidewinder": {
+      "ship": "sidewinder",
+      "type": "Sidewinder",
+      "slots": [
+        {
+          "slot": "SmallHardpoint1",
+          "group": "hardpoint",
+          "size": 1,
+          "module": {
+            "item": "hpt_pulselaser_gimbal_small",
+            "name": "Pulse Laser",
+            "grade": "1G",
+            "mount": "Gimballed",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 6600
+          },
+          "stock": true
+        },
+        {
+          "slot": "SmallHardpoint2",
+          "group": "hardpoint",
+          "size": 1,
+          "module": {
+            "item": "hpt_pulselaser_gimbal_small",
+            "name": "Pulse Laser",
+            "grade": "1G",
+            "mount": "Gimballed",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 6600
+          },
+          "stock": true
+        },
+        { "slot": "TinyHardpoint1", "group": "utility", "size": 0 },
+        { "slot": "TinyHardpoint2", "group": "utility", "size": 0 },
+        {
+          "slot": "Armour",
+          "group": "core",
+          "size": 1,
+          "module": {
+            "item": "sidewinder_armour_grade1",
+            "name": "Lightweight Alloy",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 0
+          },
+          "stock": true
+        },
+        {
+          "slot": "PowerPlant",
+          "group": "core",
+          "size": 2,
+          "module": {
+            "item": "int_powerplant_size2_class1",
+            "name": "Power Plant",
+            "grade": "2E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 1980
+          },
+          "stock": true
+        },
+        {
+          "slot": "MainEngines",
+          "group": "core",
+          "size": 2,
+          "module": {
+            "item": "int_engine_size2_class1",
+            "name": "Thrusters",
+            "grade": "2E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 1980
+          },
+          "stock": true
+        },
+        {
+          "slot": "FrameShiftDrive",
+          "group": "core",
+          "size": 2,
+          "module": {
+            "item": "int_hyperdrive_size2_class1",
+            "name": "Frame Shift Drive",
+            "grade": "2E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 1980
+          },
+          "stock": true
+        },
+        {
+          "slot": "LifeSupport",
+          "group": "core",
+          "size": 1,
+          "module": {
+            "item": "int_lifesupport_size1_class1",
+            "name": "Life Support",
+            "grade": "1E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 520
+          },
+          "stock": true
+        },
+        {
+          "slot": "PowerDistributor",
+          "group": "core",
+          "size": 1,
+          "module": {
+            "item": "int_powerdistributor_size1_class1",
+            "name": "Power Distributor",
+            "grade": "1E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 520
+          },
+          "stock": true
+        },
+        {
+          "slot": "Radar",
+          "group": "core",
+          "size": 1,
+          "module": {
+            "item": "int_sensors_size1_class1",
+            "name": "Sensors",
+            "grade": "1E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 520
+          },
+          "stock": true
+        },
+        {
+          "slot": "FuelTank",
+          "group": "core",
+          "size": 1,
+          "module": {
+            "item": "int_fueltank_size1_class3",
+            "name": "Fuel Tank (Cap: 2)",
+            "grade": "1C",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 1000
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot01_Size2",
+          "group": "internal",
+          "size": 2,
+          "module": {
+            "item": "int_shieldgenerator_size2_class1",
+            "name": "Shield Generator",
+            "grade": "2E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 1980
+          },
+          "stock": true
+        },
+        {
+          "slot": "Slot02_Size2",
+          "group": "internal",
+          "size": 2,
+          "module": {
+            "item": "int_cargorack_size2_class1",
+            "name": "Cargo Rack (Cap: 4)",
+            "grade": "2E",
+            "on": true,
+            "priority": 0,
+            "health": 1,
+            "value": 3250
+          },
+          "stock": true
+        },
+        { "slot": "Slot03_Size1", "group": "internal", "size": 1 },
+        { "slot": "Slot04_Size1", "group": "internal", "size": 1 },
+        { "slot": "Slot05_Size1", "group": "internal", "size": 1 },
+        { "slot": "Slot06_Size1", "group": "internal", "size": 1 }
+      ],
+      "prices": { "hull": 5070, "retail": 32000 }
+    }
+  },
+  "carriers": {
+    "version": 33,
+    "ready": true,
+    "commander": "Vesper Kael",
+    "carriers": [
+      {
+        "carrierId": "3700000417",
+        "kind": "own",
+        "name": "HOLLOW LANTERN",
+        "callsign": "K7V-2TQ",
+        "system": "Phroi Pruae DF-B d2-1021",
+        "arrivedAt": "2026-10-06T01:08:56.760Z",
+        "distanceLy": 351.89768400139303,
+        "fuel": {
+          "level": 842,
+          "readAt": "2026-10-11T20:18:51Z",
+          "estimated": false,
+          "uncounted": 0
+        },
+        "rangeLy": 500,
+        "fullJumpFuel": 89,
+        "jumpsLeft": 9,
+        "space": {
+          "capacity": 25000,
+          "crew": 1170,
+          "cargo": 6412,
+          "reserved": 0,
+          "shipPacks": 0,
+          "modulePacks": 0,
+          "free": 17418
+        },
+        "cargo": [],
+        "unaccounted": 6412,
+        "statsAt": "2026-10-11T20:18:51Z",
+        "finance": {
+          "balance": 2418966120,
+          "reserve": 0,
+          "available": 2418966120,
+          "readAt": "2026-10-11T20:18:51Z"
+        },
+        "dockingAccess": "squadronfriends",
+        "allowNotorious": false,
+        "services": [
+          { "role": "Rearm", "name": "Armoury", "state": "active", "weekly": 1500000 },
+          { "role": "Refuel", "name": "Refuel", "state": "active", "weekly": 1500000 },
+          { "role": "Repair", "name": "Repair", "state": "active", "weekly": 1500000 },
+          {
+            "role": "Exploration",
+            "name": "Universal Cartographics",
+            "state": "active",
+            "weekly": 1850000
+          },
+          {
+            "role": "VistaGenomics",
+            "name": "Vista Genomics",
+            "state": "active",
+            "weekly": 1500000
+          }
+        ],
+        "upkeep": {
+          "base": 5000000,
+          "services": 7850000,
+          "weekly": 12850000,
+          "perJump": 100000,
+          "jumpsThisWeek": 0,
+          "nextCharge": 12850000,
+          "nextChargeAt": "2026-10-15T07:00:00.000Z",
+          "balance": 2418966120,
+          "balanceEstimated": false,
+          "weeksCovered": 188,
+          "debtAt": "2030-05-23T07:00:00.000Z",
+          "unknownServices": []
+        }
+      }
+    ]
+  },
+  "version": "1.1.0",
+  "shoppingList": {
+    "items": [
+      { "id": "steel", "commodity": "Steel", "needed": 5412, "bought": 3200 },
+      { "id": "aluminium", "commodity": "Aluminium", "needed": 1480, "bought": 1480 },
+      { "id": "cmm", "commodity": "CMM Composite", "needed": 4028, "bought": 1104 },
+      { "id": "polymers", "commodity": "Polymers", "needed": 512, "bought": 0 },
+      { "id": "semiconductors", "commodity": "Semiconductors", "needed": 66, "bought": 66 },
+      { "id": "ceramics", "commodity": "Ceramic Composites", "needed": 702, "bought": 260 },
+      { "id": "oxygen", "commodity": "Liquid Oxygen", "needed": 1840, "bought": 0 },
+      { "id": "membrane", "commodity": "Insulating Membrane", "needed": 340, "bought": 120 }
+    ]
+  },
+  "pinnedPlan": null,
+  "commodityNames": [
+    "AZ Cancri Formula 42",
+    "Advanced Catalysers",
+    "Advanced Medicines",
+    "Aepyornis Egg",
+    "Aganippe Rush",
+    "Agri-Medicines",
+    "Agronomic Treatment",
+    "Ai Relics",
+    "Aisling Media Materials",
+    "Aisling Programme Materials",
+    "Aisling Sealed Contracts",
+    "Alacarakmo Skin Art",
+    "Albino Quechua Mammoth Meat",
+    "Alexandrite",
+    "Algae",
+    "Alliance Legislative Contracts",
+    "Alliance Legislative Records",
+    "Alliance Trade Agreements",
+    "Altairian Skin",
+    "Aluminium",
+    "Alya Body Soap",
+    "Ancient Artefact",
+    "Ancient Key",
+    "Anduliga Fire Works",
+    "Animal Meat",
+    "Animal Monitors",
+    "Anomaly Particles",
+    "Antimatter Containment Unit",
+    "Antique Jewellery",
+    "Antiquities",
+    "Any Na Coffee",
+    "Apa Vietii",
+    "Aquaponic Systems",
+    "Arouca Conventual Sweets",
+    "Articulation Motors",
+    "Assault Plans",
+    "Atmospheric Processors",
+    "Auto-Fabricators",
+    "Azure Milk",
+    "Baked Greebles",
+    "Baltah'sine Vacuum Krill",
+    "Banki Amphibious Leather",
+    "Basic Medicines",
+    "Bast Snake Gin",
+    "Bastnasite",
+    "Battle Weapons",
+    "Bauxite",
+    "Beer",
+    "Belalans Ray Leather",
+    "Benitoite",
+    "Bertrandite",
+    "Beryllium",
+    "Bioreducing Lichen",
+    "Biowaste",
+    "Bismuth",
+    "Black Box",
+    "Bone Fragments",
+    "Bootleg Liquor",
+    "Borasetani Pathogenetics",
+    "Bromellite",
+    "Buckyball Beer Mats",
+    "Building Fabricators",
+    "Burnham Bile Distillate",
+    "CD-75 Kitten Brand Coffee",
+    "CMM Composite",
+    "Caustic Tissue Sample",
+    "Centauri Mega Gin",
+    "Ceramic Composites",
+    "Ceremonial Heike Tea",
+    "Ceti Rabbits",
+    "Chameleon Cloth",
+    "Chateau De Aegaeon",
+    "Chemical Waste",
+    "Cherbones Blood Crystals",
+    "Chi Eridani Marine Paste",
+    "Classified Experimental Equipment",
+    "Clothing",
+    "Cobalt",
+    "Coffee",
+    "Coltan",
+    "Combat Stabilisers",
+    "Commercial Samples",
+    "Computer Components",
+    "Conductive Fabrics",
+    "Consumer Technology",
+    "Copper",
+    "Coquim Spongiform Victuals",
+    "Coral Sap",
+    "Core Restricted Package",
+    "Crom Silver Fesh",
+    "Crop Harvesters",
+    "Cryolite",
+    "Crystalline Spheres",
+    "Curated Commodity Package",
+    "Cyst Specimen",
+    "Damaged Escape Pod",
+    "Damna Carapaces",
+    "Data Core",
+    "Delta Phoenicis Palms",
+    "Deuringas Truffles",
+    "Deuterium",
+    "Diamond",
+    "Diplomatic Bag",
+    "Diso Ma Corn",
+    "Domestic Appliances",
+    "Drones",
+    "Duradrives",
+    "Earth Relics",
+    "Eden Apples Of Aerial",
+    "Eleu Thermals",
+    "Emergency Power Cells",
+    "Encrypted Correspondence",
+    "Encrypted Data Storage",
+    "Energy Grid Assembly",
+    "Eranin Pearl Whisky",
+    "Eshu Umbrellas",
+    "Esuseku Caviar",
+    "Ethgreze Tea Buds",
+    "Evacuation Shelter",
+    "Exhaust Manifold",
+    "Experimental Chemicals",
+    "Explosives",
+    "Fish",
+    "Food Cartridges",
+    "Fossil Remnants",
+    "Fruit and Vegetables",
+    "Fujin Tea",
+    "Galactic Travel Guide",
+    "Gallite",
+    "Gallium",
+    "Geawen Dance Dust",
+    "Gene Bank",
+    "Geological Equipment",
+    "Geological Samples",
+    "Gerasian Gueuze Beer",
+    "Giant Irukama Snails",
+    "Giant Verrix",
+    "Gilya Signature Weapons",
+    "Gold",
+    "Goman Yaupon Coffee",
+    "Goslarite",
+    "Grain",
+    "Grandidierite",
+    "Grom Counter Intelligence",
+    "Grom Underground Support",
+    "Guardian Casket",
+    "Guardian Orb",
+    "Guardian Relic",
+    "Guardian Tablet",
+    "Guardian Totem",
+    "Guardian Urn",
+    "H.E. Suits",
+    "HIP 10175 Bush Meat",
+    "HIP 118311 Swarm",
+    "HIP Proto-Squid",
+    "HN Shock Mount",
+    "HR 7221 Wheat",
+    "Haematite",
+    "Hafnium 178",
+    "Haiden Black Brew",
+    "Hardware Diagnostic Sensor",
+    "Harma Silver Sea Rum",
+    "Havasupai Dream Catcher",
+    "Heatsink Interlink",
+    "Helium",
+    "Helium-3",
+    "Helvetitj Pearls",
+    "Hip Organophosphates",
+    "Holva Duelling Blades",
+    "Honesty Pills",
+    "Hostages",
+    "Hudson Garrison Supplies",
+    "Hudson's Field Supplies",
+    "Hudson's Restricted Intel",
+    "Hydrogen Fuel",
+    "Hydrogen Peroxide",
+    "Imperial Slaves",
+    "Impure Spire Mineral",
+    "Indi Bourbon",
+    "Indite",
+    "Indium",
+    "Insulating Membrane",
+    "Ion Distributor",
+    "Iridium",
+    "Jadeite",
+    "Jaques Quinentian Still",
+    "Jaradharre Puzzle Box",
+    "Jaroua Rice",
+    "Jotun Mookah",
+    "Kachirigin Filter Leeches",
+    "Kamitra Cigars",
+    "Kamorin Historic Weapons",
+    "Karetii Couture",
+    "Karsuki Locusts",
+    "Kinago Violins",
+    "Kongga Ale",
+    "Koro Kung Pellets",
+    "Kumo Contraband Package",
+    "LTT Hyper Sweet",
+    "Land Enrichment Systems",
+    "Landmines",
+    "Lanthanum",
+    "Large Survey Data Cache",
+    "Lavian Brandy",
+    "Lavigny Corruption Reports",
+    "Lavigny Field Supplies",
+    "Lavigny Garrison Supplies",
+    "Leather",
+    "Leathery Eggs",
+    "Leestian Evil Juice",
+    "Lepidolite",
+    "Liberal Federal Aid",
+    "Liberal Federal Packages",
+    "Liberal Propaganda",
+    "Liquid Oxygen",
+    "Liquor",
+    "Lithium",
+    "Lithium Hydroxide",
+    "Live Hecate Sea Worms",
+    "Low Temperature Diamonds",
+    "Lucan Onionhead",
+    "Lyrae Weed",
+    "Magnesite",
+    "Magnetic Emitter Coil",
+    "Marine Equipment",
+    "Marked Military Arms",
+    "Marked Slaves",
+    "Master Chefs",
+    "Mechucos High Tea",
+    "Medb Starlube",
+    "Medical Diagnostic Equipment",
+    "Meta-Alloys",
+    "Methane Clathrate",
+    "Methanol Monohydrate Crystals",
+    "Micro Controllers",
+    "Micro-Weave Cooling Hoses",
+    "Microbial Furnaces",
+    "Military Grade Fabrics",
+    "Military Intelligence",
+    "Military Plans",
+    "Mineral Extractors",
+    "Mineral Oil",
+    "Modular Terminals",
+    "Moissanite",
+    "Mokojing Beast Feast",
+    "Mollusc Brain Tissue",
+    "Mollusc Fluid",
+    "Mollusc Membrane",
+    "Mollusc Mycelium",
+    "Mollusc Soft Tissue",
+    "Mollusc Spores",
+    "Momus Bog Spaniel",
+    "Monazite",
+    "Motrona Experience Jelly",
+    "Mukusubii Chitin-os",
+    "Mulachi Giant Fungus",
+    "Muon Imager",
+    "Musgravite",
+    "Mysterious Idol",
+    "Nanobreakers",
+    "Nanomedicines",
+    "Narcotics",
+    "Natural Fabrics",
+    "Neofabric Insulation",
+    "Neritus Berries",
+    "Nerve Agents",
+    "Ngadandari Fire Opals",
+    "Nguna Modern Antiques",
+    "Njangari Saddles",
+    "Non Euclidian Exotanks",
+    "Non-Lethal Weapons",
+    "Occupied Escape Pod",
+    "Ochoeng Chillies",
+    "Olivine",
+    "Onionhead",
+    "Onionhead Alpha Strain",
+    "Onionhead Beta Strain",
+    "Onionhead Derivatives",
+    "Onionhead Gamma Strain",
+    "Onionhead Samples",
+    "Ophiuch Exino Artefacts",
+    "Organ Sample",
+    "Orrerian Vicious Brew",
+    "Osmium",
+    "Out Of Date Goods",
+    "Painite",
+    "Palladium",
+    "Pantaa Prayer Sticks",
+    "Patreus Field Supplies",
+    "Patreus Garrison Supplies",
+    "Pavonis Ear Grubs",
+    "Performance Enhancers",
+    "Periclase Dunite",
+    "Personal Effects",
+    "Personal Gifts",
+    "Personal Weapons",
+    "Pesticides",
+    "Platinum",
+    "Platinum Alloy",
+    "Pod Core Tissue",
+    "Pod Dead Tissue",
+    "Pod Mesoglea",
+    "Pod Outer Tissue",
+    "Pod Shell Tissue",
+    "Pod Surface Tissue",
+    "Pod Tissue",
+    "Political Prisoners",
+    "Polymers",
+    "Power Converter",
+    "Power Generators",
+    "Power Transfer Bus",
+    "Praseodymium",
+    "Precious Gems",
+    "Progenitor Cells",
+    "Prohibited Research Materials",
+    "Protective Membrane Scrap",
+    "Prototype Tech",
+    "Pyrophyllite",
+    "Quartz Pyroxenite",
+    "Radiation Baffle",
+    "Rajukru Multi-Stoves",
+    "Rapa Bao Snake Skins",
+    "Rare Artwork",
+    "Reactive Armour",
+    "Rebel Transmissions",
+    "Reinforced Mounting Plate",
+    "Resonating Separators",
+    "Revolutionary supplies",
+    "Rhodplumsite",
+    "Robotics",
+    "Rockforth Fertiliser",
+    "Ruby",
+    "Rusani Old Smokey",
+    "Rutile",
+    "Samarium",
+    "Sanuma Decorative Meat",
+    "Sap 8 Core Container",
+    "Sapphire",
+    "Saxon Wine",
+    "Scientific Research",
+    "Scientific Samples",
+    "Scrap",
+    "Semi-Refined Spire Mineral",
+    "Semiconductors",
+    "Serendibite",
+    "Shan's Charis Orchid",
+    "Silver",
+    "Sirius Corporate Contracts",
+    "Sirius Franchise Package",
+    "Sirius Industrial Equipment",
+    "Skimmer Components",
+    "Slaves",
+    "Small Survey Data Cache",
+    "Soontill Relics",
+    "Sothis Crystalline Gold",
+    "Space Pioneer Relics",
+    "Steel",
+    "Structural Regulators",
+    "Superconductors",
+    "Surface Stabilisers",
+    "Survival Equipment",
+    "Synthetic Fabrics",
+    "Synthetic Meat",
+    "Synthetic Reagents",
+    "Taaffeite",
+    "Tactical Data",
+    "Tanmark Tranquil Tea",
+    "Tantalum",
+    "Tarach Spice",
+    "Tauri Chimes",
+    "Tea",
+    "Technical Blueprints",
+    "Telemetry Suite",
+    "Terra Mater Blood Bores",
+    "Thallium",
+    "Thargoid Basilisk Tissue Sample",
+    "Thargoid Biological Matter",
+    "Thargoid Cyclops Tissue Sample",
+    "Thargoid Glaive Tissue Sample",
+    "Thargoid Heart",
+    "Thargoid Hydra Tissue Sample",
+    "Thargoid Link",
+    "Thargoid Medusa Tissue Sample",
+    "Thargoid Orthrus Tissue Sample",
+    "Thargoid Probe",
+    "Thargoid Resin",
+    "Thargoid Scout Tissue Sample",
+    "Thargoid Scythe Tissue Sample",
+    "Thargoid Sensor",
+    "Thargoid Technology Samples",
+    "The Hutton Mug",
+    "The Waters Of Shintara",
+    "Thermal Cooling Units",
+    "Thorium",
+    "Thortveitite",
+    "Thrutis Cream",
+    "Tiegfries Synth Silk",
+    "Time Capsule",
+    "Tiolce Waste2Paste Units",
+    "Titan Deep Tissue Sample",
+    "Titan Drive Component",
+    "Titan Maw Deep Tissue Sample",
+    "Titan Maw Partial Tissue Sample",
+    "Titan Maw Tissue Sample",
+    "Titan Partial Tissue Sample",
+    "Titan Tissue Sample",
+    "Titanium",
+    "Tobacco",
+    "Torval Deeds",
+    "Torval Political Prisoners",
+    "Torval Trade Agreements",
+    "Toxandji Virocide",
+    "Toxic Waste",
+    "Trade Data",
+    "Trinkets of Hidden Fortune",
+    "Tritium",
+    "Ultra-Compact Processor Prototypes",
+    "Unclassified Relic",
+    "Unmarked Military supplies",
+    "Unoccupied Escape Pod",
+    "Unstable Data Core",
+    "Uraninite",
+    "Uranium",
+    "Uszaian Tree Grub",
+    "Utgaroar Millennial Eggs",
+    "Utopian Dissident",
+    "Utopian Publicity",
+    "Utopian Supplies",
+    "Uzumoku Low-G Wings",
+    "V Herculis Body Rub",
+    "Vanayequi Ceratomorpha Fur",
+    "Vega Slimweed",
+    "Vidavantian Lace",
+    "Void Extract Coffee",
+    "Void Opal",
+    "Volkhab Bee Drones",
+    "Water",
+    "Water Purifiers",
+    "Wheemete Wheat Cakes",
+    "Wine",
+    "Witchhaul Kobe Beef",
+    "Wolf Fesh",
+    "Wreckage Components",
+    "Wulpa Hyperbore Systems",
+    "Wuthielo Ku Froth",
+    "Xenobiological Prison Pod",
+    "Xihe Biomorphic Companions",
+    "Yaso Kondi Leaf",
+    "Yuri Grom's Military Supplies",
+    "Zeessze Ant Grub Glue"
+  ],
+  "systems": {
+    "Shinrarta Dezhra": {
+      "name": "Shinrarta Dezhra",
+      "status": "ok",
+      "traffic": { "total": 412880, "week": 6120, "day": 902 },
+      "deaths": { "total": 3418, "week": 41, "day": 6 },
+      "primaryStar": { "type": "K (Yellow-Orange) Star", "scoopable": true },
+      "closestStarport": { "name": "Jameson Memorial", "type": "Orbis Starport", "distanceLs": 347 }
+    }
+  },
+  "assistant": {
+    "version": 1,
+    "phase": "idle",
+    "transcript": [
+      {
+        "role": "commander",
+        "text": "What's worth landing for in this system?",
+        "at": "2026-10-11T22:45:26.466Z",
+        "detail": "spoken",
+        "id": 1
+      },
+      {
+        "role": "tool",
+        "text": "get_biology_here",
+        "at": "2026-10-11T22:45:26.466Z",
+        "call": {
+          "input": "{}",
+          "output": "{\"system\":\"Phroi Pruae VW-G d8-1243\",\"bodies\":2}"
+        },
+        "id": 2
+      },
+      {
+        "role": "assistant",
+        "text": "Phroi Pruae VW-G d8-1243 4 a: 3 genera mapped — Concha, Bacterium, Tussock. You've 1 of 3 samples of Concha Labiata; Concha and Tussock are new to your codex. Nobody has landed here before, so every sample pays five times over.",
+        "at": "2026-10-11T22:45:26.466Z",
+        "id": 3
+      },
+      {
+        "role": "commander",
+        "text": "How much am I carrying unsold?",
+        "at": "2026-10-11T22:53:26.466Z",
+        "detail": "spoken",
+        "id": 4
+      },
+      {
+        "role": "tool",
+        "text": "get_ledger",
+        "at": "2026-10-11T22:53:26.466Z",
+        "call": {
+          "input": "{}",
+          "output": "{\"commander\":\"Vesper Kael\",\"fines\":0,\"bounties\":0,\"combatBonds\":0,\"cartographics\":{\"value\":1510356,\"sessionValue\":1507203,\"bodies\":15,\"systems\":7},\"exobiology\":{\"value\":50683500,\"sessionValue\":50683500,\"species\":3}}"
+        },
+        "id": 5
+      },
+      {
+        "role": "assistant",
+        "text": "About 52 million credits in exploration and organic data since the last sale at your carrier. Worth a trip back once this system is done — the carrier is six jumps behind you.",
+        "at": "2026-10-11T22:53:26.466Z",
+        "id": 6
+      }
+    ],
+    "setup": {
+      "enabled": true,
+      "provider": "openai",
+      "model": "gpt-5.6-terra",
+      "ready": true,
+      "voiceInput": true,
+      "voiceOutput": true,
+      "kokoro": { "kind": "ready" },
+      "voiceInputFormat": "wav",
+      "pushToTalk": ["Right Ctrl + T"],
+      "holdToTalk": true,
+      "signedIn": false,
+      "maxRecordingSeconds": 30,
+      "keepMicrophoneOpen": false,
+      "configPath": "C:\\Users\\Commander\\.edssi\\config.yaml"
+    }
+  },
+  "input": {
+    "version": 1,
+    "devices": [
+      {
+        "vendorId": 8989,
+        "productId": 512,
+        "product": "VKB-Sim Gladiator EVO R",
+        "manufacturer": "VKB-Sim",
+        "connected": true
+      },
+      {
+        "vendorId": 8989,
+        "productId": 513,
+        "product": "VKB-Sim Gladiator EVO L",
+        "manufacturer": "VKB-Sim",
+        "connected": true
+      }
+    ],
+    "state": {},
+    "capturing": false,
+    "talking": false
+  },
+  "settings": {
+    "settings": {
+      "display": { "zoom": 1, "match_hud_color": true },
+      "openai": {},
+      "inworld": { "model": "inworld-tts-2", "voice": "Ashley" },
+      "kokoro": { "voice": "af_heart" },
+      "whisper": { "model": "base.en", "threads": 4 },
+      "wyoming": {
+        "speech_uri": "tcp://127.0.0.1:10200",
+        "transcription_uri": "tcp://127.0.0.1:10300"
+      },
+      "assistant": {
+        "enabled": true,
+        "provider": "openai",
+        "model": "gpt-5.6-terra",
+        "reasoning_effort": "medium",
+        "ultrathink": { "model": "gpt-5.6-terra", "reasoning_effort": "high" },
+        "max_tool_rounds": 8,
+        "history_turns": 12,
+        "web_search": true
+      },
+      "voice": {
+        "push_to_talk": [{ "kind": "key", "accelerator": "Control+Alt+Space" }],
+        "hold_to_talk": true,
+        "max_recording_seconds": 30,
+        "keep_microphone_open": true,
+        "transcription": {
+          "enabled": true,
+          "provider": "whisper",
+          "model": "gpt-transcribe",
+          "keywords": [
+            "Elite Dangerous",
+            "commander",
+            "supercruise",
+            "hyperspace",
+            "frame shift drive",
+            "fuel scoop",
+            "interdiction",
+            "Thargoid",
+            "Guardian",
+            "Universal Cartographics",
+            "Vista Genomics",
+            "exobiology",
+            "Shinrarta Dezhra",
+            "Colonia",
+            "Sagittarius A*"
+          ]
+        },
+        "speech": {
+          "enabled": true,
+          "provider": "kokoro",
+          "instructions": "Calm, competent ship computer. Even tone, unhurried, no enthusiasm. Speak clearly and briskly.",
+          "speed": 1,
+          "exobiology_callouts": true,
+          "personal_best_callouts": true,
+          "probe_callouts": true,
+          "route_callouts": true,
+          "carrier_departure_callouts": true
+        }
+      },
+      "edsm": { "upload": true },
+      "inara": { "upload": true },
+      "eddn": { "upload": true },
+      "carrier_alert": {
+        "enabled": true,
+        "jumps": 10,
+        "max_age_days": 60,
+        "quiet_near_stations": true,
+        "say_callsign": false
+      },
+      "carrier_webhook": { "enabled": true },
+      "mission": { "min_probe_value": 1000000 },
+      "input": { "multi_click_ms": 280, "paste": [] },
+      "vr": { "enabled": false, "bindings": {} },
+      "flight_alerts": {
+        "low_fuel": true,
+        "low_fuel_fraction": 0.25,
+        "unscoopable_next_jump": true,
+        "fuel_for_stretch": true,
+        "high_gravity": true,
+        "high_gravity_threshold": 2.5
+      }
+    },
+    "path": "C:\\Users\\Commander\\.edssi\\config.yaml"
+  },
+  "uploads": {
+    "version": 1,
+    "logVersion": 1,
+    "targets": [
+      {
+        "target": "edsm",
+        "state": "waiting",
+        "pending": 0,
+        "lastSentAt": "2026-10-11T22:56:26.466Z",
+        "sent": 214
+      },
+      { "target": "inara", "state": "off", "pending": 0, "sent": 0 },
+      {
+        "target": "eddn",
+        "state": "waiting",
+        "pending": 0,
+        "lastSentAt": "2026-10-11T22:56:26.466Z",
+        "sent": 188
+      }
+    ]
+  },
+  "uploadLog": [
+    {
+      "id": 3,
+      "target": "edsm",
+      "source": "live",
+      "at": "2026-10-11T22:56:26.466Z",
+      "firstEvent": "2026-10-11T22:50:26.466Z",
+      "lastEvent": "2026-10-11T22:55:26.466Z",
+      "events": 14,
+      "eventCounts": {
+        "Scan": 9,
+        "FSSDiscoveryScan": 1,
+        "FSDJump": 1,
+        "FuelScoop": 1,
+        "SAAScanComplete": 1,
+        "ScanOrganic": 1
+      },
+      "systems": ["Phroi Pruae VW-G d8-1243"],
+      "outcome": "sent",
+      "accepted": 14,
+      "refused": []
+    },
+    {
+      "id": 2,
+      "target": "eddn",
+      "source": "live",
+      "at": "2026-10-11T22:56:26.466Z",
+      "firstEvent": "2026-10-11T22:50:26.466Z",
+      "lastEvent": "2026-10-11T22:55:26.466Z",
+      "events": 11,
+      "eventCounts": { "Scan": 9, "FSDJump": 1, "FSSDiscoveryScan": 1 },
+      "systems": ["Phroi Pruae VW-G d8-1243"],
+      "outcome": "sent",
+      "accepted": 11,
+      "refused": []
+    },
+    {
+      "id": 1,
+      "target": "edsm",
+      "source": "live",
+      "at": "2026-10-11T22:28:26.466Z",
+      "firstEvent": "2026-10-11T22:15:26.466Z",
+      "lastEvent": "2026-10-11T22:27:26.466Z",
+      "events": 22,
+      "eventCounts": { "Scan": 16, "FSDJump": 2, "FuelScoop": 2, "SAASignalsFound": 2 },
+      "systems": [],
+      "outcome": "sent",
+      "accepted": 21,
+      "skipped": 1,
+      "refused": []
+    }
+  ],
+  "updates": { "status": "idle", "checkedAt": "2026-10-11T22:47:26.466Z" },
+  "whatsNew": {
+    "running": "1.1.0",
+    "unseen": [],
+    "all": [
+      {
+        "version": "1.1.0",
+        "items": [
+          "**A stronger default model** for the assistant.",
+          "**Whisper listens by default**, on your PC, so hearing you needs no OpenAI key.",
+          "**Clearer Quickstart**, with neater settings."
+        ]
+      },
+      {
+        "version": "1.0.0",
+        "items": [
+          "**First release.** EDSSI follows your journal while you play and shows the session at a glance: where you are, where you're heading, your fuel, and what your unsold data is worth.",
+          "**Mission tab.** The route ahead, the bodies worth a probe, and the life in each system, with the species likely to grow there and what each could pay.",
+          "**An assistant you can talk to.** Ask about your trip, your ship or the galaxy by voice or text. It searches Spansh, plots routes, reads the web, and answers aloud.",
+          "**Routes from Spansh.** Load a route's CSV and EDSSI puts the next system on the clipboard after every jump, with a 3D map of the whole trip.",
+          "**Materials, commodities and ships.** Engineering to-do lists and the trades that cover them, shopping lists with market searches and buying plans, and every ship you own slot by slot, ready to open in EDSY or Coriolis.",
+          "**Warnings in flight.** Low fuel, unscoopable stars ahead, high gravity, carriers nearby, and your own carrier about to jump.",
+          "**Uploads.** Sends your journal to EDSM, Inara and EDDN, so you don't need another tool running for that.",
+          "**Keeps itself up to date.** New versions download in the background and install the next time EDSSI starts."
+        ]
+      }
+    ]
+  },
+  "hudColor": null,
+  "fssOverlay": {
+    "state": "ready",
+    "gameDir": "C:\\Games\\Elite Dangerous",
+    "installed": true,
+    "shaders": true,
+    "conflicts": []
+  },
+  "viewOptions": {
+    "mission.bio_sort": "name",
+    "materials.missing_sort": "order",
+    "materials.missing_descending": false,
+    "materials.missing_show_covered": false
+  },
+  "browser": { "loading": false, "canGoBack": false, "canGoForward": false },
+  "tab": "mission"
+}

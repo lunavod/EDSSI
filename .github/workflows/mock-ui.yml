@@ -1,0 +1,73 @@
+# Publishes the mock UI (src/mock/): the app's windows against made-up data, as a package for other
+# projects, to GitHub Packages as @lunavod/edssi-mock-ui. release.yml calls it with each release of
+# the app, at the app's version; run it by hand to publish between releases, giving a version
+# (say 1.1.0-mock.1, as GitHub Packages never takes one twice). docs/releasing.md has the rest.
+
+name: Mock UI
+
+on:
+  workflow_call:
+    inputs:
+      version:
+        description: Version to publish; empty for package.json's
+        required: false
+        type: string
+        default: ''
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Version to publish; empty for package.json's
+        required: false
+        type: string
+
+permissions:
+  contents: read
+  packages: write
+
+jobs:
+  publish:
+    # On a hosted runner: it needs neither the signing certificate nor any native module.
+    runs-on: ubuntu-latest
+    steps:
+      # Fresh from the repository, so extensions/ (ignored, private) can't be here; the mock's
+      # builds refuse it besides.
+      - uses: actions/checkout@v6
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          registry-url: 'https://npm.pkg.github.com'
+          scope: '@lunavod'
+
+      # No install scripts: they fetch Electron and build the input modules, none of which the mock
+      # uses. The tools' native binaries are ordinary optional dependencies and still come.
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+
+      # Made afresh so its dates are the publish's; it fetches EDSY's ship tables.
+      - name: Make the demo scenario
+        run: npm run mock:scenario
+
+      - name: Build the package
+        run: npm run mock:lib
+
+      - name: Take the version asked for
+        if: inputs.version != ''
+        working-directory: dist/mock-ui
+        env:
+          VERSION: ${{ inputs.version }}
+        run: npm version "$VERSION" --no-git-tag-version --allow-same-version
+
+      - name: Publish
+        working-directory: dist/mock-ui
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          version=$(node -p "require('./package.json').version")
+          # A rerun whose package already went out has nothing to publish.
+          if npm view "@lunavod/edssi-mock-ui@$version" version >/dev/null 2>&1; then
+            echo "@lunavod/edssi-mock-ui@$version is already published"
+            exit 0
+          fi
+          npm publish
+          echo "Published @lunavod/edssi-mock-ui@$version" >> "$GITHUB_STEP_SUMMARY"

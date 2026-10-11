@@ -20,6 +20,7 @@
   },
   "include": [
     "src/renderer/src/**/*",
+    "src/mock/**/*",
     "src/shared/**/*",
     "extensions/*/renderer/**/*",
     "extensions/*/shared/**/*"

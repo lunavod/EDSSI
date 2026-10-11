@@ -1,0 +1,42 @@
+/*
+ * One embedded EDSSI (mock-app.tsx), inside its shadow root beside the app's stylesheets. Those are
+ * rewritten for the mock builds (scripts/mock/vite-plugins.ts) so that `.edssi-theme` carries what
+ * `:root` does in the app; this is what the root itself needs on top.
+ */
+
+/*
+ * What the shadow root holds the app in. Properties that inherit (font, colour, line height,
+ * letter spacing…) still cross into a shadow tree from the page; they stop here.
+ */
+.edssi-shell {
+  all: initial;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.edssi-mock {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  /*
+   * Makes the root the containing block of every `position: fixed` inside it, so the suggestion
+   * lists and dialogs hang inside this EDSSI rather than over the page (see hud/popup-place.ts).
+   */
+  transform: translateZ(0);
+  isolation: isolate;
+  text-align: left;
+}
+
+/* The app's dialogs open non-modal here (`modalDialogs`), so they're placed as a modal would be. */
+.edssi-mock dialog[open]:not(:modal) {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  margin: auto;
+  /* A modal's backdrop, which a non-modal dialog hasn't got, kept inside the root by its clip. */
+  box-shadow:
+    0 0 24px var(--wash-2),
+    0 0 0 100vmax rgb(0 0 0 / 0.7);
+}

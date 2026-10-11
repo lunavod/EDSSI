@@ -1,0 +1,13 @@
+{
+  "extends": "./tsconfig.web.json",
+  "compilerOptions": {
+    "composite": false,
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "rootDir": "src",
+    "outDir": "dist/mock-ui/types",
+    "tsBuildInfoFile": null
+  },
+  "include": ["src/mock/index.ts"]
+}

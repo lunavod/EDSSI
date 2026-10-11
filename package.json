@@ -29,7 +29,11 @@
     "hid:build": "node-gyp rebuild --directory=native/hid-usages",
     "vr:shots": "node --experimental-strip-types scripts/vr-shots.ts",
     "vr:preview": "jiti scripts/vr-preview.ts",
-    "vr:build": "dotnet build tools/vr-overlay-host/vr-overlay-host.csproj -c Release -o out/vr-overlay-host --nologo"
+    "vr:build": "dotnet build tools/vr-overlay-host/vr-overlay-host.csproj -c Release -o out/vr-overlay-host --nologo",
+    "mock:scenario": "jiti scripts/build-mock-scenario.ts && oxfmt src/mock/fixtures/demo.json",
+    "mock:dev": "vite --config vite.mock.config.ts",
+    "mock:build": "vite build --config vite.mock.config.ts",
+    "mock:lib": "vite build --config vite.mock-lib.config.ts && tsc -p tsconfig.mock-lib.json"
   },
   "dependencies": {
     "koffi": "^2.16.3",

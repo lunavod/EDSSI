@@ -1,6 +1,7 @@
 # Releases EDSSI. A `vX.Y.Z` tag (made by the /release skill, after bumping package.json) builds a
 # signed installer, puts it on the update server every installed EDSSI asks, and makes a GitHub
-# release. A `dev-vX.Y.Z-dev.N` tag builds EDSSI Dev for the dev channel instead. docs/releasing.md
+# release, and publishes the mock UI package (src/mock/) to GitHub Packages at the same version. A
+# `dev-vX.Y.Z-dev.N` tag builds EDSSI Dev for the dev channel instead. docs/releasing.md
 # has the whole of it, and what the machine and the repository need.
 
 name: Release
@@ -185,6 +186,16 @@ jobs:
         env:
           DISCORD_RELEASE_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
         run: npx --yes jiti@2.7.0 scripts/post-discord-release.ts
+
+  # The mock UI package, at the app's version (mock-ui.yml, which can also be run by hand). Only
+  # once the app itself has built and gone out, so a release that fails publishes nothing.
+  mock-ui:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: build
+    permissions:
+      contents: read
+      packages: write
+    uses: ./.github/workflows/mock-ui.yml
 
   # The dev channel: EDSSI Dev, an app of its own updating from updates-dev.edssi.app. The tag
   # gives the version (dev-v0.3.0-dev.1 is 0.3.0-dev.1). Never touches latest.yml, never makes a

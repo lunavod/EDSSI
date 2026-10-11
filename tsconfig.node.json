@@ -19,10 +19,13 @@
   },
   "include": [
     "electron.vite.config.ts",
+    "vite.mock.config.ts",
+    "vite.mock-lib.config.ts",
     "scripts/**/*",
     "src/main/**/*",
     "src/preload/**/*",
     "src/shared/**/*",
+    "src/mock/scenario.ts",
     "extensions/*/main/**/*",
     "extensions/*/shared/**/*"
   ]

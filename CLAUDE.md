@@ -20,6 +20,7 @@ platform.
   whatever is in `extensions/`, so for trying out only: releases come from the workflow.
 - `/release` (Claude Code skill) — check, bump, write both changelogs, tag `vX.Y.Z` and push;
   `.github/workflows/release.yml` builds, signs and publishes it. `dev-v*` tags build EDSSI Dev.
+  It also publishes the mock UI to GitHub Packages (`@lunavod/edssi-mock-ui`) at the same version.
   All of it, and the one-time setup, in `docs/releasing.md`.
 - `npm run build:extension -- <name> [--install]` — build an extension on its own, for any build of
   EDSSI to load (see the extensions entry below).
@@ -30,6 +31,9 @@ platform.
 - `npm run send-session -- --list` / `-- --session <prefix> [--target inara] --send` — send past
   game sessions to EDSM or Inara (never EDDN, whose listeners want news) (`scripts/send-session.ts`, run with jiti). A dry run without
   `--send`. It stops at each service's live cursor unless given `--include-sent`.
+- `npm run mock:dev` / `mock:build` / `mock:lib` — the mock UI (`src/mock/`): its demo page served,
+  built into `out/mock/`, or the embeddable package into `dist/mock-ui/`. `npm run mock:scenario`
+  makes its demo scenario afresh (see the mock UI entry below).
 
 To point the app at a test journal folder, set `EDSSI_JOURNAL_DIR`. To keep its records out of
 your real database, also set `EDSSI_DATA_DIR`, which also holds that run's browser profile (the
@@ -491,6 +495,24 @@ Data flows one way: journal files → main process → IPC → renderer.
 - **`src/preload/`** — exposes `window.edssi` (typed by `EdssiApi` in `src/shared/api.ts`). The
   window is sandboxed, so the preload must be built as CJS (`index.cjs`, see
   `electron.vite.config.ts`).
+- **`src/renderer/src/api/`** — how the window reaches the main process: `useEdssi()`, from the
+  `EdssiProvider` that `main.tsx` puts round the app with `window.edssi`. Nothing else reads
+  `window.edssi` (a test checks), so a page can hold several EDSSIs, each with an API of its own.
+  State a window's components share lives on the provider too (`viewOptions`, `settingsRequests`),
+  never in a module's `let`, and so does where the document is: `themeRoot()` for the HUD colour,
+  `useOpenDialog()` (modal in the app, not embedded). Popups place themselves with `popupPlace`, and
+  lists scroll with `scrollNearest`/`scrollWithin`, never `scrollIntoView`, which scrolls the page.
+- **`src/mock/`**: the mock UI, the app's own windows against made-up data, for embedding in other
+  pages, many to a page (`<MockApp scenario tab />`), each in a shadow root with its own React
+  root so no page's styles reach it. `MockEdssi` implements `EdssiApi` from a
+  `MockScenario`: reads answer from it, a visitor's changes (favourites, to-dos, a sort) stay in
+  that instance, and what needs the game or the network says it is a demo. The demo scenario
+  (`fixtures/demo.json`) is made by `npm run mock:scenario`: `scripts/mock/demo-journal.ts` writes
+  the journal of a made-up trip (its life predicted by `predict.ts`, its ships from EDSY), and
+  `scripts/mock/run-services.ts` runs the real services over it under jiti with `electron`
+  aliased to a stub, saving what they'd send a window. Its builds scope the app's stylesheets to
+  `.edssi-theme` and refuse anything from `extensions/` (`scripts/mock/vite-plugins.ts`). How to
+  embed it, and the rules that keep new renderer code mockable, are in `src/mock/README.md`.
 - **`src/renderer/src/journal/`** — `state.ts` is the sync reducer: it subscribes first, queues
   messages until the snapshot arrives, then skips messages with `seq` ≤ the snapshot's. Its session
   reset mirrors the main process's rule. `summaries.ts` maps event names to categories (ordered

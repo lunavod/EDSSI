@@ -405,14 +405,20 @@ Data flows one way: journal files → main process → IPC → renderer.
   outside this repository, each a folder in `extensions/` (git-ignored), found with
   `import.meta.glob`, so a build without one has none of it. An extension adds its own settings
   sections, Route tab pages, assistant toolsets, system locators and IPC (`ext:` channels), and
-  main-process entries through its `build.json`. The public code never names one: a new extension
-  point is named for what it offers. `npm run build:extension -- <name> --install` builds one on
-  its own into `<config dir>/extensions/<name>/`, which any build loads at start
-  (`src/main/installed-extensions.ts`, `src/shared/extensions.ts`): EDSSI's code it imports is
-  bundled in, but React and zod are the running EDSSI's (stand-ins for `globalThis`), native
-  modules come from EDSSI's folder (`EDSSI_APP_PATH`), and the window loads it over `edssi-ext://`
-  before importing the app. `EXTENSION_API_VERSION` gates it. How it fits together is in
-  `docs/extensions.md`; an extension's own notes live in its folder.
+  main-process entries through its `build.json`. It hears EDSSI's own two journal readers
+  (`context.journal`, `src/main/extension-feed.ts`, each event marked live or replayed), reads
+  what EDSSI made of them (`context.game`), asks the assistant's model (`context.ask`), and adds
+  tabs and side panel blocks of its own, each drawn inside an `ExtensionBoundary`. The public code
+  never names one: a new extension point is named for what it offers. `npm run build:extension --
+<name> --install` builds one on its own into `<config dir>/extensions/<name>/`, which any build
+  loads at start (`src/main/installed-extensions.ts`, `src/shared/extensions.ts`): EDSSI's code it
+  imports is bundled in, but React and zod are the running EDSSI's (stand-ins for `globalThis`),
+  native modules come from EDSSI's folder (`EDSSI_APP_PATH`), and the window loads it over
+  `edssi-ext://` before importing the app, where `useEdssi()` works because `EdssiContext` lives
+  on `globalThis`. It loads if built for any version from `OLDEST_EXTENSION_API_VERSION` to
+  `EXTENSION_API_VERSION`. The Settings tab's Extensions page turns any of them off from the next
+  start (`<config dir>/extensions.json`). How it fits together is in `docs/extensions.md`; an
+  extension's own notes live in its folder.
 - **`src/main/config/`** — `~/.edssi/config.yaml` (override the folder with `EDSSI_CONFIG_DIR`):
   API keys, the model, voice settings and the push-to-talk bindings. The zod schema lives in
   `src/shared/settings.ts` (the renderer needs it for the Settings tab), where every field has a

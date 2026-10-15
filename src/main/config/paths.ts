@@ -33,3 +33,8 @@ export function chatGptTokenPath(): string {
 export function vrOverlayPath(): string {
   return join(configDir(), 'vr-overlay.json');
 }
+
+/** Which extensions are turned off (`src/shared/extensions.ts`). */
+export function extensionsStatePath(): string {
+  return join(configDir(), 'extensions.json');
+}

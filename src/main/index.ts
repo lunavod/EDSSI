@@ -10,9 +10,10 @@ import { hullKey } from '../shared/build-import';
 import { plottedAlongCsv } from '../shared/followed-route';
 import type { PlottedRoute } from '../shared/nav-routes';
 import { currentShip } from '../shared/overview';
-import { TAB_IDS, type TabId } from '../shared/ui';
+import { isTabId, type TabId } from '../shared/ui';
 import { startActivityService } from './activity-service';
-import { startAssistantService } from './ai/service';
+import type { GameData } from './ai/game-data';
+import { type AssistantService, startAssistantService } from './ai/service';
 import type { Toolset } from './ai/tools/define';
 import { broadcast } from './broadcast';
 import { Browser } from './browser/browser';
@@ -29,12 +30,13 @@ import { locateSystems, type SystemLocator } from './csv-route/locate';
 import { startEdhmService } from './edhm-service';
 import { EdsmClient } from './edsm';
 import { startEdsmService } from './edsm-service';
+import { journalFeed } from './extension-feed';
 import { loadInstalledExtensions, startExtensions } from './extensions';
 import { startFlightAlertService } from './flight-alert-service';
 import { startHistoryService } from './history-service';
 import { startPasteBinding } from './input/paste';
 import { startInputService } from './input/service';
-import { JournalReader } from './journal';
+import { findJournalDir, JournalReader } from './journal';
 import { startJournalService } from './journal-service';
 import { startMaterialsService } from './materials-service';
 import { type NavRouteService, startNavRouteService } from './nav-route-service';
@@ -156,6 +158,9 @@ function startServices(browser: Browser): SettingsStore {
     journal.onError((error) => console.error('[journal]', error));
   }
   const journal = startJournalService(reader, historyReader);
+  // The journal as extensions hear it, subscribed to before either reader starts.
+  const sessionFeed = journalFeed(reader);
+  const allFeed = journalFeed(historyReader);
   const activity = startActivityService(historyReader);
   const edsm = new EdsmClient();
   startEdsmService(edsm);
@@ -246,9 +251,33 @@ function startServices(browser: Browser): SettingsStore {
   const viewOptionsService = startViewOptionsService(viewOptions);
   /** Set once the assistant is up: what the extensions tell the commander goes through it. */
   let notifyFromExtension: ((text: string) => void) | undefined;
+  let askFromExtension: AssistantService['look'] | undefined;
   const extensionToolsets: Toolset[] = [];
+  const game: GameData = {
+    session: () => journal.snapshot(),
+    overview: () => journal.snapshot().overview,
+    history: () => history.snapshot(),
+    carriers: () => carriers.snapshot(),
+    activity: () => activity.snapshot(),
+    routes: () => navRoutes?.recent() ?? [],
+    csvRoute: () => csvRoute.state(),
+    settings: () => settings.current(),
+    system: (name) => edsm.system(name),
+  };
   const extensions = startExtensions({
     settings,
+    dataRoot: process.env['EDSSI_DATA_DIR'] ?? app.getPath('userData'),
+    journal: {
+      session: sessionFeed.feed,
+      all: allFeed.feed,
+      dir: async () => reader.dir ?? (await findJournalDir()),
+    },
+    game,
+    ask: ({ instructions, text, images = [] }, signal = new AbortController().signal) =>
+      askFromExtension
+        ? askFromExtension({ instructions, text, images }, signal)
+        : Promise.reject(new Error('The assistant has not started yet.')),
+    showTab: (tab) => broadcast(IpcChannel.UiCommand, { type: 'open-tab', tab }),
     here: () => journal.snapshot().overview.system,
     ship: () => currentShip(journal.snapshot().events),
     ships: () => ships.owned(),
@@ -310,17 +339,7 @@ function startServices(browser: Browser): SettingsStore {
     // Built beside this file (electron.vite.config.ts); onnxruntime only ever loads in there.
     kokoroWorker: join(import.meta.dirname, 'kokoro-worker.js'),
     toolsets: extensionToolsets,
-    game: {
-      session: () => journal.snapshot(),
-      overview: () => journal.snapshot().overview,
-      history: () => history.snapshot(),
-      carriers: () => carriers.snapshot(),
-      activity: () => activity.snapshot(),
-      routes: () => navRoutes?.recent() ?? [],
-      csvRoute: () => csvRoute.state(),
-      settings: () => settings.current(),
-      system: (name) => edsm.system(name),
-    },
+    game,
     app: {
       openTab: (tab) => broadcast(IpcChannel.UiCommand, { type: 'open-tab', tab }),
       surface,
@@ -332,6 +351,7 @@ function startServices(browser: Browser): SettingsStore {
   });
 
   notifyFromExtension = (text) => assistant.notify(text);
+  askFromExtension = assistant.look;
 
   const callouts = new ExobiologyCallouts();
   const probeCallouts = new ProbeCallouts();
@@ -406,6 +426,7 @@ function startServices(browser: Browser): SettingsStore {
     .then(() => {
       csvRoute.markLive();
       commodities.markLive();
+      sessionFeed.markLive();
       carrierAlert.markLive();
       carrierWebhook.markLive();
       flightAlert.markLive();
@@ -421,6 +442,7 @@ function startServices(browser: Browser): SettingsStore {
       materials.markReady();
       ships.markReady();
       carriers.markReady();
+      allFeed.markLive();
     })
     .catch((error: unknown) => console.error('[history] failed to start', error));
   return settings;
@@ -436,10 +458,8 @@ ipcMain.handle(IpcChannel.ClipboardWrite, (_event, text: string) => {
 // the panels are windows of their own and can't see the window's state.
 let windowTab: TabId = 'mission';
 ipcMain.on(IpcChannel.UiSetTab, (_event, tab: unknown) => {
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- checked against the list
-  if (!TAB_IDS.includes(tab as TabId) || tab === windowTab) return;
-  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- checked just above
-  windowTab = tab as TabId;
+  if (!isTabId(tab) || tab === windowTab) return;
+  windowTab = tab;
   broadcast(IpcChannel.UiTabChanged, windowTab);
 });
 ipcMain.handle(IpcChannel.UiGetTab, () => windowTab);

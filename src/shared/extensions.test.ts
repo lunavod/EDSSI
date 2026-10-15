@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 
-import { parseManifest } from './extensions';
+import { type ExtensionInfo, needsRestart, parseExtensionsFile, parseManifest } from './extensions';
 
 describe('parseManifest', () => {
   it('reads what a build writes', () => {
@@ -34,5 +34,35 @@ describe('parseManifest', () => {
       apiVersion: 1,
       main: 'dist/main.js',
     });
+  });
+});
+
+describe('parseExtensionsFile', () => {
+  it('keeps the names turned off', () => {
+    expect(parseExtensionsFile({ disabled: ['plotter', 3, 'mover'] })).toEqual({
+      disabled: ['plotter', 'mover'],
+    });
+  });
+
+  it('turns nothing off for a missing or broken file', () => {
+    expect(parseExtensionsFile(null)).toEqual({ disabled: [] });
+    expect(parseExtensionsFile({ disabled: 'plotter' })).toEqual({ disabled: [] });
+  });
+});
+
+function extension(state: ExtensionInfo['state'], enabled: boolean): ExtensionInfo {
+  return { name: 'plotter', source: 'installed', state, enabled };
+}
+
+describe('needsRestart', () => {
+  it('is needed once the next start would differ from this one', () => {
+    expect(needsRestart(extension('running', true))).toBe(false);
+    expect(needsRestart(extension('running', false))).toBe(true);
+    expect(needsRestart(extension('disabled', false))).toBe(false);
+    expect(needsRestart(extension('disabled', true))).toBe(true);
+  });
+
+  it('is never needed for one left out for a built-in one', () => {
+    expect(needsRestart(extension('shadowed', false))).toBe(false);
   });
 });

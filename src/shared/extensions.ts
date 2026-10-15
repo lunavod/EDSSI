@@ -6,10 +6,37 @@
 
 /**
  * The version of what EDSSI gives extensions (`MainExtension`, `RendererExtension` and their
- * contexts) and of the modules it shares with them. An installed extension built against another
- * is left out, so bump it whenever either changes in a way one built before would trip over.
+ * contexts) and of the modules it shares with them, which a build writes into its manifest. Bump
+ * it whenever either gains something: an extension built against a later version than the running
+ * EDSSI's is left out, as it may use what this EDSSI lacks.
+ *
+ * 2: the journal feeds, `game`, `ask`, `dataDir`, `log` and `showTab` on the main context; tabs
+ * and side panel blocks of its own; `useEdssi()` working from an installed extension.
  */
-export const EXTENSION_API_VERSION = 1;
+export const EXTENSION_API_VERSION = 2;
+
+/**
+ * The oldest version still loaded. Raise it to `EXTENSION_API_VERSION` when a change would trip up
+ * an extension built before: something taken away, renamed or made to mean something else.
+ */
+export const OLDEST_EXTENSION_API_VERSION = 1;
+
+/** Why an extension built against `apiVersion` can't be loaded, if it can't. */
+export function apiVersionProblem(name: string, apiVersion: number): string | undefined {
+  if (apiVersion > EXTENSION_API_VERSION) {
+    return (
+      `${name} was built for extension API ${apiVersion}, and this EDSSI only has ` +
+      `${EXTENSION_API_VERSION}; update EDSSI`
+    );
+  }
+  if (apiVersion < OLDEST_EXTENSION_API_VERSION) {
+    return (
+      `${name} was built for extension API ${apiVersion}, and this EDSSI needs at least ` +
+      `${OLDEST_EXTENSION_API_VERSION}; build it again against this EDSSI`
+    );
+  }
+  return undefined;
+}
 
 /** What an installed extension's folder says about itself, written by its build. */
 export interface ExtensionManifest {
@@ -97,3 +124,54 @@ export const HOST_NATIVE_MODULES = ['koffi', 'node-hid', 'uiohook-napi', 'onnxru
 
 /** Names EDSSI's app folder, where `HOST_NATIVE_MODULES` are found from. */
 export const EXTENSION_APP_PATH_ENV = 'EDSSI_APP_PATH';
+
+/** Where an extension comes from: compiled into this build, or installed beside its settings. */
+export type ExtensionSource = 'built-in' | 'installed';
+
+/** An extension as the Settings tab lists it. */
+export interface ExtensionInfo {
+  name: string;
+  source: ExtensionSource;
+  /**
+   * How it stands in this run: running, turned off, failed to load or start, or (installed) left
+   * out for one of the same name built in.
+   */
+  state: 'running' | 'disabled' | 'failed' | 'shadowed';
+  /** On at the next start, as `extensions.json` says. */
+  enabled: boolean;
+  /** An installed one's folder. */
+  folder?: string;
+  /** Why it failed. */
+  problem?: string;
+}
+
+export interface ExtensionsView {
+  extensions: ExtensionInfo[];
+  /** Where installed extensions live. */
+  folder: string;
+  /** Folders there that can't be loaded, and why. */
+  problems: string[];
+}
+
+/** The extensions turned off, kept in `<config dir>/extensions.json`. */
+export interface ExtensionsFile {
+  disabled: string[];
+}
+
+/** The file's contents, tolerating a missing or broken one: nothing is turned off. */
+export function parseExtensionsFile(raw: unknown): ExtensionsFile {
+  if (typeof raw !== 'object' || raw === null) return { disabled: [] };
+  // oxlint-disable-next-line typescript/no-unsafe-type-assertion -- its one field is checked below
+  const { disabled } = raw as { disabled?: unknown };
+  return {
+    disabled: Array.isArray(disabled)
+      ? disabled.filter((name): name is string => typeof name === 'string')
+      : [],
+  };
+}
+
+/** A change to a running extension takes effect only when EDSSI starts again. */
+export function needsRestart(extension: ExtensionInfo): boolean {
+  if (extension.state === 'shadowed') return false;
+  return extension.enabled === (extension.state === 'disabled');
+}

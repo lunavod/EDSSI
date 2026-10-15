@@ -11,6 +11,8 @@ import {
   dockedCarrierJump,
   type Overview,
 } from '../../../shared/overview';
+import { ExtensionBoundary } from '../ExtensionBoundary';
+import { sidePanelBlocks } from '../extensions';
 import { formatCredits, formatNumber } from '../journal/format';
 import { useInVr } from '../vr/in-vr';
 import { BodyPanel } from './BodyPanel';
@@ -26,6 +28,9 @@ import { type Fact, starBadge, systemFacts, systemTags, type SystemTag } from '.
 import { securityRow, systemValueRow, threatRow } from './system-rows';
 import { useNow } from './useNow';
 import { useSystemInfo } from './useSystemInfo';
+
+/** The extensions' blocks, under the fuel. Fixed before this module loads (`main.tsx`). */
+const EXTENSION_BLOCKS = sidePanelBlocks();
 
 interface SidePanelProps {
   overview: Overview;
@@ -79,6 +84,11 @@ export function SidePanel({
           route={route}
           lowFuelFraction={lowFuelFraction}
         />
+        {EXTENSION_BLOCKS.map(({ key, extension, block: { Block } }) => (
+          <ExtensionBoundary key={key} name={extension}>
+            <Block />
+          </ExtensionBoundary>
+        ))}
       </div>
       <div className="side-foot">
         <Line />

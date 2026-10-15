@@ -119,6 +119,7 @@ export type Panel =
   | 'bindings'
   | 'carrier-webhook'
   | 'edhm'
+  | 'extensions'
   | 'voice-test'
   | 'paste-bindings'
   | 'updates'
@@ -161,6 +162,7 @@ export const PAGE_IDS = [
   'uploads',
   'router',
   'vr',
+  'extensions',
   'about',
 ] as const;
 
@@ -933,6 +935,12 @@ const BUILT_IN_PAGES: Page[] = [
         ],
       },
     ],
+  },
+  {
+    id: 'extensions',
+    title: 'Extensions',
+    help: 'Features added to EDSSI from outside it: built into this build, or installed beside the settings file.',
+    sections: [{ id: 'extensions', title: 'Extensions', panel: 'extensions', fields: [] }],
   },
   {
     id: 'about',

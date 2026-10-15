@@ -95,6 +95,11 @@ const api: EdssiApi = {
       };
     },
     installed: () => ipcRenderer.invoke(IpcChannel.ExtensionsInstalled),
+    list: () => ipcRenderer.invoke(IpcChannel.ExtensionsList),
+    setEnabled: (name, enabled) =>
+      ipcRenderer.invoke(IpcChannel.ExtensionsSetEnabled, name, enabled),
+    openFolder: () => ipcRenderer.invoke(IpcChannel.ExtensionsOpenFolder),
+    restart: () => ipcRenderer.invoke(IpcChannel.ExtensionsRestart),
   },
   history: {
     getSnapshot: (): Promise<HistorySnapshot> => ipcRenderer.invoke(IpcChannel.HistorySnapshot),

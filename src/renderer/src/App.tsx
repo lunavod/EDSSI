@@ -7,6 +7,8 @@ import { useShoppingList } from './commodities/useCommodities';
 import { type CommsPage, CommsTab } from './comms/CommsTab';
 import { useAssistant } from './comms/useAssistant';
 import { useVoice } from './comms/useVoice';
+import { ExtensionBoundary } from './ExtensionBoundary';
+import { extensionTabs } from './extensions';
 import { Glyph } from './hud/Glyph';
 import { Line } from './hud/Line';
 import { nearBody } from './hud/near-body';
@@ -42,6 +44,18 @@ const TABS = [
   { id: 'journal', label: 'Journal' },
   { id: 'ships', label: 'Ships' },
 ] as const;
+
+/** The extensions' own modules, after EDSSI's. Fixed before this module loads (`main.tsx`). */
+const EXTENSION_TABS = extensionTabs();
+
+/**
+ * Each extension tab's badge. The list never changes while the window is up, so the hooks are
+ * always called in the same order.
+ */
+function useExtensionBadges(): (string | number | undefined)[] {
+  // oxlint-disable-next-line react-hooks/rules-of-hooks -- a fixed list, called in a fixed order
+  return EXTENSION_TABS.map(({ tab }) => tab.useBadge?.());
+}
 
 /** The window. `initialTab` is the module it opens on: Mission, unless an embedder says. */
 export function App({ initialTab = 'mission' }: { initialTab?: TabId }) {
@@ -100,6 +114,7 @@ export function App({ initialTab = 'mission' }: { initialTab?: TabId }) {
   const hud = useHudColor();
   const shopping = useShoppingList();
   const voice = useVoice(assistant?.setup);
+  const extensionBadges = useExtensionBadges();
 
   // The assistant can put a module up when it is asked to show something.
   useEffect(
@@ -116,18 +131,26 @@ export function App({ initialTab = 'mission' }: { initialTab?: TabId }) {
     : assistant?.phase !== undefined && assistant.phase !== 'idle'
       ? assistant.phase
       : undefined;
+  const tabs = [
+    ...TABS.map((candidate) =>
+      candidate.id === 'commodities' && commoditiesLeft(shopping) > 0
+        ? { ...candidate, badge: commoditiesLeft(shopping) }
+        : candidate.id === 'comms' && listening
+          ? { ...candidate, badge: listening }
+          : candidate,
+    ),
+    ...EXTENSION_TABS.map(({ id, tab: added }, index) => ({
+      id,
+      label: added.label,
+      badge: extensionBadges[index],
+    })),
+  ];
 
   return (
     <div className="hud">
       <header className="titlebar">
         <Tabs
-          tabs={TABS.map((candidate) =>
-            candidate.id === 'commodities' && commoditiesLeft(shopping) > 0
-              ? { ...candidate, badge: commoditiesLeft(shopping) }
-              : candidate.id === 'comms' && listening
-                ? { ...candidate, badge: listening }
-                : candidate,
-          )}
+          tabs={tabs}
           active={tab === 'browser' ? 'comms' : tab}
           onSelect={selectTab}
           ariaLabel="Modules"
@@ -207,6 +230,13 @@ export function App({ initialTab = 'mission' }: { initialTab?: TabId }) {
               browserActive={tab === 'browser' && leavingFor === undefined}
             />
           </div>
+          {EXTENSION_TABS.map(({ id, extension, tab: { View } }) => (
+            <div key={id} className="hud-module" hidden={tab !== id}>
+              <ExtensionBoundary name={extension}>
+                <View active={tab === id} />
+              </ExtensionBoundary>
+            </div>
+          ))}
           <div className="hud-module" hidden={tab !== 'settings'}>
             <SettingsView
               view={settings}
@@ -219,7 +249,7 @@ export function App({ initialTab = 'mission' }: { initialTab?: TabId }) {
               onDirtyChange={onSettingsDirty}
               leavingFor={
                 leavingFor &&
-                TABS.find(
+                tabs.find(
                   (candidate) => candidate.id === (leavingFor === 'browser' ? 'comms' : leavingFor),
                 )?.label
               }

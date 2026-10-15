@@ -5,7 +5,7 @@
  */
 
 import * as React from 'react';
-import type { ReactNode } from 'react';
+import type { ComponentType, ReactNode } from 'react';
 import * as ReactDom from 'react-dom';
 import * as ReactDomClient from 'react-dom/client';
 import * as compilerRuntime from 'react/compiler-runtime';
@@ -21,6 +21,7 @@ import {
   type SHARED_RENDERER_MODULES,
 } from '../../shared/extensions';
 import { registerSettingsSections } from '../../shared/settings';
+import { type ExtensionTabId, extensionTabId } from '../../shared/ui';
 import type { PageId, Section } from './settings/fields';
 
 export interface RendererExtension {
@@ -34,6 +35,59 @@ export interface RendererExtension {
    * stays mounted.
    */
   useRoutePages?: (context: RoutePagesContext) => RoutePages;
+  /**
+   * Modules of its own, on the tab bar after EDSSI's, as `extensionTabId(name, id)`. Each stays
+   * mounted, as EDSSI's do, and is told whether it is on screen.
+   */
+  tabs?: readonly ExtensionTab[];
+  /** Blocks of the side panel, under the fuel, in the order given. */
+  sidePanel?: readonly SidePanelBlock[];
+}
+
+/** Every extension's tabs, with the ids the tab bar knows them by. */
+export function extensionTabs(): {
+  id: ExtensionTabId;
+  extension: string;
+  tab: ExtensionTab;
+}[] {
+  return RENDERER_EXTENSIONS.flatMap((extension) =>
+    (extension.tabs ?? []).map((tab) => ({
+      id: extensionTabId(extension.name, tab.id),
+      extension: extension.name,
+      tab,
+    })),
+  );
+}
+
+/** Every extension's side panel blocks. */
+export function sidePanelBlocks(): { key: string; extension: string; block: SidePanelBlock }[] {
+  return RENDERER_EXTENSIONS.flatMap((extension) =>
+    (extension.sidePanel ?? []).map((block) => ({
+      key: `${extension.name}/${block.id}`,
+      extension: extension.name,
+      block,
+    })),
+  );
+}
+
+export interface ExtensionTab {
+  id: string;
+  label: string;
+  View: ComponentType<{ active: boolean }>;
+  /**
+   * What the tab's badge says (a count, a state), or nothing. A hook, called on every render of
+   * the window.
+   */
+  useBadge?: () => string | number | undefined;
+}
+
+export interface SidePanelBlock {
+  id: string;
+  /**
+   * A `<section className="side-block">` of its own, as EDSSI's blocks are; null when it has
+   * nothing to say.
+   */
+  Block: ComponentType;
 }
 
 export interface RoutePagesContext {
@@ -93,6 +147,19 @@ export async function loadInstalledExtensions(api: EdssiApi): Promise<void> {
     zod,
   };
   Object.assign(globalThis, { [EXTENSION_HOST_GLOBAL]: shared });
+  try {
+    // The ones compiled in that are turned off; an installed one turned off isn't listed below.
+    const { extensions } = await api.extensions.list();
+    const off = new Set(
+      extensions
+        .filter((extension) => extension.source === 'built-in' && extension.state === 'disabled')
+        .map((extension) => extension.name),
+    );
+    const kept = RENDERER_EXTENSIONS.filter((extension) => !off.has(extension.name));
+    RENDERER_EXTENSIONS.splice(0, RENDERER_EXTENSIONS.length, ...kept);
+  } catch (error) {
+    console.error('[extensions] could not list the extensions', error);
+  }
   let installed: InstalledRendererExtension[];
   try {
     installed = await api.extensions.installed();

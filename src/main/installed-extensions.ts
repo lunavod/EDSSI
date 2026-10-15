@@ -7,7 +7,7 @@ import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { extname, isAbsolute, join, relative, resolve, sep } from 'node:path';
 
 import {
-  EXTENSION_API_VERSION,
+  apiVersionProblem,
   EXTENSION_MANIFEST,
   type ExtensionManifest,
   parseManifest,
@@ -42,13 +42,12 @@ export function findInstalledExtensions(dir: string): {
       problems.push(`${entry.name}'s ${EXTENSION_MANIFEST} can't be read: ${String(error)}`);
       continue;
     }
+    const unloadable =
+      'problem' in manifest ? undefined : apiVersionProblem(manifest.name, manifest.apiVersion);
     if ('problem' in manifest) {
       problems.push(`${entry.name}'s ${EXTENSION_MANIFEST} is wrong: ${manifest.problem}`);
-    } else if (manifest.apiVersion !== EXTENSION_API_VERSION) {
-      problems.push(
-        `${manifest.name} was built for extension API ${manifest.apiVersion}, and this EDSSI ` +
-          `has ${EXTENSION_API_VERSION}; build it again against this EDSSI`,
-      );
+    } else if (unloadable !== undefined) {
+      problems.push(unloadable);
     } else if (found.some((other) => other.manifest.name === manifest.name)) {
       problems.push(`${manifest.name} is installed twice; ${entry.name} is left out`);
     } else {

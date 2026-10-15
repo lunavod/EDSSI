@@ -779,3 +779,23 @@
     opacity: 1;
   }
 }
+
+/* The Extensions page. */
+.ext-name {
+  gap: 10px;
+}
+.ext-path {
+  overflow: hidden;
+  min-width: 0;
+  color: var(--muted);
+  font-size: 14px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.ext-actions {
+  padding-top: 12px;
+  border-top: 1px solid var(--rule-soft);
+}
+.ext-actions .ext-path {
+  max-width: 420px;
+}

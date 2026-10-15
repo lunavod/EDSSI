@@ -5,7 +5,7 @@
  * `window.edssi`, to hand it to the provider.
  */
 
-import { createContext, useCallback, useContext } from 'react';
+import { type Context, createContext, useCallback, useContext } from 'react';
 
 import type { EdssiApi } from '../../../shared/api';
 import type { ViewOptionsStore } from '../hud/useViewOption';
@@ -49,7 +49,17 @@ export interface EdssiInstance {
 
 export type WindowStorage = Pick<Storage, 'getItem' | 'setItem'>;
 
-export const EdssiContext = createContext<EdssiInstance | null>(null);
+/**
+ * Kept on `globalThis` under a registered symbol, so an installed extension, which carries a copy of
+ * this module, finds the running EDSSI's context and its `useEdssi()` and every hook built on it
+ * work. Whichever copy loads first makes it: the app's own, as `main.tsx` imports it first.
+ */
+const CONTEXT_KEY = Symbol.for('edssi.context');
+
+// oxlint-disable-next-line typescript/no-unsafe-type-assertion -- only ever set just below
+const host = globalThis as { [CONTEXT_KEY]?: Context<EdssiInstance | null> };
+
+export const EdssiContext = (host[CONTEXT_KEY] ??= createContext<EdssiInstance | null>(null));
 
 export function useEdssiInstance(): EdssiInstance {
   const instance = useContext(EdssiContext);

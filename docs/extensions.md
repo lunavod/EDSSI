@@ -54,9 +54,16 @@ What has to be EDSSI's copy is not bundled (`src/shared/extensions.ts`):
 So a module EDSSI keeps state in, a React context or a class checked with `instanceof` won't work
 across the line; give the extension what it needs through its context instead.
 
-`extension.json` carries `EXTENSION_API_VERSION`, and EDSSI leaves out an extension built for
-another, saying so in the log. Bump it whenever the contexts, the extension types or the shared
-modules change in a way an extension built before would trip over.
+`extension.json` carries the extension API version it was built for; see [Versions](#versions).
+
+## Turning one off
+
+The Settings tab's Extensions page lists every extension, built in or installed, and how it
+stands: running, turned off, failed to load, or an installed one left out for one built in under
+the same name. Its switches write `<config dir>/extensions.json` (`{ "disabled": [names] }`), read
+once at start: a built-in one turned off is never started and its window side is dropped
+(`loadInstalledExtensions` on both sides), an installed one is never loaded at all. Its settings
+sections stay in the file, untouched. The page also opens the installed extensions' folder.
 
 ## What an extension can add
 
@@ -80,8 +87,43 @@ modules change in a way an extension built before would trip over.
   the route is taken up as the saved one. The window names it with `RouteNameForm`
   (`hud/SavedRoutes.tsx`).
 - **Telling the commander.** `context.notify`: spoken, or written in Comms when speech is off.
+- **The journal.** `context.journal.session` is the current game session and its companion files
+  (`onCompanion`), `context.journal.all` every journal there is, oldest first: EDSSI's own two
+  readers, so an extension never polls the files a second time. `on(name, …)` and `onAny(…)` hear
+  each event with where it was read and whether it is `live`; handlers added while starting hear
+  the whole replay first, as EDSSI's own services do, and `onLive` says when it is done. Something
+  that should only happen in play (a callout, a key pressed) checks `live`. A handler that throws
+  is logged under the extension's name and the reader goes on.
+- **What EDSSI has made of it.** `context.game` is what the assistant reads (`GameData` in
+  `src/main/ai/game-data.ts`): the session snapshot, the overview, the ledger and survey, the
+  carriers, activity, routes, the CSV route, the settings and EDSM's answers.
+- **The model.** `context.ask` puts one question to the assistant's model as the commander set it
+  up (an API key or their ChatGPT plan), with images if wanted and no tools, and answers the text.
+- **Its own files.** `context.dataDir()` is a folder of its own in EDSSI's data folder.
+- **The log.** `context.log.info/warn/error`, under the extension's name.
 - **IPC.** `context.handle` and `context.broadcast` in main, `window.edssi.extensions.invoke` and
-  `.on` in a window. Channels are prefixed with `ext:`, so they can't collide with EDSSI's own.
+  `.on` in a window (through `useEdssi()`). Channels are prefixed with `ext:`, so they can't collide
+  with EDSSI's own.
+- **Tabs.** `tabs` on the window side: modules of its own on the tab bar after EDSSI's, each a
+  component told whether it is on screen, kept mounted, with a `useBadge` hook if its tab should
+  say something. Its id is `extensionTabId(extension, tab)` (`src/shared/ui.ts`), which
+  `context.showTab` brings forward from the main process, as it does EDSSI's own tabs.
+- **The side panel.** `sidePanel`: blocks under the fuel, each a `side-block` section of its own.
+- **EDSSI's hooks.** An installed extension carries a copy of the EDSSI code it imports, but
+  `EdssiContext` is kept on `globalThis` (`api/context.ts`), so `useEdssi()` and every hook built on
+  it (`useJournal`, `useHistory`, `useCarriers`, `useViewOption`…) work from one as they do from
+  EDSSI's own components. A hook that keeps state in a module of its own still doesn't.
+
+What an extension draws (tabs, side panel blocks) is held in a boundary: one that throws shows what
+went wrong in its place, rather than blanking the window.
+
+## Versions
+
+A build writes `EXTENSION_API_VERSION` into `extension.json`. EDSSI loads an extension built for any
+version from `OLDEST_EXTENSION_API_VERSION` up to its own, so adding to the API (and bumping the
+version) leaves extensions built before working, while one built for a later EDSSI is refused
+rather than left to find what is missing. Taking something away or changing what it means raises
+`OLDEST_EXTENSION_API_VERSION` too, and every installed extension has to be built again.
 
 A new kind of extension point goes in those two files, named for what it offers rather than for
 the extension that wanted it.

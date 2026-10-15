@@ -118,6 +118,10 @@ export class MockEdssi implements EdssiApi {
     invoke: () => Promise.reject(new Error(DEMO_ONLY)),
     on: never,
     installed: () => Promise.resolve([]),
+    list: () => Promise.resolve({ extensions: [], folder: '~/.edssi/extensions', problems: [] }),
+    setEnabled: () => Promise.reject(new Error(DEMO_ONLY)),
+    openFolder: () => Promise.reject(new Error(DEMO_ONLY)),
+    restart: () => Promise.reject(new Error(DEMO_ONLY)),
   };
 
   history: EdssiApi['history'] = {

@@ -27,7 +27,7 @@ import type {
 import type { CsvRouteState } from './csv-route';
 import type { FssOverlayInstallResult, FssOverlayStatus, HudColor } from './edhm';
 import type { SystemExternalInfo } from './edsm';
-import type { InstalledRendererExtension } from './extensions';
+import type { ExtensionsView, InstalledRendererExtension } from './extensions';
 import type { HistorySnapshot } from './history';
 import type { CaptureResult, InputSnapshot } from './input';
 import type { JournalMessage, JournalSnapshot } from './journal';
@@ -121,6 +121,14 @@ export interface EdssiApi {
     on(channel: string, listener: (payload: unknown) => void): () => void;
     /** The installed extensions' window sides (`src/shared/extensions.ts`), to load. */
     installed(): Promise<InstalledRendererExtension[]>;
+    /** Every extension, built in or installed, and how each stands, for the Settings tab. */
+    list(): Promise<ExtensionsView>;
+    /** Turns one on or off from the next start. */
+    setEnabled(name: string, enabled: boolean): Promise<ExtensionsView>;
+    /** Opens the folder installed extensions live in, making it if need be. */
+    openFolder(): Promise<void>;
+    /** Starts EDSSI again, for a change to the extensions to take effect. */
+    restart(): Promise<void>;
   };
   history: {
     /** The ledger and current system survey, worked out from every journal. */
@@ -374,6 +382,10 @@ export const IpcChannel = {
   NavRoutesRecent: 'nav-routes:recent',
   NavRouteChanged: 'nav-routes:changed',
   ExtensionsInstalled: 'extensions:installed',
+  ExtensionsList: 'extensions:list',
+  ExtensionsSetEnabled: 'extensions:set-enabled',
+  ExtensionsOpenFolder: 'extensions:open-folder',
+  ExtensionsRestart: 'extensions:restart',
   CsvRouteGet: 'csv-route:get',
   CsvRouteChanged: 'csv-route:changed',
   CsvRouteOpen: 'csv-route:open',

@@ -16,6 +16,7 @@ import { UpdatesPanel } from '../updates/UpdatesPanel';
 import { BindingsPanel } from './BindingsPanel';
 import { CarrierWebhookPanel } from './CarrierWebhookPanel';
 import { EdhmPanel } from './EdhmPanel';
+import { ExtensionsPanel } from './ExtensionsPanel';
 import { FieldInput, FieldRow, Toggle } from './FieldRow';
 import {
   effectiveValue,
@@ -312,6 +313,8 @@ export function SettingsView({
         return get(['voice', 'speech', 'enabled']) === false ? null : <VoiceTestPanel get={get} />;
       case 'edhm':
         return <EdhmPanel hud={hud} matching={settings.display.match_hud_color} />;
+      case 'extensions':
+        return <ExtensionsPanel />;
       case 'upload-log':
         return <UploadLog logVersion={uploads?.logVersion} />;
       case 'updates':

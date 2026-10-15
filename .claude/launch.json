@@ -1,0 +1,25 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "mock-ui",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["run", "mock:dev", "--", "--port", "5179", "--strictPort"],
+      "port": 5179
+    },
+    {
+      "name": "mock-ui-built",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": [
+        "vite",
+        "preview",
+        "--config",
+        "vite.mock.config.ts",
+        "--port",
+        "5182",
+        "--strictPort"
+      ],
+      "port": 5182
+    }
+  ]
+}

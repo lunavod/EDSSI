@@ -282,6 +282,13 @@ export const SettingsSchema = z.object({
     /** Take EDSSI's colour from the EDHM theme in use, when there is one. */
     match_hud_color: flag(true),
   }),
+  startup: section({
+    /**
+     * Start EDSSI whenever the game starts, without taking focus from it: a small watcher started
+     * with Windows does it (`src/main/startup/`). Only an installed EDSSI registers one.
+     */
+    with_game: flag(false),
+  }),
   openai: section({
     /** Platform API key. Listening needs one even when the assistant runs on a ChatGPT plan. */
     api_key: text(),
@@ -659,6 +666,11 @@ display:
   zoom: 1
   # Take EDSSI's colour from the EDHM theme the game is using, when EDHM is installed.
   match_hud_color: true
+
+startup:
+  # Start EDSSI whenever Elite Dangerous starts, leaving the game in focus. A small watcher
+  # started with Windows does it.
+  with_game: false
 
 openai:
   # https://platform.openai.com/api-keys — needed for listening even on a ChatGPT plan.

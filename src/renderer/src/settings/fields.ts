@@ -256,7 +256,7 @@ const BUILT_IN_PAGES: Page[] = [
   {
     id: 'interface',
     title: 'Interface',
-    help: 'How EDSSI looks, and the EDHM mod it can install into the game.',
+    help: 'How EDSSI looks and starts, and the EDHM mod it can install into the game.',
     sections: [
       {
         id: 'display',
@@ -278,6 +278,20 @@ const BUILT_IN_PAGES: Page[] = [
             path: ['display', 'match_hud_color'],
             label: 'Match HUD colour',
             help: 'Take EDSSI’s colour from the EDHM theme the game is using, when EDHM is installed.',
+          },
+        ],
+      },
+      {
+        id: 'startup',
+        title: 'Startup',
+        fields: [
+          {
+            kind: 'flag',
+            path: ['startup', 'with_game'],
+            label: 'Start with the game',
+            help: 'Open EDSSI whenever Elite Dangerous starts, leaving the game in focus.',
+            aside:
+              'A small watcher starts with Windows and looks for the game every few seconds; turning this off removes it. Only an installed EDSSI sets it up.',
           },
         ],
       },

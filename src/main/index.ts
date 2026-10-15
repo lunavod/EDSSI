@@ -43,6 +43,7 @@ import { routeEdsmCallout } from './route-edsm';
 import { startSettingsService } from './settings-service';
 import { startShipsService } from './ships-service';
 import { startShipCatalog } from './ships/catalog';
+import { startedByGame, startStartWithGame } from './startup/start-with-game';
 import { BodyRecordStore } from './store/body-record-store';
 import { CraftingTodoStore } from './store/crafting-todo-store';
 import { CsvRouteStore } from './store/csv-route-store';
@@ -94,7 +95,16 @@ function createWindow(settings: SettingsStore, browser: Browser): void {
     },
   });
 
-  if (saved?.maximized) win.maximize();
+  // Started by the game, it comes up behind it: the commander is flying, and the game only reads
+  // their stick while it has focus. Maximising shows a hidden window activated, so until the
+  // commander first comes to it, it only fills the screen it would be maximised on.
+  const inactive = startedByGame();
+  if (saved?.maximized) {
+    if (inactive) {
+      win.setBounds(screen.getDisplayMatching(win.getBounds()).workArea);
+      win.once('focus', () => win.maximize());
+    } else win.maximize();
+  }
   reportMaximized(win);
   browser.attach(win);
   rememberBounds(win, (rect) => screen.getDisplayMatching(rect));
@@ -104,7 +114,9 @@ function createWindow(settings: SettingsStore, browser: Browser): void {
   // and `ready-to-show` never comes. Once the page has loaded will do: its background is the
   // window's own colour, and the app paints a moment later.
   const show = () => {
-    if (!win.isVisible()) win.show();
+    if (win.isVisible()) return;
+    if (inactive) win.showInactive();
+    else win.show();
   };
   win.once('ready-to-show', show);
   win.webContents.once('did-finish-load', show);
@@ -446,6 +458,8 @@ void app.whenReady().then(async () => {
   const browser = new Browser();
   const settings = startServices(browser);
   createWindow(settings, browser);
+  const startWithGame = startStartWithGame({ settings, dataDir });
+  app.on('before-quit', () => startWithGame.stop());
 
   app.on('activate', () => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow(settings, browser);

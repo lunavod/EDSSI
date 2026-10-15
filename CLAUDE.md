@@ -272,6 +272,15 @@ Data flows one way: journal files → main process → IPC → renderer.
   `src/shared/updates.ts`) since the version last shown (`whats-new.json`). `updater.log` in the data
   folder says what it did. NSIS stays assisted, per-user and without a choice of folder: with
   `allowToChangeInstallationDirectory` a silent update doesn't start EDSSI again.
+- **`src/main/startup/`**: "Start with the game" (`startup.with_game`). Turned on in an installed
+  build, it writes `start-with-game.ps1` (inlined with `?raw`; keep it ASCII) into the data folder,
+  adds it to Windows' startup apps through Electron's login items, and starts it. The hidden
+  watcher (one per build, by mutex) looks for `EliteDangerous64` every 3 s and, as it starts and
+  EDSSI isn't running, starts EDSSI with `--started-by-game`, which shows the window with
+  `showInactive` (and holds off maximising, which activates). It also hands focus back to the game
+  if an EDSSI window takes it in the first moments (an update installed on start restarts EDSSI
+  without the flag). Turning it off removes the startup app and the script; the watcher ends once
+  its file is gone. It logs to `start-with-game.log` beside it.
 - **`src/main/edsm.ts`**: EDSM client (traffic, ship losses, stations, primary star), cached per
   system; windows ask via `window.edssi.edsm`.
 - **`src/main/spansh/`**: Spansh, for the assistant (`toolsets/spansh.ts`). Searches of stations,

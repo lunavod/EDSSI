@@ -90,6 +90,17 @@ Data flows one way: journal files → main process → IPC → renderer.
   (`hud/RouteMap.tsx`, react-three-fiber; the pure part in `hud/route-map.ts`) its 3D route, the
   stretch flown in another colour. A Spansh `Refuel` of Yes counts as scoopable; No says nothing,
   as Spansh passes scoopable stars by.
+- **`src/main/spansh-plot-service.ts`** + **`src/main/spansh/plot.ts`**: the Route tab's Spansh
+  page (`hud/SpanshPlotView.tsx`), the galaxy map's route plotter as a form over Spansh's galaxy
+  (`/generic/route`, the ship's drive from `shipBuild`), neutron (`/route`) and fleet carrier
+  (`/fleetcarrier/route`) plotters, for the ship being flown or any other the commander owns. An
+  empty From is here (its address, for the plotters that take id64s); the galaxy plotter takes no
+  stops on the way, so a route with them is a job per leg, joined. One plot at a time, cancelled
+  by aborting its polling. The answer is folded into a `CsvRoute` under Spansh's own CSV columns
+  (`spanshToCsvRoute` in `src/shared/spansh-plot.ts`, with each stop's coordinates) and waits on
+  the page, beside the followed route on the Map page, until Follow makes it the CSV route
+  (`CsvRouteService.load`) or Save puts it among the saved routes. System names are suggested
+  from Spansh as they are typed.
 - **`src/main/history-service.ts`** + **`src/main/history/`**: a second `JournalReader` with
   `backfill: 'all'` feeds `HistoryTracker`. It keeps a per-commander ledger (fines, vouchers,
   unsold cartographic and organic data, valued with EDDiscovery's formulas in `values.ts`) and a

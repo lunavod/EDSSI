@@ -21,6 +21,7 @@ import type { JournalSnapshot } from '../shared/journal';
 import type { MaterialsSnapshot } from '../shared/materials';
 import type { PlottedRoute } from '../shared/nav-routes';
 import type { ShipsSnapshot } from '../shared/ships';
+import type { SpanshPlotState, SpanshShipChoice } from '../shared/spansh-plot';
 import type { TabId } from '../shared/ui';
 import type { UpdateState, WhatsNew } from '../shared/updates';
 import type { UploadLogEntry, UploadsSnapshot } from '../shared/uploads';
@@ -70,6 +71,19 @@ const api: EdssiApi = {
     renameSaved: (id, name): Promise<string | undefined> =>
       ipcRenderer.invoke(IpcChannel.CsvRouteRenameSaved, id, name),
     deleteSaved: (id) => ipcRenderer.invoke(IpcChannel.CsvRouteDeleteSaved, id),
+  },
+  spanshPlot: {
+    get: (): Promise<SpanshPlotState> => ipcRenderer.invoke(IpcChannel.SpanshPlotGet),
+    onChange: (listener) => listen(IpcChannel.SpanshPlotChanged, listener),
+    ships: (): Promise<SpanshShipChoice[]> => ipcRenderer.invoke(IpcChannel.SpanshPlotShips),
+    plot: (request): Promise<string | undefined> =>
+      ipcRenderer.invoke(IpcChannel.SpanshPlotPlot, request),
+    cancel: () => ipcRenderer.invoke(IpcChannel.SpanshPlotCancel),
+    follow: (): Promise<boolean> => ipcRenderer.invoke(IpcChannel.SpanshPlotFollow),
+    save: (name): Promise<string | undefined> =>
+      ipcRenderer.invoke(IpcChannel.SpanshPlotSave, name),
+    systems: (prefix): Promise<string[]> =>
+      ipcRenderer.invoke(IpcChannel.SpanshPlotSystems, prefix),
   },
   extensions: {
     invoke: (channel, ...args) => ipcRenderer.invoke(EXTENSION_CHANNEL_PREFIX + channel, ...args),

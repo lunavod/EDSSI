@@ -43,6 +43,7 @@ import { routeEdsmCallout } from './route-edsm';
 import { startSettingsService } from './settings-service';
 import { startShipsService } from './ships-service';
 import { startShipCatalog } from './ships/catalog';
+import { startSpanshPlotService } from './spansh-plot-service';
 import { startedByGame, startStartWithGame } from './startup/start-with-game';
 import { BodyRecordStore } from './store/body-record-store';
 import { CraftingTodoStore } from './store/crafting-todo-store';
@@ -220,6 +221,16 @@ function startServices(browser: Browser): SettingsStore {
     todos: craftingTodos,
     here: () => journal.snapshot().overview.system,
     hullName: (ship) => ships.hulls().find((hull) => hullKey(hull.ship) === hullKey(ship))?.type,
+  });
+  // The Route tab's Spansh page; a route it plots is followed as the CSV route.
+  startSpanshPlotService({
+    csvRoute,
+    here: () => {
+      const { system, systemAddress } = journal.snapshot().overview;
+      return { name: system, address: systemAddress };
+    },
+    ship: () => currentShip(journal.snapshot().events),
+    ships: () => ships.owned(),
   });
   // The session reader: only purchases made now count as bought.
   const commodities = startCommoditiesService(reader, {

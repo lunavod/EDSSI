@@ -36,6 +36,7 @@ import type { PlottedRoute } from './nav-routes';
 import type { PromptAnswer } from './prompts';
 import type { CarrierWebhookSettings, Settings, SettingsPatch } from './settings';
 import type { ShipExportTarget, ShipsSnapshot, StockFit } from './ships';
+import type { SpanshPlotRequest, SpanshPlotState, SpanshShipChoice } from './spansh-plot';
 import type { TabId, UiCommand } from './ui';
 import type { UpdateState, WhatsNew } from './updates';
 import type { UploadLogEntry, UploadsSnapshot } from './uploads';
@@ -94,6 +95,24 @@ export interface EdssiApi {
     renameSaved(id: number, name: string): Promise<string | undefined>;
     /** Forgets a saved route; if it is the one loaded, it stays loaded, unsaved. */
     deleteSaved(id: number): Promise<void>;
+  };
+  spanshPlot: {
+    /** The plot under way on the Route tab's Spansh page, and the last route plotted. */
+    get(): Promise<SpanshPlotState>;
+    /** Subscribes to it changing. Returns an unsubscribe function. */
+    onChange(listener: (state: SpanshPlotState) => void): () => void;
+    /** Every ship the commander owns, the one being flown first, to plot for. */
+    ships(): Promise<SpanshShipChoice[]>;
+    /** Plots a route, kept as the `result`. Resolves with why it failed (`cancelled` when stopped). */
+    plot(request: SpanshPlotRequest): Promise<string | undefined>;
+    /** Stops the plot under way. */
+    cancel(): Promise<void>;
+    /** Makes the last route plotted the CSV route followed; false if there is none. */
+    follow(): Promise<boolean>;
+    /** Saves the last route plotted under a name. Resolves with why it couldn't, if it couldn't. */
+    save(name: string): Promise<string | undefined>;
+    /** Names of systems Spansh knows starting like `prefix`, best match first. */
+    systems(prefix: string): Promise<string[]>;
   };
   extensions: {
     /** Asks the main process side of an extension (`src/main/extensions.ts`). */
@@ -365,6 +384,14 @@ export const IpcChannel = {
   CsvRouteLoadSaved: 'csv-route:load-saved',
   CsvRouteRenameSaved: 'csv-route:rename-saved',
   CsvRouteDeleteSaved: 'csv-route:delete-saved',
+  SpanshPlotGet: 'spansh-plot:get',
+  SpanshPlotChanged: 'spansh-plot:changed',
+  SpanshPlotShips: 'spansh-plot:ships',
+  SpanshPlotPlot: 'spansh-plot:plot',
+  SpanshPlotCancel: 'spansh-plot:cancel',
+  SpanshPlotFollow: 'spansh-plot:follow',
+  SpanshPlotSave: 'spansh-plot:save',
+  SpanshPlotSystems: 'spansh-plot:systems',
   HistorySnapshot: 'history:snapshot',
   HistoryChanged: 'history:changed',
   ActivityTallies: 'activity:tallies',
@@ -475,6 +502,7 @@ export interface IpcBroadcasts {
   [IpcChannel.JournalMessage]: JournalMessage;
   [IpcChannel.NavRouteChanged]: PlottedRoute;
   [IpcChannel.CsvRouteChanged]: CsvRouteState;
+  [IpcChannel.SpanshPlotChanged]: SpanshPlotState;
   [IpcChannel.HistoryChanged]: HistorySnapshot;
   [IpcChannel.ActivityChanged]: ActivityTallies;
   [IpcChannel.MaterialsChanged]: MaterialsSnapshot;

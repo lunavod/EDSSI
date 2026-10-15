@@ -10,7 +10,9 @@ import { Icon } from './Icon';
 import { ICONS } from './icons';
 import { RouteMap } from './RouteMap';
 import { RouteView } from './RouteView';
+import { SpanshPlotView } from './SpanshPlotView';
 import { Tabs } from './Tabs';
+import { useSpanshPlot } from './useSpanshPlot';
 
 /**
  * Every extension's pages, as one hook. The extensions are fixed before this module loads, so the
@@ -25,8 +27,8 @@ const useExtensionPages = RENDERER_EXTENSIONS.reduce<(context: RoutePagesContext
 );
 
 /**
- * The Route module: the route plotted in the game, one loaded from a CSV file, the pages
- * extensions add, and a map of the CSV route in 3D.
+ * The Route module: the route plotted in the game, one loaded from a CSV file, Spansh's plotters,
+ * the pages extensions add, and a map of the CSV route in 3D.
  */
 export function RouteTab({
   routes,
@@ -46,6 +48,15 @@ export function RouteTab({
   const [tab, setTab] = useState('plotted');
   const extended = useExtensionPages({ csvRoute, here: system, fuel, active: tab, show: setTab });
   const extraPages = extended.flatMap((pages) => pages.pages);
+  const spansh = useSpanshPlot();
+  const spanshRoute = spansh?.result;
+  // The map shows a plot not followed yet beside the followed route; an extension's comes first.
+  const compare =
+    extended.find((pages) => pages.mapRoute)?.mapRoute ??
+    (spanshRoute &&
+    !(spanshRoute.followedAt !== undefined && csvRoute?.route?.loadedAt === spanshRoute.followedAt)
+      ? { route: spanshRoute.route, label: 'Plotted on Spansh, not followed' }
+      : undefined);
   const [csvProblem, setCsvProblem] = useState<string>();
   const plotted = activeRoute(routes);
   const jumps = plotted?.systems ? plotted.systems.length - 1 : undefined;
@@ -70,6 +81,11 @@ export function RouteTab({
             id: 'csv',
             label: 'CSV route',
             badge: csv ? `${csvRoute?.position ?? 0} / ${csv.systems.length - 1}` : undefined,
+          },
+          {
+            id: 'spansh',
+            label: 'Spansh',
+            ...(spansh?.running && { badge: 'plotting' }),
           },
           ...extraPages.map(({ id, label, badge }) => ({ id, label, badge })),
           { id: 'map', label: 'Map' },
@@ -113,17 +129,23 @@ export function RouteTab({
       <div className="route-page" hidden={tab !== 'csv'}>
         <CsvRouteView state={csvRoute} problem={csvProblem} onProblem={setCsvProblem} />
       </div>
+      <div className="route-page" hidden={tab !== 'spansh'}>
+        <SpanshPlotView
+          state={spansh}
+          csvRoute={csvRoute}
+          here={system}
+          shown={tab === 'spansh'}
+          onShowRoute={() => setTab('csv')}
+          onShowMap={() => setTab('map')}
+        />
+      </div>
       {extraPages.map((page) => (
         <div key={page.id} className="route-page" hidden={tab !== page.id}>
           {page.content}
         </div>
       ))}
       <div className="route-page" hidden={tab !== 'map'}>
-        <RouteMap
-          csvRoute={csvRoute}
-          compare={extended.find((pages) => pages.mapRoute)?.mapRoute}
-          shown={tab === 'map'}
-        />
+        <RouteMap csvRoute={csvRoute} compare={compare} shown={tab === 'map'} />
       </div>
     </>
   );

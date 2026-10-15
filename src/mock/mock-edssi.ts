@@ -103,6 +103,17 @@ export class MockEdssi implements EdssiApi {
     deleteSaved: resolved,
   };
 
+  spanshPlot: EdssiApi['spanshPlot'] = {
+    get: () => Promise.resolve({}),
+    onChange: never,
+    ships: () => Promise.resolve([]),
+    plot: () => Promise.resolve(DEMO_ONLY),
+    cancel: resolved,
+    follow: () => Promise.resolve(false),
+    save: () => Promise.resolve(DEMO_ONLY),
+    systems: () => Promise.resolve([]),
+  };
+
   extensions: EdssiApi['extensions'] = {
     invoke: () => Promise.reject(new Error(DEMO_ONLY)),
     on: never,

@@ -432,3 +432,78 @@
   border-color: var(--accent);
   background: var(--accent);
 }
+
+/* The Spansh page's form: from and to, the stops on the way, and the plotter's options. */
+.plot-fields {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 38px minmax(0, 1fr);
+  gap: 12px;
+}
+.plot-stops {
+  display: grid;
+  gap: 10px;
+}
+.plot-stop {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px 32px;
+  align-items: end;
+  gap: 8px;
+}
+.plot-opts {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px 32px;
+  margin-top: 14px;
+}
+.plot-opts .field > .label,
+.plot-fields .field > .label,
+.plot-stops .field > .label {
+  font-size: 14px;
+}
+.plot-opts .seg button {
+  height: 36px;
+}
+.plot-opts .switch {
+  height: 32px;
+}
+.plot-set {
+  display: contents;
+}
+/* Held while a plot runs. */
+.panel [inert] {
+  opacity: 0.6;
+}
+.plot-go {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+  margin-left: auto;
+}
+.swap {
+  align-self: flex-end;
+  width: 38px;
+  height: 38px;
+  padding: 9px;
+}
+/* Spansh says nothing of how far a plot has got: a slice runs along the bar while it waits. */
+.plot-wait > i {
+  width: 30%;
+  animation: plot-wait 1.6s ease-in-out infinite alternate;
+}
+@keyframes plot-wait {
+  from {
+    left: 0;
+  }
+  to {
+    left: 70%;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .plot-wait > i {
+    width: 100%;
+    animation: none;
+    opacity: 0.5;
+  }
+}

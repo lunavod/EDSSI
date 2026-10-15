@@ -19,14 +19,19 @@ export interface StepStatus {
 /** The key that shows and hides the cockpit, unless `vr-overlay.json` says otherwise. */
 export const VR_TOGGLE_KEY = 'Control+Shift+H';
 
+/**
+ * `provider` is the one picked on the page, saved or not: the ChatGPT sign-in can't wait for a
+ * save, or picking the plan would show nothing to sign in with.
+ */
 export function stepStatus(
   kind: StepKind,
   settings: Settings,
   setup: AssistantSetup | undefined,
+  provider: unknown = setup?.provider,
 ): StepStatus {
   switch (kind) {
     case 'assistant':
-      return assistantStatus(settings, setup);
+      return assistantStatus(settings, setup, provider);
     case 'hearing':
       return hearingStatus(settings, setup);
     case 'speaking':
@@ -43,11 +48,24 @@ export function stepStatus(
   }
 }
 
-function assistantStatus(settings: Settings, setup: AssistantSetup | undefined): StepStatus {
+/** Whether the provider picked on the page is the ChatGPT plan, not yet signed in to. */
+export function needsChatGptSignIn(setup: AssistantSetup | undefined, provider: unknown): boolean {
+  return setup !== undefined && provider === 'codex' && !setup.signedIn;
+}
+
+function assistantStatus(
+  settings: Settings,
+  setup: AssistantSetup | undefined,
+  provider: unknown,
+): StepStatus {
   if (!setup) return { tone: 'busy', text: 'Asking the assistant how it stands…' };
   if (!setup.enabled) return { tone: 'off', text: 'The assistant is switched off.' };
-  if (setup.provider === 'codex' && !setup.signedIn) {
+  if (needsChatGptSignIn(setup, provider)) {
     return { tone: 'trouble', text: 'Sign in to ChatGPT to use your plan.' };
+  }
+  if (provider !== setup.provider) {
+    const to = provider === 'codex' ? 'your ChatGPT plan' : 'your API key';
+    return { tone: 'busy', text: `Save to switch to ${to}.` };
   }
   // The assistant's own words point at the settings file; this page has the field right here.
   if (!setup.ready && setup.provider === 'openai' && settings.openai.api_key === undefined) {

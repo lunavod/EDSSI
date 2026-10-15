@@ -45,6 +45,15 @@ describe('stepStatus', () => {
     );
   });
 
+  it('follows the provider picked on the page before it is saved', () => {
+    // The ChatGPT plan just picked: the sign-in can't wait for a save.
+    expect(stepStatus('assistant', settings(), SETUP, 'codex').text).toMatch(/Sign in to ChatGPT/);
+    expect(stepStatus('assistant', settings(), { ...SETUP, signedIn: true }, 'codex')).toEqual({
+      tone: 'busy',
+      text: 'Save to switch to your ChatGPT plan.',
+    });
+  });
+
   it('asks for a push-to-talk binding before anything else about hearing', () => {
     const unbound = settings((s) => (s.voice.push_to_talk = []));
     expect(stepStatus('hearing', unbound, SETUP)).toMatchObject({ tone: 'trouble' });

@@ -40,7 +40,7 @@ import {
 import { HelpText } from './HelpText';
 import { useSettingsRequests } from './open';
 import { PasteBindingsPanel } from './PasteBindingsPanel';
-import { type StepStatus, stepStatus } from './quickstart';
+import { needsChatGptSignIn, type StepStatus, stepStatus } from './quickstart';
 import { UploadLog } from './UploadLog';
 import { VoiceTestPanel } from './VoiceTestPanel';
 import { VrBindingsPanel } from './VrBindingsPanel';
@@ -284,7 +284,7 @@ export function SettingsView({
   const panel = (section: Section, warned: boolean): ReactNode => {
     switch (section.panel) {
       case 'assistant-status':
-        return <AssistantStatus setup={assistant} quiet={warned} />;
+        return <AssistantStatus setup={assistant} provider={provider} quiet={warned} />;
       case 'bindings':
         return (
           <BindingsPanel
@@ -340,6 +340,8 @@ export function SettingsView({
     }
   };
 
+  // As picked on the page, before it's saved.
+  const provider = get(['assistant', 'provider']);
   const current = PAGES.find((candidate) => candidate.id === page) ?? PAGES[0]!;
   const steps = current.sections.filter((candidate) => candidate.step);
   const renderSection = (section: Section) => (
@@ -349,11 +351,8 @@ export function SettingsView({
       step={
         section.step && {
           number: steps.indexOf(section) + 1,
-          status: stepStatus(section.step.kind, settings, assistant),
-          signIn:
-            section.step.kind === 'assistant' &&
-            assistant?.provider === 'codex' &&
-            !assistant.signedIn,
+          status: stepStatus(section.step.kind, settings, assistant, provider),
+          signIn: section.step.kind === 'assistant' && needsChatGptSignIn(assistant, provider),
           more: PAGES.find((candidate) => candidate.id === section.step?.more.page)?.title ?? '',
           onMore: () =>
             open(
@@ -904,23 +903,45 @@ function shortLabel(label: string, flag: string): string {
 }
 
 /** Whether the assistant can answer, and the sign-in when the ChatGPT plan is waiting on one. */
-function AssistantStatus({ setup, quiet }: { setup: AssistantSetup | undefined; quiet: boolean }) {
+function AssistantStatus({
+  setup,
+  provider,
+  quiet,
+}: {
+  setup: AssistantSetup | undefined;
+  /** As picked on the page, saved or not. */
+  provider: unknown;
+  quiet: boolean;
+}) {
   const edssi = useEdssi();
   if (!setup) return null;
-  const needsSignIn = setup.provider === 'codex' && !setup.signedIn;
+  const needsSignIn = needsChatGptSignIn(setup, provider);
+  const switching = provider !== setup.provider;
   // The section's own warning already says what is missing.
-  if (quiet && setup.enabled && !setup.ready && !needsSignIn) return null;
-  const tone = !setup.enabled ? 'off' : setup.ready ? 'good' : 'trouble';
+  if (quiet && setup.enabled && !setup.ready && !needsSignIn && !switching) return null;
+  const tone = !setup.enabled
+    ? 'off'
+    : needsSignIn
+      ? 'trouble'
+      : switching
+        ? 'busy'
+        : setup.ready
+          ? 'good'
+          : 'trouble';
   return (
     <div className="settings-status" data-tone={tone}>
       <span className="settings-status-dot" aria-hidden="true" />
       <span className="grow">
         {!setup.enabled
           ? 'The assistant is off.'
-          : setup.ready
-            ? `Ready: ${setup.model} on ${setup.provider === 'codex' ? 'your ChatGPT plan' : 'the API key'}.`
-            : (setup.problem ?? 'Not ready.')}
-        {setup.provider === 'codex' && setup.signedIn && ' Signed in to ChatGPT.'}
+          : needsSignIn
+            ? 'Sign in to ChatGPT to use your plan.'
+            : switching
+              ? `Save to switch to ${provider === 'codex' ? 'your ChatGPT plan' : 'the API key'}.`
+              : setup.ready
+                ? `Ready: ${setup.model} on ${setup.provider === 'codex' ? 'your ChatGPT plan' : 'the API key'}.`
+                : (setup.problem ?? 'Not ready.')}
+        {provider === 'codex' && setup.signedIn && ' Signed in to ChatGPT.'}
       </span>
       {needsSignIn && (
         <button type="button" className="btn sm" onClick={() => void edssi.assistant.signIn()}>

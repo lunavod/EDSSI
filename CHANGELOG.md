@@ -3,6 +3,67 @@
 What changed in each release, in technical detail. The notes EDSSI shows commanders after an
 update are CHANGELOG_USER.md.
 
+## 1.2.0
+
+### Added
+
+- A Spansh page on the Route tab (`hud/SpanshPlotView.tsx`, `src/main/spansh-plot-service.ts`,
+  `src/main/spansh/plot.ts`): the galaxy map's route plotter as a form over Spansh's galaxy,
+  neutron and fleet carrier plotters, for the ship being flown or any other the commander owns.
+  The galaxy plotter takes no stops on the way, so a route with them is a job per leg, joined.
+  System names are suggested from Spansh as they are typed. The answer is folded into a `CsvRoute`
+  under Spansh's CSV columns (`spanshToCsvRoute`) and waits on the page, and beside the followed
+  route on the Map page, until Follow makes it the CSV route or Save puts it among the saved
+  routes.
+- Start with the game (`startup.with_game`, `src/main/startup/`): an installed build writes
+  `start-with-game.ps1` into the data folder and adds it to Windows' startup apps. The hidden
+  watcher looks for `EliteDangerous64` every 3 s and starts EDSSI with `--started-by-game`, which
+  shows the window inactive, and hands focus back to the game if an EDSSI window takes it in the
+  first moments. Turning it off removes the startup app and the script.
+- The mock UI (`src/mock/`): `<MockApp scenario tab />` draws the real app against a
+  `MockScenario`, many to a page, each in a shadow root with its own React root and `MockEdssi`.
+  The demo scenario is made by running the real services over the journal of a made-up trip
+  (`npm run mock:scenario`). A demo page (`mock:dev`, `mock:build`) and a package (`mock:lib`),
+  published to GitHub Packages as `@lunavod/edssi-mock-ui` with each release.
+- An Extensions page on the Settings tab (`settings/ExtensionsPanel.tsx`): every extension, built
+  in or installed, and how it stands (running, turned off, failed, or an installed one left out
+  for a built-in one of the same name), a switch for each from the next start
+  (`<config dir>/extensions.json`, read once at start), the installed extensions' folder, a
+  restart button and a link to `docs/extensions.md`. Folders that can't be loaded are listed with
+  why.
+- Extension API 2:
+  - `context.journal.session` and `.all` hear EDSSI's own two journal readers
+    (`src/main/extension-feed.ts`), each event with its source and whether it is live;
+    `onLive` says when the replay is done, `session.onCompanion` hears the companion files, and
+    `journal.dir()` is the folder they read. A handler that throws is logged under the
+    extension's name.
+  - `context.game` (the assistant's `GameData`), `context.ask` (one tool-less question to the
+    assistant's model), `dataDir()`, `log` and `showTab()`.
+  - `tabs` and `sidePanel` on `RendererExtension`: modules of its own on the tab bar
+    (`extensionTabId`, so `TabId` takes `ext:<extension>/<tab>`) and blocks under the fuel, each
+    inside an `ExtensionBoundary`.
+  - `EdssiContext` is kept on `globalThis` under `Symbol.for('edssi.context')`, so an installed
+    extension's bundled copy of `api/context.ts` finds the running EDSSI's, and `useEdssi()` and
+    the hooks built on it work from one.
+
+### Changed
+
+- An installed extension built for any API version from `OLDEST_EXTENSION_API_VERSION` (1) to
+  `EXTENSION_API_VERSION` (2) loads; one built for a later EDSSI is refused with "update EDSSI".
+- The window reaches the main process through `useEdssi()`, from an `EdssiProvider` per instance,
+  instead of `window.edssi`, which only `main.tsx` reads. State a window's components share (view
+  options, Settings page requests) and what belongs to the document (the HUD colour's root, how
+  dialogs open, the microphone, small remembered choices) live on the provider. Popups place
+  themselves inside a scaled frame (`popupPlace`), and lists scroll their own box
+  (`scrollNearest`, `scrollWithin`) rather than the page.
+
+### Fixed
+
+- Picking the ChatGPT plan on the Settings tab showed no sign-in until the settings were saved:
+  the sign-in followed the saved provider rather than the one picked.
+- Copying a stop's name from the route map used a clipboard the window doesn't have; it goes
+  through the main process now.
+
 ## 1.1.0
 
 ### Added

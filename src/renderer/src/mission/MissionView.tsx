@@ -8,6 +8,7 @@ import type { ExobiologyEntry, HistorySnapshot, SystemSurvey } from '../../../sh
 import { isScoopableClass, type PlottedRoute } from '../../../shared/nav-routes';
 import type { Overview } from '../../../shared/overview';
 import { DEFAULT_SETTINGS, type Settings } from '../../../shared/settings';
+import { useExtensionMissionBiology } from '../extensions';
 import { shortBodyName, typeLabel } from '../hud/BodyPanel';
 import { CopyButton } from '../hud/CopyButton';
 import { Glyph } from '../hud/Glyph';
@@ -92,7 +93,12 @@ export function MissionView({
     <div className="mission-page">
       <div className="mscroll">
         {!hideRoute && <RouteSection overview={overview} routes={routes} csvRoute={csvRoute} />}
-        <BiologySection survey={survey} minValue={minValue} bodyName={bodyName} />
+        <BiologySection
+          survey={survey}
+          systemAddress={overview.systemAddress}
+          minValue={minValue}
+          bodyName={bodyName}
+        />
         <ProbeSection survey={survey} minValue={minValue} />
         <ExobiologySection history={history} here={overview.systemAddress} />
       </div>
@@ -323,28 +329,36 @@ function RouteStop({
 
 function BiologySection({
   survey,
+  systemAddress,
   minValue,
   bodyName,
 }: {
   survey: SystemSurvey | undefined;
+  systemAddress: number | bigint | undefined;
   minValue: number;
   bodyName: string | undefined;
 }) {
   // Shared, so the assistant can change it and the VR panel follows the window.
   const [sort, setSort] = useViewOption('mission.bio_sort');
-  const bodies = sortBioBodies(bioBodies(survey, minValue), sort);
-  if (!survey || bodies.length === 0) {
+  const own = bioBodies(survey, minValue);
+  // An extension may know the bodies better.
+  const extension = useExtensionMissionBiology({ systemAddress, survey, bodies: own, minValue });
+  const bodies = sortBioBodies(extension?.bodies ?? own, sort);
+  const systemName = survey?.systemName ?? extension?.systemName ?? '';
+  if (bodies.length === 0) {
     const scanned = survey?.bodies.filter((body) => body.kind !== undefined).length ?? 0;
     return (
       <Section
         title="Biology here"
         meta={[
           <None key="none">
-            {!survey
-              ? 'Waiting for the scans'
-              : survey.bodyCount === undefined
-                ? 'None found yet · honk and scan the system to find them'
-                : `None · ${scanned} ${scanned === 1 ? 'body' : 'bodies'} scanned`}
+            {extension
+              ? `None · ${extension.source}`
+              : !survey
+                ? 'Waiting for the scans'
+                : survey.bodyCount === undefined
+                  ? 'None found yet · honk and scan the system to find them'
+                  : `None · ${scanned} ${scanned === 1 ? 'body' : 'bodies'} scanned`}
           </None>,
         ]}
       />
@@ -383,6 +397,11 @@ function BiologySection({
         )
       }
       meta={[
+        extension && (
+          <span key="source" title="Where these bodies and species come from">
+            {extension.source}
+          </span>
+        ),
         <span key="bodies">
           <b>{bodies.length}</b> {bodies.length === 1 ? 'body' : 'bodies'}
         </span>,
@@ -406,7 +425,7 @@ function BiologySection({
           <BioBodyCard
             key={bio.body.bodyId}
             bio={bio}
-            systemName={survey.systemName}
+            systemName={systemName}
             current={bio.body.name === bodyName}
           />
         ))}
@@ -419,7 +438,7 @@ function BiologySection({
                 className="done-chip"
                 title={`${bio.lines.length} of ${bio.lines.length} analysed`}
               >
-                <b>{shortBodyName(bio.body.name, survey.systemName)}</b>
+                <b>{shortBodyName(bio.body.name, systemName)}</b>
                 <span>{formatCompact(bio.collected)}</span>
               </span>
             ))}
@@ -455,6 +474,7 @@ function BioBodyCard({
   const gravity = body.gravity === undefined ? undefined : body.gravity / 9.80665;
   const tags = join(
     unmapped && `${body.bioSignals} ${body.bioSignals === 1 ? 'signal' : 'signals'}`,
+    bio.shipDistance !== undefined && `${formatShipDistance(bio.shipDistance)} away`,
     body.distanceLs !== undefined && `${formatNumber(body.distanceLs, 0)} ls`,
     typeLabel(body),
     gravity !== undefined && `${formatNumber(gravity, 2)} g`,
@@ -591,6 +611,13 @@ function BioRowLine({ line }: { line: BioLine }) {
       </span>
     </div>
   );
+}
+
+/** How far the ship is from a body: km close by, light seconds further out. */
+function formatShipDistance(metres: number): string {
+  const ls = metres / 299_792_458;
+  if (ls >= 1) return `${formatNumber(ls, ls < 10 ? 1 : 0)} ls`;
+  return `${formatNumber(metres / 1000, 0)} km`;
 }
 
 /** "5.0M", or "11.8–22.9M" for a range; "?" when it isn't known. */

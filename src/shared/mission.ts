@@ -116,6 +116,11 @@ export interface BioBody {
   potentialMax: number;
   /** What a probe run here would add, when the body is one of those worth mapping. */
   mapping?: ProbeTarget;
+  /**
+   * How far the ship is from the body's centre now, in metres, where something measures it (an
+   * extension's `useMissionBiology`); the journal never says.
+   */
+  shipDistance?: number;
 }
 
 /**

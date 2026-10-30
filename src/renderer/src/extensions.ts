@@ -20,6 +20,8 @@ import {
   type InstalledRendererExtension,
   type SHARED_RENDERER_MODULES,
 } from '../../shared/extensions';
+import type { SystemSurvey } from '../../shared/history';
+import type { BioBody } from '../../shared/mission';
 import { registerSettingsSections } from '../../shared/settings';
 import { type ExtensionTabId, extensionTabId } from '../../shared/ui';
 import type { PageId, Section } from './settings/fields';
@@ -42,6 +44,48 @@ export interface RendererExtension {
   tabs?: readonly ExtensionTab[];
   /** Blocks of the side panel, under the fuel, in the order given. */
   sidePanel?: readonly SidePanelBlock[];
+  /**
+   * The bodies with life the Mission tab's "Biology here" lists, in place of EDSSI's own (made
+   * from the journal by `bioBodies`), when it has them; undefined leaves EDSSI's. A hook, called
+   * on every render of the section. The first extension to answer wins.
+   */
+  useMissionBiology?: (context: MissionBiologyContext) => MissionBiology | undefined;
+}
+
+export interface MissionBiologyContext {
+  /** The current system, from the session's journal. */
+  systemAddress: number | bigint | undefined;
+  /** What the journal says of the current system's bodies, once the history reader is there. */
+  survey: SystemSurvey | undefined;
+  /** EDSSI's own bodies with life for it, the same `survey` folded by `bioBodies`. */
+  bodies: readonly BioBody[];
+  /** The probe cutoff (`mission.min_probe_value`), for a body's `mapping`. */
+  minValue: number;
+}
+
+export interface MissionBiology {
+  /** In `bioBodies`' shape; a body may carry `shipDistance`. Sorted by the section. */
+  bodies: BioBody[];
+  /** Where they come from, shown in the section's heading: the extension's own name for it. */
+  source: string;
+  /** The system's name, when the survey has none yet. */
+  systemName?: string;
+}
+
+/**
+ * The first extension's answer to `useMissionBiology`, every extension's hook called on every
+ * render in the same order (the list is fixed before the app loads), as hooks must be.
+ */
+export function useExtensionMissionBiology(
+  context: MissionBiologyContext,
+): MissionBiology | undefined {
+  let answer: MissionBiology | undefined;
+  for (const extension of RENDERER_EXTENSIONS) {
+    if (!extension.useMissionBiology) continue;
+    const biology = extension.useMissionBiology(context);
+    answer ??= biology;
+  }
+  return answer;
 }
 
 /** Every extension's tabs, with the ids the tab bar knows them by. */

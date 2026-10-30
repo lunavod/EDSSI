@@ -109,6 +109,11 @@ sections stay in the file, untouched. The page also opens the installed extensio
   say something. Its id is `extensionTabId(extension, tab)` (`src/shared/ui.ts`), which
   `context.showTab` brings forward from the main process, as it does EDSSI's own tabs.
 - **The side panel.** `sidePanel`: blocks under the fuel, each a `side-block` section of its own.
+- **The Mission tab's life.** `useMissionBiology`, a hook called on every render of "Biology
+  here": given the current system, EDSSI's survey and its own bodies with life (`bioBodies`), it
+  answers bodies of its own in the same `BioBody` shape (a better prediction, say), or undefined to
+  leave EDSSI's. The first extension to answer wins; its `source` is shown in the heading. A body
+  may carry `shipDistance` (metres from the ship), shown on its card as "… away".
 - **EDSSI's hooks.** An installed extension carries a copy of the EDSSI code it imports, but
   `EdssiContext` is kept on `globalThis` (`api/context.ts`), so `useEdssi()` and every hook built on
   it (`useJournal`, `useHistory`, `useCarriers`, `useViewOption`…) work from one as they do from

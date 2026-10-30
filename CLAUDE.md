@@ -563,7 +563,9 @@ Data flows one way: journal files → main process → IPC → renderer.
   between them. The tracker supplies the log (`HistorySnapshot.exobiology`), a jump count, "new
   species" flags and each ledger total's share from this game session. The pure folding lives in
   `src/shared/mission.ts`, so the assistant's `get_biology_here` and `get_exobiology_log` read it
-  the same way; `mission.ts` here only adds the formatting.
+  the same way; `mission.ts` here only adds the formatting. An extension can answer the section's
+  bodies itself (`useMissionBiology`, `src/renderer/src/extensions.ts`), each with the ship's
+  distance (`BioBody.shipDistance`).
 - **`src/renderer/src/comms/`**: the Comms tab. The microphone lives here (the main process can't
   reach one without a native module): `recorder.ts` records Opus, `speech.ts` plays the answer's
   PCM as it streams in, and `useVoice.ts` ties both to the push-to-talk key.

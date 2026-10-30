@@ -12,8 +12,10 @@
  *
  * 2: the journal feeds, `game`, `ask`, `dataDir`, `log` and `showTab` on the main context; tabs
  * and side panel blocks of its own; `useEdssi()` working from an installed extension.
+ * 3: `useMissionBiology` on the window's side, bodies with life of its own for the Mission tab, and
+ * a body's `shipDistance` on them.
  */
-export const EXTENSION_API_VERSION = 2;
+export const EXTENSION_API_VERSION = 3;
 
 /**
  * The oldest version still loaded. Raise it to `EXTENSION_API_VERSION` when a change would trip up

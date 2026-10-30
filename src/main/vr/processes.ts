@@ -36,3 +36,26 @@ export function runningProcesses(): Promise<Set<string> | undefined> {
     );
   });
 }
+
+/** The Khronos loader every OpenXR program loads; the game holds it while it is in VR. */
+export const OPENXR_LOADER = 'openxr_loader.dll';
+
+/** Whether the `tasklist /M` listing has the game in it, i.e. the game has the module loaded. */
+export function parseModuleTasklist(output: string): boolean {
+  return parseTasklist(output).has(ELITE_PROCESS);
+}
+
+/**
+ * Whether the game has the OpenXR loader loaded, i.e. is in VR through OpenXR; undefined if that
+ * couldn't be found out. Asked only while the game is running, and only of the game.
+ */
+export function gameUsesOpenXr(): Promise<boolean | undefined> {
+  return new Promise((resolve) => {
+    execFile(
+      'tasklist',
+      ['/FI', `IMAGENAME eq ${ELITE_PROCESS}`, '/M', OPENXR_LOADER, '/FO', 'CSV', '/NH'],
+      { windowsHide: true, maxBuffer: 1024 * 1024 },
+      (error, stdout) => resolve(error ? undefined : parseModuleTasklist(stdout)),
+    );
+  });
+}

@@ -1,0 +1,11 @@
+{
+  "file_format_version": "1.0.0",
+  "api_layer": {
+    "name": "XR_APILAYER_EDSSI_probe",
+    "library_path": ".\\edssi_openxr_probe.dll",
+    "api_version": "1.0",
+    "implementation_version": "1",
+    "description": "EDSSI: logs what an OpenXR app does, and changes nothing",
+    "disable_environment": "EDSSI_OPENXR_PROBE_DISABLE"
+  }
+}

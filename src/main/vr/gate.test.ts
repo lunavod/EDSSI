@@ -1,7 +1,7 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { startVrGate } from './gate';
-import { ELITE_PROCESS, parseTasklist, STEAMVR_PROCESS } from './processes';
+import { chooseRoute, startVrGate, type VrRoute } from './gate';
+import { ELITE_PROCESS, parseModuleTasklist, parseTasklist, STEAMVR_PROCESS } from './processes';
 
 describe('parseTasklist', () => {
   it('reads the image names, lower-cased', () => {
@@ -18,6 +18,42 @@ describe('parseTasklist', () => {
     expect(
       parseTasklist('INFO: No tasks are running which match the specified criteria.\r\n'),
     ).toEqual(new Set());
+  });
+});
+
+describe('parseModuleTasklist', () => {
+  it('is true when the game is listed with the module', () => {
+    expect(parseModuleTasklist('"EliteDangerous64.exe","80440","openxr_loader.dll"\r\n')).toBe(
+      true,
+    );
+  });
+
+  it('is false when nothing matches', () => {
+    expect(
+      parseModuleTasklist('INFO: No tasks are running which match the specified criteria.\r\n'),
+    ).toBe(false);
+  });
+});
+
+describe('chooseRoute', () => {
+  const game = new Set([ELITE_PROCESS]);
+  const both = new Set([ELITE_PROCESS, STEAMVR_PROCESS]);
+
+  it('takes nothing without the game', () => {
+    expect(chooseRoute(new Set([STEAMVR_PROCESS]), true, 'auto')).toBeUndefined();
+  });
+
+  it('prefers SteamVR on auto, and takes the OpenXR layer when the game has OpenXR loaded', () => {
+    expect(chooseRoute(both, true, 'auto')).toBe('openvr');
+    expect(chooseRoute(game, true, 'auto')).toBe('openxr');
+    expect(chooseRoute(game, false, 'auto')).toBeUndefined();
+    expect(chooseRoute(game, undefined, 'auto')).toBeUndefined();
+  });
+
+  it('keeps to the backend the settings name', () => {
+    expect(chooseRoute(game, true, 'openvr')).toBeUndefined();
+    expect(chooseRoute(both, true, 'openxr')).toBe('openxr');
+    expect(chooseRoute(both, false, 'openxr')).toBeUndefined();
   });
 });
 
@@ -134,5 +170,50 @@ describe('startVrGate', () => {
     expect(look.mock.calls.length).toBe(looks);
     g.stop();
     expect(listener).toBeUndefined();
+  });
+
+  it('starts on the OpenXR layer when the game has OpenXR, and switches when SteamVR comes', async () => {
+    let openxr: boolean | undefined = false;
+    const asked = vi.fn(() => Promise.resolve(openxr));
+    const routes: VrRoute[] = [];
+    running = new Set([ELITE_PROCESS]);
+    const g = startVrGate({
+      enabled: () => enabled,
+      onEnabledChange: () => () => {},
+      running: () => Promise.resolve(running),
+      openxr: asked,
+      start: (route) => {
+        routes.push(route);
+        const service = { stop: vi.fn() };
+        started.push(service);
+        return service;
+      },
+      intervalMs: 1000,
+    });
+    await vi.advanceTimersByTimeAsync(0);
+    expect(started).toHaveLength(0);
+
+    openxr = true;
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(routes).toEqual(['openxr']);
+
+    // Unanswered: the OpenXR cockpit stays.
+    openxr = undefined;
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(started[0]?.stop).not.toHaveBeenCalled();
+
+    // SteamVR wins on auto, and isn't asked about OpenXR.
+    running = new Set([ELITE_PROCESS, STEAMVR_PROCESS]);
+    const calls = asked.mock.calls.length;
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(started[0]?.stop).toHaveBeenCalledOnce();
+    expect(routes).toEqual(['openxr', 'openvr']);
+    expect(asked.mock.calls.length).toBe(calls);
+
+    running = new Set();
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(started[1]?.stop).toHaveBeenCalledOnce();
+    expect(asked.mock.calls.length).toBe(calls);
+    g.stop();
   });
 });

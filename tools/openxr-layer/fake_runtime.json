@@ -1,0 +1,7 @@
+{
+  "file_format_version": "1.0.0",
+  "runtime": {
+    "name": "EDSSI fake runtime (no headset)",
+    "library_path": ".\\fake_runtime.dll"
+  }
+}

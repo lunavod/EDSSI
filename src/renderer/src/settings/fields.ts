@@ -14,6 +14,7 @@ import {
   REASONING_EFFORTS,
   SPEECH_PROVIDERS,
   TRANSCRIPTION_PROVIDERS,
+  VR_BACKENDS,
 } from '../../../shared/settings';
 import type { UploadTarget } from '../../../shared/uploads';
 import { WHISPER_MODEL_MB, WHISPER_MODELS } from '../../../shared/whisper';
@@ -903,7 +904,7 @@ const BUILT_IN_PAGES: Page[] = [
   {
     id: 'vr',
     title: 'VR',
-    help: 'Five panels of EDSSI hung around you as SteamVR overlays. A prototype: the panels are placed with the keys in ~/.edssi/vr-overlay.json.',
+    help: 'Five panels of EDSSI hung around you in VR, as SteamVR overlays or through an OpenXR layer in the game. A prototype: the panels are placed with the keys in ~/.edssi/vr-overlay.json.',
     sections: [
       {
         id: 'vr-cockpit',
@@ -913,7 +914,15 @@ const BUILT_IN_PAGES: Page[] = [
             kind: 'flag',
             path: ['vr', 'enabled'],
             label: 'Enabled',
-            help: 'Runs the cockpit whenever SteamVR and Elite Dangerous are both running, and stops it when either closes.',
+            help: 'Runs the cockpit whenever Elite Dangerous is running in VR, and stops it when the game closes or leaves VR.',
+          },
+          {
+            kind: 'choice',
+            path: ['vr', 'backend'],
+            label: 'Through',
+            options: VR_BACKENDS,
+            labels: { auto: 'Automatic', openvr: 'SteamVR', openxr: 'OpenXR layer' },
+            help: 'SteamVR overlays, or an OpenXR layer EDSSI puts inside the game, for another OpenXR runtime (Virtual Desktop with EDVR). Automatic takes SteamVR when it is running.',
           },
         ],
       },

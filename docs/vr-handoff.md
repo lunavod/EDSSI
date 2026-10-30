@@ -7,6 +7,45 @@ The commander asked for three things, and all three have landed: the cockpit is 
 steady, and showing what it draws as it draws it; the bindings are on the stick with click modes;
 and the ministick scrolls. What is left is the smaller things noticed on the way.
 
+## OpenXR route: built, not yet seen in a headset
+
+The commander plays through Virtual Desktop (VDXR) with EDVR, not SteamVR, so the overlays never
+showed. `tools/openxr-layer` is the answer (`docs/vr.md`, "The OpenXR route"). Built and tested
+without a headset, Oct 30:
+
+- the layer loads in the real game, launched by Steam with EDVR in VR (`openxr-layer.log`:
+  `xrCreateInstance from "Elite Dangerous (EDVR)"`), and EDVR carries on exactly as without it;
+- the whole chain — EDSSI on `backend: openxr`, the bridge, the layer, the real Khronos loader —
+  hangs all nine quads (five panels, four seams) with the real panel pixels in a fake runtime,
+  including from a "game" started outside the packaged shell.
+
+Left, in the order to try them with the headset on:
+
+1. **First flight.** The installed EDSSI (1.2.0) has none of this: run the branch `vr-openxr`
+   (`npm run vr:openxr:build`, then `npm run dev`). `vr.enabled: true` (backend `auto` is right),
+   start EDSSI, then the game in VR. The layer has to be registered before the game starts; EDSSI does it on start. Look for
+   `[vr] the game is in VR through OpenXR` in EDSSI's log and `adding 9 panel(s)` in
+   `out/openxr-layer/openxr-layer.log`. If nothing shows, that log says how far it got
+   (no D3D11 session? format? spaces?).
+2. **EDVR's device.** EDVR runs with `separate_device=1`; the layer copies on whatever device the
+   session was made with, from the thread that calls `xrEndFrame`. If EDVR uses that device's
+   immediate context from another thread at the same time, this needs a deferred context or a
+   device of the layer's own — watch for corruption or a crash on the first frames.
+3. **Placement.** World lock pins in LOCAL space. EDVR has its own recentring (seat, look-to-aim);
+   check the rig stays where it was pinned when EDVR recentres, and that `Control+Shift+H` re-pins.
+4. **Gaze.** Same cone as the C# host (cos 0.80); check the tuning keys act on the panel looked at.
+5. **Missing pieces:** packaging (`out/openxr-layer` as an `extraResource`, and the manifest path
+   then lives in the install). Curvature (cylinder layers) and alpha (colour scale) are in, tested
+   against the fake runtime only: check in the headset that VDXR lists both extensions (the layer's
+   log line `runtime extensions: ...`), that the main panel's curve bends towards you (`;` / `'`)
+   and that alpha fades it (`Control+Shift+,` / `.`).
+6. **The probe layer** (`tools/openxr-probe-layer`) is unregistered and can go once this works.
+7. **Registered now:** the dev build's layer (`<repo>\out\openxr-layer\edssi_openxr_layer.json`)
+   is in HKCU. Without EDSSI's bridge running it only notes the session's device and passes every
+   call through. To take it out:
+   `reg delete HKCU\SOFTWARE\Khronos\OpenXR\1\ApiLayers\Implicit /v <that path> /f`, or switch the
+   cockpit off in a dev EDSSI.
+
 ## Done since: bindings on sticks, click modes, scroll on the ministick
 
 Both of the commander's remaining asks have landed. What they came to:

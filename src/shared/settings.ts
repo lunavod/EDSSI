@@ -29,6 +29,15 @@ export type ReasoningEffort = (typeof REASONING_EFFORTS)[number];
 /** `openai` bills an API key; `codex` uses a ChatGPT plan, as the Codex CLI does. */
 export const PROVIDERS = ['openai', 'codex'] as const;
 
+/**
+ * How the VR cockpit reaches the headset: SteamVR overlays (`openvr`), or EDSSI's OpenXR API layer
+ * inside the game (`openxr`, for a game on another OpenXR runtime, such as Virtual Desktop's with
+ * EDVR). `auto` takes SteamVR when it is running and the layer when the game has OpenXR loaded.
+ */
+export const VR_BACKENDS = ['auto', 'openvr', 'openxr'] as const;
+
+export type VrBackend = (typeof VR_BACKENDS)[number];
+
 export type ProviderName = (typeof PROVIDERS)[number];
 
 /** Who reads answers aloud: Kokoro on this machine, Inworld on its own key, or a Wyoming server. */
@@ -478,8 +487,10 @@ export const SettingsSchema = z.object({
    * `~/.edssi/vr-overlay.json`; the stick bindings live here.
    */
   vr: section({
-    /** Run the cockpit, while SteamVR and the game are both running. */
+    /** Run the cockpit, while the game is running in VR (see `backend`). */
     enabled: flag(false),
+    /** SteamVR overlays, the OpenXR layer, or whichever the game is using. */
+    backend: choice(VR_BACKENDS, 'auto'),
     bindings: vrBindings(),
   }),
   /** Warnings in flight, each said once per system or body, and never while docked. */
@@ -766,12 +777,15 @@ voice:
     # A minute before your own carrier jumps, while you're docked on it.
     carrier_departure_callouts: true
 
-# The VR cockpit (a prototype). While enabled, it runs whenever SteamVR and the game are both
-# running. Where the panels hang, and the keys that move them, are in ~/.edssi/vr-overlay.json — a
+# The VR cockpit (a prototype). While enabled, it runs whenever the game is running in VR: as
+# SteamVR overlays when SteamVR is running, or through EDSSI's OpenXR layer when the game is on
+# another OpenXR runtime (Virtual Desktop with EDVR, say). backend: auto, openvr or openxr. Where the
+# panels hang, and the keys that move them, are in ~/.edssi/vr-overlay.json — a
 # headset leaves no way to show a settings screen. Stick buttons are the other way round: bind them
 # on the Settings tab, by pressing them, since a control has no name to type. They look like this:
 vr:
   enabled: false
+  backend: auto
   # bindings:
   #   toggle:
   #     - device: VKBsim Gladiator EVO R

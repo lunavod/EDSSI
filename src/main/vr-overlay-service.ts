@@ -26,7 +26,8 @@ import { vrOverlayPath } from './config/paths';
 import type { SettingsStore } from './config/store';
 import type { EdhmService } from './edhm-service';
 import type { InputAction, InputService } from './input/service';
-import { startOverlayHost } from './vr/host';
+import type { VrRoute } from './vr/gate';
+import { openxrBridgePath, startOverlayHost } from './vr/host';
 import {
   loadLayout,
   readLayout,
@@ -141,6 +142,12 @@ export interface VrOverlayServiceOptions {
    * default accent.
    */
   edhm?: Pick<EdhmService, 'hudColor' | 'onHudColor'>;
+  /**
+   * How the panels reach the headset: SteamVR overlays through `tools/vr-overlay-host` (the
+   * default), or the OpenXR layer in the game through `tools/openxr-layer`'s bridge. Both speak the
+   * same protocol, so nothing else here changes.
+   */
+  route?: VrRoute;
 }
 
 export interface VrOverlayService {
@@ -573,6 +580,7 @@ export function startVrOverlayService(options: VrOverlayServiceOptions): VrOverl
   function connect(): void {
     if (stopped) return;
     host = startOverlayHost({
+      ...(options.route === 'openxr' ? { exePath: openxrBridgePath() } : {}),
       onReply(reply) {
         // The host has finished with a texture, so Chromium may have it back. Answered in order
         // per panel, so the oldest one being held is the one it means.

@@ -62,8 +62,9 @@ import { installPendingUpdate, startUpdateService } from './update-service';
 import { startUploadService } from './upload-service';
 import { startViewOptionsService, ViewOptionsStore } from './view-options-service';
 import { startVrOverlayService, vrCapturing, type VrOverlayService } from './vr-overlay-service';
-import { startVrGate } from './vr/gate';
-import { runningProcesses } from './vr/processes';
+import { startVrGate, type VrRoute } from './vr/gate';
+import { setLayerRegistered } from './vr/openxr-layer';
+import { gameUsesOpenXr, runningProcesses } from './vr/processes';
 import { loadBounds, placeOnDisplay, rememberBounds } from './window-bounds';
 import { reportMaximized, startWindowControls } from './window-controls';
 
@@ -316,18 +317,37 @@ function startServices(browser: Browser): SettingsStore {
   // Ctrl+V on a stick button, for pasting the route's next system into the galaxy map.
   const paste = startPasteBinding({ input, settings });
   // A prototype, off unless vr.enabled: five panels of EDSSI hung around the commander as SteamVR
-  // overlays, moved about with the keys in vr-overlay-service.ts. Only up while SteamVR and the game
-  // are both running; capturing panels for the preview runs it at once.
-  const startVr = () => startVrOverlayService({ input, edhm, settings });
+  // overlays or through EDSSI's OpenXR layer in the game, moved about with the keys in
+  // vr-overlay-service.ts. Only up while the game is in VR (vr/gate.ts); capturing panels for the
+  // preview runs it at once.
+  const startVr = (route?: VrRoute) =>
+    startVrOverlayService({ input, edhm, settings, ...(route === undefined ? {} : { route }) });
   let vr: { stop(): void };
   if (vrCapturing()) vr = vrService = startVr();
   else {
     vr = startVrGate({
       enabled: () => settings.current().vr.enabled,
       onEnabledChange: (listener) => settings.onChange((next) => listener(next.vr.enabled)),
+      backend: () => settings.current().vr.backend,
       running: runningProcesses,
+      openxr: gameUsesOpenXr,
       start: startVr,
       onChange: (service) => (vrService = service),
+    });
+    // The layer has to be registered before the game goes into VR, so it follows the setting.
+    const registerLayer = (vrSettings: { enabled: boolean; backend: string }) => {
+      const wanted = vrSettings.enabled && vrSettings.backend !== 'openvr';
+      void setLayerRegistered(wanted).then((outcome) => {
+        if (outcome !== 'unchanged') console.log(`[vr] OpenXR layer: ${outcome}`);
+      });
+    };
+    let layerWanted = settings.current().vr;
+    registerLayer(layerWanted);
+    settings.onChange((next) => {
+      if (next.vr.enabled === layerWanted.enabled && next.vr.backend === layerWanted.backend)
+        return;
+      layerWanted = next.vr;
+      registerLayer(layerWanted);
     });
   }
 

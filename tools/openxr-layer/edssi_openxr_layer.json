@@ -1,0 +1,14 @@
+{
+  "file_format_version": "1.0.0",
+  "api_layer": {
+    "name": "XR_APILAYER_EDSSI_cockpit",
+    "library_path": ".\\edssi_openxr_layer.dll",
+    "api_version": "1.0",
+    "implementation_version": "1",
+    "description": "EDSSI: hangs EDSSI's VR cockpit panels in OpenXR games while EDSSI is running",
+    "functions": {
+      "xrNegotiateLoaderApiLayerInterface": "xrNegotiateLoaderApiLayerInterface"
+    },
+    "disable_environment": "EDSSI_OPENXR_LAYER_DISABLE"
+  }
+}

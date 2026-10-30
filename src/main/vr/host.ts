@@ -66,6 +66,23 @@ export function overlayHostPath(): string {
   return candidates.find((candidate) => existsSync(candidate)) ?? candidates[0]!;
 }
 
+/**
+ * Where `npm run vr:openxr:build` leaves the OpenXR bridge and the layer beside it (`tools/openxr-layer`).
+ * Like the OpenVR host, a packaged build would carry the folder as an `extraResource`.
+ */
+export function openxrBridgePath(): string {
+  return openxrFile('edssi-openxr-bridge.exe');
+}
+
+/** A file of the OpenXR layer's build: the bridge, the layer DLL or its manifest. */
+export function openxrFile(name: string): string {
+  const candidates = [
+    join(import.meta.dirname, '..', 'openxr-layer', name),
+    join(process.resourcesPath, 'openxr-layer', name),
+  ];
+  return candidates.find((candidate) => existsSync(candidate)) ?? candidates[0]!;
+}
+
 export function startOverlayHost(options: OverlayHostOptions): OverlayHost {
   const exe = options.exePath ?? overlayHostPath();
   // Told who we are, so it can let go if EDSSI is killed outright rather than shut down. Closing

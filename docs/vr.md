@@ -1,10 +1,17 @@
 # The VR cockpit
 
-Five panels of EDSSI hung in front of the commander as SteamVR overlays. A prototype: off unless `vr.enabled`
-is on in `config.yaml` (the Settings tab's VR page), and then only up while SteamVR and the game
-are both running — `src/main/vr/gate.ts` looks for `vrserver.exe` and `EliteDangerous64.exe` every
-five seconds and starts or stops the whole cockpit with them. The code is `src/main/vr-overlay-service.ts` + `src/main/vr/`, the renderer's
-`#vr/<id>` routes, and `tools/vr-overlay-host` (C#). CLAUDE.md has the architecture paragraph.
+Five panels of EDSSI hung in front of the commander in VR. A prototype: off unless `vr.enabled` is
+on in `config.yaml` (the Settings tab's VR page), and then only up while the game is running in VR —
+`src/main/vr/gate.ts` looks every five seconds and starts or stops the whole cockpit. It reaches the
+headset one of two ways (`vr.backend`, `auto` by default):
+
+- **SteamVR overlays** (`openvr`) while `vrserver.exe` runs: `tools/vr-overlay-host` (C#).
+- **EDSSI's OpenXR API layer** (`openxr`) when the game runs on another OpenXR runtime — Virtual
+  Desktop's VDXR with the EDVR mod, say — and has `openxr_loader.dll` loaded (`tasklist /M`):
+  `tools/openxr-layer`. See "The OpenXR route" below.
+
+The code is `src/main/vr-overlay-service.ts` + `src/main/vr/`, the renderer's `#vr/<id>` routes,
+and the two tools. CLAUDE.md has the architecture paragraph.
 
 ## Running it
 
@@ -210,6 +217,64 @@ shades that both come out transparent, and a page that has changed hands over a 
 are also no longer sent before the host says `ready`, since it has no overlays to put them on. `[vr] <panel>: the host has nothing to show
 yet` in the log (with `EDSSI_VR_LOG=1`), once per panel, says it happened. Pixels are not: a frame is megabytes, so the
 fallback path still waits until there is something to look at.
+
+## The OpenXR route
+
+For a game that never talks to SteamVR. `tools/openxr-layer` builds three things (`npm run
+vr:openxr:build`, CMake + Visual Studio 2022, into `out/openxr-layer/`; its README has the detail):
+
+- `edssi_openxr_layer.dll` + `edssi_openxr_layer.json`: an implicit OpenXR API layer, the way
+  OpenKneeboard works. Every OpenXR program of this Windows user loads it, and it does nothing at
+  all until the bridge is running. Then, in each `xrEndFrame` of a D3D11 session, it copies the
+  panels that changed into swapchains of its own on the game's device and appends one
+  `XrCompositionLayerQuad` per panel after the game's own layers (within `maxLayerCount`):
+  head-locked in VIEW space, or pinned upright in LOCAL space where the head was when `anchor` last
+  changed — the same rule as the C# host. It also works out which panel the head is turned to.
+- `edssi-openxr-bridge.exe`: what EDSSI runs instead of the C# host on this route. Same stdin
+  protocol (`protocol.ts`), same replies (`ready`, `took`, `want`, `gaze`, plus `layer`), so the
+  service, panels, layout and keys are unchanged. It copies each Chromium frame into a per-panel
+  texture shared by name with a keyed mutex and publishes the rig in shared memory
+  (`Local\EDSSI-OpenXR-Cockpit`, `shared.h`); Chromium's texture goes straight back.
+- tests: `openxr-layer-test.exe` (`npm run vr:openxr:test`) runs the real bridge and layer against
+  a fake runtime in-process; `fake_runtime.dll` + `xr-client.exe` run the whole chain through the
+  real Khronos loader with no headset (below).
+
+**Registration.** The layer is a value under `HKCU\SOFTWARE\Khronos\OpenXR\1\ApiLayers\Implicit`
+named by the manifest's path (0 = on). EDSSI adds it while `vr.enabled` is on and the backend is
+not `openvr` (`src/main/vr/openxr-layer.ts`) and removes it otherwise. It has to be there before
+the game goes into VR: the loader reads the list at `xrCreateInstance`.
+
+**Why it never loaded at first** (Oct 2026). The probe layer was registered from a shell inside
+the Claude desktop app, which is a packaged (MSIX) app: every HKCU write from it and its children
+lands in the package's private registry. The probe client, started from the same shell, saw it;
+Steam and the game never did — the loader's `RegOpenKeyExW(HKCU\...\Implicit)` in the game
+returned "not found" (traced with debugger breakpoints). Nothing was wrong with the layer. EDSSI
+itself is not packaged, so its registration is real; an agent testing from such a shell has to
+write the registry from a process outside the package, e.g. one started through WMI
+(`Invoke-CimMethod Win32_Process -MethodName Create -Arguments @{CommandLine='reg add ...'}`).
+The same goes for `%LOCALAPPDATA%` files. Named kernel objects are not affected: a game outside the
+package found a packaged EDSSI's bridge.
+
+**Seeing it without a headset.** VDXR without a headset fails `xrGetSystem`, so EDVR never makes a
+session and the layer only gets as far as `xrCreateInstance` (its log, `openxr-layer.log` beside
+the DLL, says so). The rest is tested with `fake_runtime.dll`: copy `xr-client.exe` to a folder as
+`EliteDangerous64.exe`, start EDSSI with `vr.enabled` and `backend: openxr`, and run
+
+```
+$env:XR_RUNTIME_JSON = "<repo>\out\openxr-layer\fake_runtime.json"
+$env:FAKE_XR_DUMP_DIR = "<some folder>"
+.\EliteDangerous64.exe "<game>\Openvr\win64\openxr_loader.dll" 60
+```
+
+EDSSI sees a game in VR through OpenXR, starts the bridge, and every 300 frames the fake runtime
+writes each quad's image as `quadN.bmp` with its space, pose and size in `layers.txt`.
+
+**Curvature and alpha.** A curved panel is a cylinder layer and a faded one carries a colour scale;
+the layer enables `XR_KHR_composition_layer_cylinder` and `XR_KHR_composition_layer_color_scale_bias`
+on the game's instance when the runtime has them (its log says `runtime extensions: cylinder yes,
+colour scale yes`), else panels stay flat and opaque (tools/openxr-layer/README.md).
+
+**What the layer does not do yet.** D3D11 sessions only, and not yet seen in a headset.
 
 ## When a binding misbehaves
 

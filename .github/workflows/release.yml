@@ -68,12 +68,15 @@ jobs:
       - name: Check
         run: npm run check
 
-      # Both ride beside the app as extraResources (electron-builder.yml).
+      # All three ride beside the app as extraResources (electron-builder.yml).
       - name: Build the stick usages addon
         run: npm run hid:build
 
       - name: Build the VR overlay host
         run: npm run vr:build
+
+      - name: Build the OpenXR layer
+        run: npm run vr:openxr:build
 
       - name: Build
         run: npm run build
@@ -236,6 +239,9 @@ jobs:
 
       - name: Build the VR overlay host
         run: npm run vr:build
+
+      - name: Build the OpenXR layer
+        run: npm run vr:openxr:build
 
       - name: Build
         run: npm run build

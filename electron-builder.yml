@@ -21,8 +21,11 @@ files:
   - node_modules/onnxruntime-node/dist/**
   - node_modules/onnxruntime-node/bin/napi-v6/win32/x64/**
   - node_modules/onnxruntime-common/**
-  # The VR host is a program of its own, so it rides beside the app (below), not in the asar.
+  # The VR host and the OpenXR layer are programs of their own, so they ride beside the app (below),
+  # not in the asar.
   - '!out/vr-overlay-host/**'
+  - '!out/openxr-layer/**'
+  - '!out/openxr-layer-build/**'
   # Extensions built on their own (npm run build:extension) are installed, never shipped.
   - '!out/extensions/**'
 asar: true
@@ -35,8 +38,8 @@ extraResources:
   # The GPL asks that every copy carries the licence.
   - LICENSE
   # Where src/main/input/usages.ts and src/main/vr/host.ts look in a packaged build. Built by
-  # `npm run hid:build` and `npm run vr:build`; a build without them still runs, without stick
-  # usages or the VR cockpit.
+  # `npm run hid:build`, `npm run vr:build` and `npm run vr:openxr:build`; a build without them still
+  # runs, without stick usages or the VR cockpit.
   - from: native/hid-usages
     to: hid-usages
     filter:
@@ -45,6 +48,13 @@ extraResources:
       - build/Release/hid_usages.node
   - from: out/vr-overlay-host
     to: vr-overlay-host
+  # Only what a game loads and what feeds it: the same folder holds the test programs.
+  - from: out/openxr-layer
+    to: openxr-layer
+    filter:
+      - edssi_openxr_layer.dll
+      - edssi_openxr_layer.json
+      - edssi-openxr-bridge.exe
 # A .node file has to be a real file on disk for the loader to find it.
 asarUnpack:
   - node_modules/uiohook-napi/**

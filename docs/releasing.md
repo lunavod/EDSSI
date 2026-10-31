@@ -25,8 +25,8 @@ release that failed to sign uploaded nothing, so sign in and push the tag again
 
 - refuses to go on if `extensions/` has anything in it (a release is the repository alone; the
   checkout cleans out ignored files, so this only trips if something put them back);
-- `npm ci`, `npm run check`, builds the stick addon (`hid:build`) and the VR host (`vr:build`),
-  `npm run build`, packages with `electron-builder`, signing with the Certum certificate given by
+- `npm ci`, `npm run check`, builds the stick addon (`hid:build`), the VR host (`vr:build`) and the
+  OpenXR layer (`vr:openxr:build`), `npm run build`, packages with `electron-builder`, signing with the Certum certificate given by
   thumbprint on the command line, and checks the signatures;
 - uploads the installer and its blockmap, then `latest.yml` (uncached, and last, so it never names
   a file that isn't there yet), and deletes all but the three newest releases;
@@ -78,7 +78,8 @@ What the workflow needs that the repository can't hold:
 1. **The runner.** A self-hosted runner for `lunavod/EDSSI` on the machine with SimplySign
    Desktop, labelled `certum-signing` (Settings → Actions → Runners → New self-hosted runner; a
    second runner beside OverLooker's, in its own folder). It needs Node 24, the .NET SDK
-   (`vr:build`), the Visual Studio C++ build tools (`hid:build`), Python, and the AWS CLI.
+   (`vr:build`), the Visual Studio C++ build tools (`hid:build`) with CMake on the PATH (`vr:openxr:build`), Python,
+   and the AWS CLI.
 2. **The bucket.** An R2 bucket `edssi-updates`, with the custom domains `updates.edssi.app` and
    `updates-dev.edssi.app` both attached to it (the domain `edssi.app` on Cloudflare first). Never
    change the production URL: every installed EDSSI has it baked into its `app-update.yml`.

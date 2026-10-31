@@ -68,7 +68,7 @@ export function overlayHostPath(): string {
 
 /**
  * Where `npm run vr:openxr:build` leaves the OpenXR bridge and the layer beside it (`tools/openxr-layer`).
- * Like the OpenVR host, a packaged build would carry the folder as an `extraResource`.
+ * A packaged build carries them as an `extraResource`.
  */
 export function openxrBridgePath(): string {
   return openxrFile('edssi-openxr-bridge.exe');

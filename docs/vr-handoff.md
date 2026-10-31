@@ -21,11 +21,11 @@ without a headset, Oct 30:
 
 Left, in the order to try them with the headset on:
 
-1. **First flight.** The installed EDSSI (1.2.0) has none of this: run the branch `vr-openxr`
-   (`npm run vr:openxr:build`, then `npm run dev`). `vr.enabled: true` (backend `auto` is right),
+1. **First flight.** From 1.3.0 an installed EDSSI carries the layer; from source, it's
+   `npm run vr:openxr:build`, then `npm run dev`. `vr.enabled: true` (backend `auto` is right),
    start EDSSI, then the game in VR. The layer has to be registered before the game starts; EDSSI does it on start. Look for
    `[vr] the game is in VR through OpenXR` in EDSSI's log and `adding 9 panel(s)` in
-   `out/openxr-layer/openxr-layer.log`. If nothing shows, that log says how far it got
+   `openxr-layer.log` beside the layer. If nothing shows, that log says how far it got
    (no D3D11 session? format? spaces?).
 2. **EDVR's device.** EDVR runs with `separate_device=1`; the layer copies on whatever device the
    session was made with, from the thread that calls `xrEndFrame`. If EDVR uses that device's
@@ -34,8 +34,7 @@ Left, in the order to try them with the headset on:
 3. **Placement.** World lock pins in LOCAL space. EDVR has its own recentring (seat, look-to-aim);
    check the rig stays where it was pinned when EDVR recentres, and that `Control+Shift+H` re-pins.
 4. **Gaze.** Same cone as the C# host (cos 0.80); check the tuning keys act on the panel looked at.
-5. **Missing pieces:** packaging (`out/openxr-layer` as an `extraResource`, and the manifest path
-   then lives in the install). Curvature (cylinder layers) and alpha (colour scale) are in, tested
+5. **Unseen in a headset:** curvature (cylinder layers) and alpha (colour scale) are in, tested
    against the fake runtime only: check in the headset that VDXR lists both extensions (the layer's
    log line `runtime extensions: ...`), that the main panel's curve bends towards you (`;` / `'`)
    and that alpha fades it (`Control+Shift+,` / `.`).

@@ -3,6 +3,31 @@
 What changed in each release, in technical detail. The notes EDSSI shows commanders after an
 update are CHANGELOG_USER.md.
 
+## 1.3.0
+
+### Added
+
+- The VR cockpit through an OpenXR API layer, for OpenXR games such as Virtual Desktop's VDXR with
+  EDVR (`tools/openxr-layer`, `docs/vr.md`). `layer.cpp` is an implicit layer that passes everything
+  through until the bridge's shared memory exists, then appends a composition layer per panel to
+  each `xrEndFrame` of a D3D11 session. A curved panel is a cylinder layer and a faded one carries a
+  colour scale where the runtime has those extensions. `edssi-openxr-bridge.exe` speaks the OpenVR
+  host's stdin protocol. Tested against a fake runtime through the real Khronos loader, and not yet
+  seen in a headset.
+- `vr.backend` (`auto`, `openvr`, `openxr`) on the VR settings page. Auto takes SteamVR overlays
+  while `vrserver.exe` runs, else the OpenXR layer while the game has `openxr_loader.dll` loaded.
+  `vr/openxr-layer.ts` registers the layer under HKCU's implicit layers while the cockpit is on and
+  not SteamVR-only, and takes it out otherwise.
+- `useMissionBiology` (extension API 3): an extension may answer the Mission tab's "Biology here"
+  bodies itself, shown with its source in the heading. A body may carry `shipDistance`, shown on its
+  card.
+
+### Changed
+
+- The release and dev builds build the OpenXR layer (`vr:openxr:build`, so the runner needs CMake on
+  its PATH) and carry the layer, its manifest and the bridge as `extraResources`, without the test
+  programs built beside them.
+
 ## 1.2.0
 
 ### Added

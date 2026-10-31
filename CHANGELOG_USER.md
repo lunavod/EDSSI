@@ -3,6 +3,10 @@
 What each version of EDSSI brought, as EDSSI shows it after an update. Plain words for
 commanders; the technical record is CHANGELOG.md.
 
+## 1.3.0
+
+- **VR cockpit through Virtual Desktop.** EDSSI's VR panels can now show through an OpenXR layer inside the game, for Virtual Desktop with EDVR, as well as through SteamVR. Still a prototype, and not yet flown in a headset. Choose it under Settings, VR.
+
 ## 1.2.0
 
 - **Plot routes on Spansh from the Route tab.** Galaxy, neutron and fleet carrier routes for any

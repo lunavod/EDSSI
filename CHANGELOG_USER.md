@@ -3,6 +3,11 @@
 What each version of EDSSI brought, as EDSSI shows it after an update. Plain words for
 commanders; the technical record is CHANGELOG.md.
 
+## 1.4.0
+
+- **Hull health on the Ships tab.** Each ship's page now shows its hull's health beside cargo and fuel, in amber when damaged and red below half.
+- **Health that matches the game.** Module percentages on the Ships tab are rounded the way the game's Modules panel rounds them, so the two agree.
+
 ## 1.3.0
 
 - **VR cockpit through Virtual Desktop.** EDSSI's VR panels can now show through an OpenXR layer inside the game, for Virtual Desktop with EDVR, as well as through SteamVR. Still a prototype, and not yet flown in a headset. Choose it under Settings, VR.

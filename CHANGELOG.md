@@ -3,6 +3,23 @@
 What changed in each release, in technical detail. The notes EDSSI shows commanders after an
 update are CHANGELOG_USER.md.
 
+## 1.4.0
+
+### Added
+
+- `useShipCondition` (extension API 4): an extension may answer a ship's module health by slot and
+  its hull's health as they are now, which the Ships tab shows in place of the last `Loadout`'s
+  (`withCondition` in `ships/ships.ts`), with its `source` (and `asOf` when the reading is not
+  current) under the slots. `context.ships()` gives each ship's `slots` as the tab shows them, the
+  modules named.
+- The Ships tab shows the hull's health as a stat beside cargo, fuel and mass: warn below 99.5%,
+  danger below 50%.
+
+### Changed
+
+- Module health on the Ships tab is rounded down (`healthPercent`), as the game's Modules panel
+  shows it; the hull is rounded to nearest (`hullPercent`), as the game's ship display shows it.
+
 ## 1.3.0
 
 ### Added

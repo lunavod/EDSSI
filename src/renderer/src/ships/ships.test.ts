@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { FittedModule, ShipView } from '../../../shared/ships';
-import { withCondition } from './ships';
+import { healthPercent, withCondition } from './ships';
 
 const module = (item: string, health: number): FittedModule => ({
   item,
@@ -56,5 +56,21 @@ describe('withCondition', () => {
     const ship = withCondition(SHIP, { modules: { Radar: Number.NaN }, source: 'test' });
     expect(ship.slots[1]?.module?.health).toBe(0.99);
     expect(ship.stats?.hullHealth).toBe(1);
+  });
+});
+
+describe('healthPercent', () => {
+  it('rounds down, as the game shows a module', () => {
+    expect(healthPercent(0.979_166)).toBe(97);
+    expect(healthPercent(0.989_344)).toBe(98);
+    expect(healthPercent(0.994_999)).toBe(99);
+    expect(healthPercent(1)).toBe(100);
+  });
+
+  it('keeps whole percents whole despite floating point', () => {
+    expect(healthPercent(0.29)).toBe(29);
+    expect(healthPercent(0.57)).toBe(57);
+    expect(healthPercent(0)).toBe(0);
+    expect(healthPercent(-0.1)).toBe(0);
   });
 });

@@ -21,6 +21,7 @@ import {
   freeSlots,
   GROUP_TITLES,
   groupSlots,
+  healthPercent,
   isOptional,
   shipTitle,
   sizeLabel,
@@ -273,7 +274,7 @@ function ShipDetail({
           <Stat label="Unladen" value={formatNumber(ship.stats.unladenMass, 1)} unit="t" />
           <Stat
             label="Hull"
-            value={String(Math.round(ship.stats.hullHealth * 100))}
+            value={String(healthPercent(ship.stats.hullHealth))}
             unit="%"
             tone={
               ship.stats.hullHealth < 0.5
@@ -451,7 +452,7 @@ function SlotRow({
           {module && !module.on && <span className="tag ghost">Off</span>}
           {module && module.health < WORN && (
             <span className={module.health < 0.5 ? 'tag danger' : 'tag warn'}>
-              {Math.round(module.health * 100)}%
+              {healthPercent(module.health)}%
             </span>
           )}
         </div>

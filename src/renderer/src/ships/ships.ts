@@ -79,6 +79,14 @@ export function slotLabel(slot: string): string {
 }
 
 /**
+ * A health (0–1) as a whole percent, rounded down as the game's own Modules panel shows it: a
+ * module at 0.979 is 97%, not 98%.
+ */
+export function healthPercent(health: number): number {
+  return Math.max(0, Math.floor(health * 100 + 1e-9));
+}
+
+/**
  * The ship with its modules' and hull's health as an extension knows them now
  * (`useShipCondition`), in place of the last `Loadout`'s; a slot it doesn't know keeps its own.
  */

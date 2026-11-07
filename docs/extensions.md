@@ -80,7 +80,7 @@ sections stay in the file, untouched. The page also opens the installed extensio
 - **The commander.** `context.here()` is the current system, `context.ship()` the ship being
   flown: its last `Loadout` and the tonnes in its hold, from the session's journal, so it is there
   with the game closed too. `context.ships()` lists every ship the commander owns, with the Ships
-  tab's names and each one's last `Loadout`.
+  tab's names, each one's last `Loadout` and its `slots` as the tab shows them, the modules named.
 - **Following a route.** `context.followRoute` makes a route the CSV route, as if loaded from a file.
 - **Saving a route.** `context.saveRoute` puts a route among the CSV route page's saved routes
   under a name, without following it. It answers the route's `savedId`; followed with that on it,
@@ -114,6 +114,11 @@ sections stay in the file, untouched. The page also opens the installed extensio
   answers bodies of its own in the same `BioBody` shape (a better prediction, say), or undefined to
   leave EDSSI's. The first extension to answer wins; its `source` is shown in the heading. A body
   may carry `shipDistance` (metres from the ship), shown on its card as "… away".
+- **A ship's condition.** `useShipCondition`, a hook called on every render of a ship's page on
+  the Ships tab: given the ship on show, it answers the health of its modules by slot and of its
+  hull as they are now, which the page shows in place of its last `Loadout`'s, or undefined to
+  leave the `Loadout`'s. The first extension to answer wins; its `source` (and `asOf`, when the
+  reading is not current) is shown under the slots.
 - **EDSSI's hooks.** An installed extension carries a copy of the EDSSI code it imports, but
   `EdssiContext` is kept on `globalThis` (`api/context.ts`), so `useEdssi()` and every hook built on
   it (`useJournal`, `useHistory`, `useCarriers`, `useViewOption`…) work from one as they do from

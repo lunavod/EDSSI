@@ -357,6 +357,9 @@ tr.sh-empty .sh-size-box {
 .sh-stats .stat .v.warn {
   color: var(--warn);
 }
+.sh-stats .stat .v.danger {
+  color: var(--danger);
+}
 .cr-upkeep {
   width: 100%;
 }

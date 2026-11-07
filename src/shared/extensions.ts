@@ -14,8 +14,10 @@
  * and side panel blocks of its own; `useEdssi()` working from an installed extension.
  * 3: `useMissionBiology` on the window's side, bodies with life of its own for the Mission tab, and
  * a body's `shipDistance` on them.
+ * 4: `useShipCondition` on the window's side, the health of a ship's modules and hull now for the
+ * Ships tab; each of `ships()`' ships with its `slots` as the Ships tab shows them.
  */
-export const EXTENSION_API_VERSION = 3;
+export const EXTENSION_API_VERSION = 4;
 
 /**
  * The oldest version still loaded. Raise it to `EXTENSION_API_VERSION` when a change would trip up

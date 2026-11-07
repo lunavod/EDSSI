@@ -11,6 +11,7 @@ import type {
   ShipExportTarget,
   ShipsSnapshot,
   ShipView,
+  SlotView,
   StockFit,
 } from '../shared/ships';
 import { broadcast } from './broadcast';
@@ -50,6 +51,8 @@ export interface OwnedShip {
   where?: string;
   /** Unset while the journal hasn't shown it. */
   loadout?: LoadoutEvent;
+  /** Slot by slot, with the modules named, as the Ships tab shows it (always, from `owned()`). */
+  slots?: SlotView[];
 }
 
 /**
@@ -139,6 +142,7 @@ export function startShipsService(reader: JournalReader, catalog: ShipCatalogSou
           current: view.current,
           ...(view.where !== undefined && { where: view.where }),
           ...(loadout && { loadout }),
+          slots: view.slots,
         };
       });
     },

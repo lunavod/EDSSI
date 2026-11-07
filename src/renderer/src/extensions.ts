@@ -23,6 +23,7 @@ import {
 import type { SystemSurvey } from '../../shared/history';
 import type { BioBody } from '../../shared/mission';
 import { registerSettingsSections } from '../../shared/settings';
+import type { ShipView } from '../../shared/ships';
 import { type ExtensionTabId, extensionTabId } from '../../shared/ui';
 import type { PageId, Section } from './settings/fields';
 
@@ -50,6 +51,28 @@ export interface RendererExtension {
    * on every render of the section. The first extension to answer wins.
    */
   useMissionBiology?: (context: MissionBiologyContext) => MissionBiology | undefined;
+  /**
+   * The health of a ship's modules and hull as it is now, for the Ships tab to show in place of
+   * its last `Loadout`'s; undefined leaves the `Loadout`'s. A hook, called on every render of the
+   * ship's page. The first extension to answer wins.
+   */
+  useShipCondition?: (context: ShipConditionContext) => ShipCondition | undefined;
+}
+
+export interface ShipConditionContext {
+  /** The ship on show: `current` when it is the one being flown; `shipId` -1 for a stock hull. */
+  ship: ShipView;
+}
+
+export interface ShipCondition {
+  /** Health, 0–1, by the journal's slot name (`Slot`, any case), for the slots it knows. */
+  modules: Readonly<Record<string, number>>;
+  /** The hull's health, 0–1. */
+  hull?: number;
+  /** Where it comes from, shown under the slots. */
+  source: string;
+  /** When it was read (ISO), when that is not now: shown beside the source. */
+  asOf?: string;
 }
 
 export interface MissionBiologyContext {
@@ -84,6 +107,19 @@ export function useExtensionMissionBiology(
     if (!extension.useMissionBiology) continue;
     const biology = extension.useMissionBiology(context);
     answer ??= biology;
+  }
+  return answer;
+}
+
+/** The first extension's answer to `useShipCondition`, every extension's hook called in order. */
+export function useExtensionShipCondition(
+  context: ShipConditionContext,
+): ShipCondition | undefined {
+  let answer: ShipCondition | undefined;
+  for (const extension of RENDERER_EXTENSIONS) {
+    if (!extension.useShipCondition) continue;
+    const condition = extension.useShipCondition(context);
+    answer ??= condition;
   }
   return answer;
 }

@@ -10,6 +10,7 @@ import type {
   StockFit,
 } from '../../../shared/ships';
 import { useEdssi } from '../api/context';
+import { type ShipCondition, useExtensionShipCondition } from '../extensions';
 import { Glyph } from '../hud/Glyph';
 import { Select } from '../hud/Select';
 import { formatCompact, formatNumber, formatShortDateTime } from '../journal/format';
@@ -25,6 +26,7 @@ import {
   sizeLabel,
   sizeTitle,
   slotLabel,
+  withCondition,
 } from './ships';
 
 /** Below this a module's health is worth a mention. */
@@ -220,7 +222,7 @@ function CarrierButton({
 }
 
 function ShipDetail({
-  ship,
+  ship: loaded,
   catalog,
   browsing,
 }: {
@@ -229,6 +231,8 @@ function ShipDetail({
   /** A hull picked from the list of stock hulls, rather than one the commander owns. */
   browsing: boolean;
 }) {
+  const condition = useExtensionShipCondition({ ship: loaded });
+  const ship = withCondition(loaded, condition);
   const free = freeSlots(ship);
   const stock = ship.layout === 'stock';
   const hasSlots = ship.stats !== undefined || stock;
@@ -267,6 +271,18 @@ function ShipDetail({
           <Stat label="Cargo" value={formatNumber(ship.stats.cargoCapacity, 0)} unit="t" />
           <Stat label="Fuel" value={formatNumber(ship.stats.fuelMain, 1)} unit="t" />
           <Stat label="Unladen" value={formatNumber(ship.stats.unladenMass, 1)} unit="t" />
+          <Stat
+            label="Hull"
+            value={String(Math.round(ship.stats.hullHealth * 100))}
+            unit="%"
+            tone={
+              ship.stats.hullHealth < 0.5
+                ? 'danger'
+                : ship.stats.hullHealth < WORN
+                  ? 'warn'
+                  : undefined
+            }
+          />
           <Stat label="Rebuy" value={formatCompact(ship.stats.rebuy)} unit="CR" />
           {ship.stats.hullValue !== undefined && ship.stats.modulesValue !== undefined && (
             <Stat
@@ -341,15 +357,25 @@ function ShipDetail({
           );
         })}
 
-      <CatalogFoot ship={ship} catalog={catalog} />
+      <CatalogFoot ship={ship} catalog={catalog} condition={condition} />
     </>
   );
 }
-function Stat({ label, value, unit }: { label: string; value: string; unit?: string }) {
+function Stat({
+  label,
+  value,
+  unit,
+  tone,
+}: {
+  label: string;
+  value: string;
+  unit?: string;
+  tone?: 'warn' | 'danger' | undefined;
+}) {
   return (
     <div className="stat">
       <span className="k">{label}</span>
-      <span className="v">
+      <span className={tone ? `v ${tone}` : 'v'}>
         {value}
         {unit && <small>{unit}</small>}
       </span>
@@ -491,7 +517,15 @@ function JournalOnlyNote({ ship, catalog }: { ship: ShipView; catalog: CatalogSt
   );
 }
 
-function CatalogFoot({ ship, catalog }: { ship: ShipView; catalog: CatalogStatus }) {
+function CatalogFoot({
+  ship,
+  catalog,
+  condition,
+}: {
+  ship: ShipView;
+  catalog: CatalogStatus;
+  condition: ShipCondition | undefined;
+}) {
   const edssi = useEdssi();
   const [checking, setChecking] = useState(false);
   const check = () => {
@@ -514,6 +548,13 @@ function CatalogFoot({ ship, catalog }: { ship: ShipView; catalog: CatalogStatus
         )}
         {ship.seenAt !== undefined && (
           <span className="dim"> Loadout as of {formatShortDateTime(ship.seenAt)}.</span>
+        )}
+        {condition && (
+          <span className="dim">
+            {' '}
+            Health from {condition.source}
+            {condition.asOf !== undefined && <> as of {formatShortDateTime(condition.asOf)}</>}.
+          </span>
         )}
       </span>
       <span className="sp" />

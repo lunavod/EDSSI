@@ -1,5 +1,6 @@
 /** The Ships tab's formatting: slot sizes, module names and what's free. */
 import type { SlotGroup, SlotView, ShipView } from '../../../shared/ships';
+import type { ShipCondition } from '../extensions';
 
 export const GROUP_TITLES: Readonly<Record<SlotGroup, string>> = {
   hardpoint: 'Hardpoints',
@@ -75,4 +76,27 @@ export function slotLabel(slot: string): string {
     .replace(/0*(\d+)$/, ' $1')
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/ ([A-Z])/g, (_, char: string) => ` ${char.toLowerCase()}`);
+}
+
+/**
+ * The ship with its modules' and hull's health as an extension knows them now
+ * (`useShipCondition`), in place of the last `Loadout`'s; a slot it doesn't know keeps its own.
+ */
+export function withCondition(ship: ShipView, condition: ShipCondition | undefined): ShipView {
+  if (!condition) return ship;
+  const health = new Map(
+    Object.entries(condition.modules).map(([slot, value]) => [slot.toLowerCase(), value]),
+  );
+  return {
+    ...ship,
+    slots: ship.slots.map((slot) => {
+      const value = health.get(slot.slot.toLowerCase());
+      return slot.module && value !== undefined && Number.isFinite(value)
+        ? { ...slot, module: { ...slot.module, health: value } }
+        : slot;
+    }),
+    ...(ship.stats &&
+      condition.hull !== undefined &&
+      Number.isFinite(condition.hull) && { stats: { ...ship.stats, hullHealth: condition.hull } }),
+  };
 }

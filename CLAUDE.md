@@ -194,7 +194,9 @@ Data flows one way: journal files → main process → IPC → renderer.
   gzipped and base64'd into the import URL; `export.ts`), or to a CSV of its slots.
   EDSY also gives each hull's stock fit (the modules the shipyard sells it with) and prices: a
   ship still fitted as sold is tagged Stock, a ship the journal has no loadout for shows its stock
-  fit, and the tab can show any hull as sold. Anything else that wants a ship it hasn't seen a
+  fit, and the tab can show any hull as sold. A ship's page shows each module's and the
+  hull's health from its last `Loadout`, or fresher from an extension (`useShipCondition`,
+  `src/renderer/src/extensions.ts`; `withCondition` in `ships/ships.ts`). Anything else that wants a ship it hasn't seen a
   loadout for asks `ShipsService.stockFit(ship)` (`hulls()` lists them) in main, or
   `window.edssi.ships.stockFit` in a window: a `StockFit` of `SlotView`s, the same shape the tab
   shows an owned ship's slots in.

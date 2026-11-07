@@ -86,6 +86,11 @@ export function healthPercent(health: number): number {
   return Math.max(0, Math.floor(health * 100 + 1e-9));
 }
 
+/** The hull as a whole percent, rounded as the game's ship display shows it: 0.797 is 80%. */
+export function hullPercent(health: number): number {
+  return Math.max(0, Math.round(health * 100));
+}
+
 /**
  * The ship with its modules' and hull's health as an extension knows them now
  * (`useShipCondition`), in place of the last `Loadout`'s; a slot it doesn't know keeps its own.

@@ -22,6 +22,7 @@ import {
   GROUP_TITLES,
   groupSlots,
   healthPercent,
+  hullPercent,
   isOptional,
   shipTitle,
   sizeLabel,
@@ -274,7 +275,7 @@ function ShipDetail({
           <Stat label="Unladen" value={formatNumber(ship.stats.unladenMass, 1)} unit="t" />
           <Stat
             label="Hull"
-            value={String(healthPercent(ship.stats.hullHealth))}
+            value={String(hullPercent(ship.stats.hullHealth))}
             unit="%"
             tone={
               ship.stats.hullHealth < 0.5

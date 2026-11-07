@@ -1,7 +1,7 @@
 import { describe, expect, it } from 'vitest';
 
 import type { FittedModule, ShipView } from '../../../shared/ships';
-import { healthPercent, withCondition } from './ships';
+import { healthPercent, hullPercent, withCondition } from './ships';
 
 const module = (item: string, health: number): FittedModule => ({
   item,
@@ -72,5 +72,14 @@ describe('healthPercent', () => {
     expect(healthPercent(0.57)).toBe(57);
     expect(healthPercent(0)).toBe(0);
     expect(healthPercent(-0.1)).toBe(0);
+  });
+});
+
+describe('hullPercent', () => {
+  it('rounds, as the game shows the hull', () => {
+    expect(hullPercent(0.797_172)).toBe(80);
+    expect(hullPercent(0.794)).toBe(79);
+    expect(hullPercent(1)).toBe(100);
+    expect(hullPercent(0)).toBe(0);
   });
 });
